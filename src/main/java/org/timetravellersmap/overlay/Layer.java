@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Layer {
     private ArrayList<LayerComponent> layerComponents = new ArrayList<>();
 
-    public Layer() {
+    public Layer () {
     }
 
     public void addComponent(LayerComponent component) {
