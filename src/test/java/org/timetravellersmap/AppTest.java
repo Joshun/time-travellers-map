@@ -1,4 +1,4 @@
-package org.geotools;
+package org.timetravellersmap;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

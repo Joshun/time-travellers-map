@@ -1,4 +1,4 @@
-package org.geotools.tutorial.quickstart;
+package org.timetravellersmap.tutorial.quickstart;
 
 import java.io.File;
 
