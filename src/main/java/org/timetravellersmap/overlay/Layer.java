@@ -18,4 +18,10 @@ public class Layer {
     public void removeComponent(LayerComponent component) {
         layerComponents.remove(component);
     }
+
+    public void draw() {
+        for (LayerComponent layerComponent: layerComponents) {
+            layerComponent.draw();
+        }
+    }
 }
