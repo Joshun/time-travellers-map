@@ -12,7 +12,6 @@ public class TimeSequence {
 
     private final Calendar startDate;
     private final Calendar endDate;
-    private ArrayList<TimeFrame> timeFrames;
     private Annotation annotation;
 
     public TimeSequence(Calendar startDate, Calendar endDate, Annotation annotation) {
