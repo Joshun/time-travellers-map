@@ -3,7 +3,7 @@ package org.timetravellersmap;
 /**
  * Created by joshua on 23/01/17.
  */
-public class ShapefileException extends TimetravellersmapException {
+public class ShapefileException extends TimeTravellersMapException {
     public ShapefileException() {
         super();
     }
