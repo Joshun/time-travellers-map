@@ -1,5 +1,7 @@
 package org.timetravellersmap.timeline;
 
+import org.timetravellersmap.Annotation;
+
 import java.util.Calendar;
 
 /**

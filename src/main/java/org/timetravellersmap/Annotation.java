@@ -1,4 +1,4 @@
-package org.timetravellersmap.timeline;
+package org.timetravellersmap;
 
 /**
  * Created by joshua on 23/01/17.
