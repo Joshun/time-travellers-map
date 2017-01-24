@@ -1,22 +1,32 @@
 package org.timetravellersmap.overlay;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by joshua on 24/01/17.
  */
 public class LayerList {
-    private HashMap<Integer,Layer> layers = new HashMap();
-    private int highestLayerIndex = 0;
+    private TreeMap<Integer,Layer> layers = new TreeMap<>();
 
     public LayerList() {
     }
 
+    public void addLayer(Layer layer, int orderIndex) {
+        layers.put(Integer.valueOf(orderIndex), layer);
+    }
+
+    public void removeLayer(int orderIndex) {
+
+        layers.remove(Integer.valueOf(orderIndex));
+    }
+
     public void draw() {
-        for (int i=0; i<highestLayerIndex; i++) {
-            if (layers.containsKey(Integer.valueOf(i))) {
-                layers.get(i).draw();
-            }
+        for (Map.Entry<Integer,Layer> layerEntry: layers.entrySet()) {
+            int orderIndex = layerEntry.getKey().intValue();
+            System.out.println("Drawing layer " + orderIndex);
+            Layer layer = layerEntry.getValue();
+            layer.draw();
         }
     }
 }

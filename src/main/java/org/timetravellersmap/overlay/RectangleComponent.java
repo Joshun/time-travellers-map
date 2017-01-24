@@ -25,7 +25,11 @@ public class RectangleComponent extends LayerComponent {
             this.y2 == other.y2;
     }
 
-    public void draw() {
+    public String toString() {
+        return "RectangleComponent (" + this.x1 + "," + this.y1 + ") (" + this.x2 + "," + this.y2 + ")";
+    }
 
+    public void draw() {
+        System.out.println("Draw rectangle with coords" + this.toString());
     }
 }
