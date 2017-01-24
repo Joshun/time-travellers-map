@@ -1,5 +1,7 @@
 package org.timetravellersmap.overlay;
 
+import org.geotools.map.MapContent;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -8,8 +10,10 @@ import java.util.TreeMap;
  */
 public class LayerList {
     private TreeMap<Integer,Layer> layers = new TreeMap<>();
+    private MapContent mapContent;
 
-    public LayerList() {
+    public LayerList(MapContent mapContent) {
+        this.mapContent = mapContent;
     }
 
     public void addLayer(Layer layer, int orderIndex) {
@@ -21,12 +25,12 @@ public class LayerList {
         layers.remove(Integer.valueOf(orderIndex));
     }
 
-    public void draw() {
-        for (Map.Entry<Integer,Layer> layerEntry: layers.entrySet()) {
-            int orderIndex = layerEntry.getKey().intValue();
-            System.out.println("Drawing layer " + orderIndex);
-            Layer layer = layerEntry.getValue();
-            layer.draw();
-        }
-    }
+//    public void draw() {
+//        for (Map.Entry<Integer,Layer> layerEntry: layers.entrySet()) {
+//            int orderIndex = layerEntry.getKey().intValue();
+//            System.out.println("Drawing layer " + orderIndex);
+//            Layer layer = layerEntry.getValue();
+//            layer.draw();
+//        }
+//    }
 }
