@@ -17,6 +17,6 @@ public class Annotation {
     }
 
     public String toString() {
-        return "(Annotation) name: " + name + " description: " + description;
+        return "Annotation name: " + name + " description: " + description;
     }
 }
