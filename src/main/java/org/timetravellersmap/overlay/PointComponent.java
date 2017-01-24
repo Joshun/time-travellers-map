@@ -30,4 +30,8 @@ public class PointComponent extends LayerComponent{
     public void draw() {
         System.out.println("Drawing " + this.toString());
     }
+
+    public void displayAnnotation() {
+
+    }
 }

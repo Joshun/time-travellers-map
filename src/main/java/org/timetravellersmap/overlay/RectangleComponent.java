@@ -32,4 +32,8 @@ public class RectangleComponent extends LayerComponent {
     public void draw() {
         System.out.println("Draw rectangle with coords" + this.toString());
     }
+
+    public void displayAnnotation() {
+
+    }
 }
