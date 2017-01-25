@@ -1,5 +1,10 @@
 package org.timetravellersmap.overlay;
 
+import org.geotools.map.MapContent;
+import org.geotools.map.MapViewport;
+
+import java.awt.*;
+
 /**
  * Created by joshua on 24/01/17.
  */
@@ -27,8 +32,11 @@ public class PointComponent extends LayerComponent{
         return this.x == other.x && this.y == other.y && this.radius == other.radius;
     }
 
-    public void draw() {
-        System.out.println("Drawing " + this.toString());
+//    public void draw() {
+//        System.out.println("Drawing " + this.toString());
+//    }
+    public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
+
     }
 
     public void displayAnnotation() {

@@ -1,5 +1,10 @@
 package org.timetravellersmap.overlay;
 
+import org.geotools.map.MapContent;
+import org.geotools.map.MapViewport;
+
+import java.awt.*;
+
 /**
  * Created by joshua on 23/01/17.
  */
@@ -29,9 +34,14 @@ public class RectangleComponent extends LayerComponent {
         return "RectangleComponent (" + this.x1 + "," + this.y1 + ") (" + this.x2 + "," + this.y2 + ")";
     }
 
-    public void draw() {
-        System.out.println("Draw rectangle with coords" + this.toString());
+//    public void draw() {
+//        System.out.println("Draw rectangle with coords" + this.toString());
+//    }
+
+    public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
+
     }
+
 
     public void displayAnnotation() {
 

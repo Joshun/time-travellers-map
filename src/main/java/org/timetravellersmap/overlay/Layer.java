@@ -12,11 +12,11 @@ import java.util.ArrayList;
  */
 public class Layer extends org.geotools.map.DirectLayer {
     private ArrayList<LayerComponent> layerComponents = new ArrayList<>();
-    private MapContent mapContent;
+//    private MapContent mapContent;
 
-    public Layer(MapContent mapContent) {
-        this.mapContent = mapContent;
-    }
+//    public Layer(MapContent mapContent) {
+//        this.mapContent = mapContent;
+//    }
 
     public void addComponent(LayerComponent component) {
         layerComponents.add(component);

@@ -11,6 +11,11 @@ import org.geotools.styling.Style;
 import org.geotools.swing.JMapFrame;
 import org.geotools.swing.data.JFileDataStoreChooser;
 
+import org.timetravellersmap.overlay.LayerComponent;
+import org.timetravellersmap.overlay.LayerList;
+import org.timetravellersmap.overlay.PointComponent;
+import org.timetravellersmap.timeline.Event;
+
 import java.io.File;
 
 
@@ -49,6 +54,13 @@ public class Toplevel {
         style = SLD.createSimpleStyle(featureSource.getSchema());
         layer = new FeatureLayer(featureSource, style);
         mapContent.addLayer(layer);
+
+        // Testing of custom layering system
+        LayerList layerList = new LayerList(mapContent);
+        org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer();
+        LayerComponent layerComponent1 = new PointComponent(50, 50, 5);
+        layer1.addComponent(layerComponent1);
+        mapContent.addLayer(layer1);
     }
 
     public void show() {
