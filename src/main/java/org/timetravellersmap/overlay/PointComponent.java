@@ -5,6 +5,7 @@ import org.geotools.map.MapViewport;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 /**
  * Created by joshua on 24/01/17.
@@ -37,9 +38,23 @@ public class PointComponent extends LayerComponent{
 //        System.out.println("Drawing " + this.toString());
 //    }
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
-        double topX = x - 2.0*radius;
-        double topY = y - 2.0*radius;
-        graphics2D.fill(new Ellipse2D.Double(topX, topY, 2.0*radius, 2.0*radius));
+        double screenX, screenY;
+        Point2D.Double point = worldToScreen(new Point2D.Double(x, y), mapContent, mapViewport);
+        screenX = point.getX();
+        screenY = point.getY();
+
+//        double topX = screenX - 2.0*radius;
+//        double topY = screenY - 2.0*radius;
+
+        // Convert screen coordinates of midpoint to the topleft coordinates of circle bounding box
+        // Distance from midpoint of circle to edge of box is same as diameter
+        double topX = screenX - 2.0*radius;
+        double topY = screenY - 2.0*radius;
+        // Width and height of box is twice the diameter / four times radius
+        double width = 4.0*radius;
+        double height = 4.0*radius;
+
+        graphics2D.fill(new Ellipse2D.Double(topX, topY, width, height));
     }
 
     public void displayAnnotation() {
