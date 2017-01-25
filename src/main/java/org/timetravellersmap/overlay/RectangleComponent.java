@@ -39,7 +39,8 @@ public class RectangleComponent extends LayerComponent {
 //    }
 
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
-
+        System.out.println(this.toString() + " draw called");
+        graphics2D.draw(new Rectangle(x1, y1, (x2-x1), (y2-y1)));
     }
 
 

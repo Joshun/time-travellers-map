@@ -4,6 +4,7 @@ import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 /**
  * Created by joshua on 24/01/17.
@@ -36,7 +37,9 @@ public class PointComponent extends LayerComponent{
 //        System.out.println("Drawing " + this.toString());
 //    }
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
-
+        double topX = x - 2.0*radius;
+        double topY = y - 2.0*radius;
+        graphics2D.fill(new Ellipse2D.Double(topX, topY, 2.0*radius, 2.0*radius));
     }
 
     public void displayAnnotation() {

@@ -33,7 +33,9 @@ public class Layer extends org.geotools.map.DirectLayer {
 //    }
 
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
+        System.out.println(this.toString() + " draw called");
         for (LayerComponent layerComponent: layerComponents) {
+            System.out.println("Trying to draw " + layerComponent.toString());
             layerComponent.draw(graphics2D, mapContent, mapViewport);
         }
     }
