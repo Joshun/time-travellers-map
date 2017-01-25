@@ -14,6 +14,7 @@ public class PointComponent extends LayerComponent{
     private double x;
     private double y;
     private final static int DEFAULT_RADIUS = 1;
+    private final static boolean USE_SCALING = false;
     private double radius;
 
     public PointComponent(double x, double y, double radius) {
@@ -43,16 +44,26 @@ public class PointComponent extends LayerComponent{
         screenX = point.getX();
         screenY = point.getY();
 
+        System.out.println("scale " + computeMapScale(mapViewport));
+
+        double scaledRadius;
+        if (USE_SCALING) {
+            scaledRadius = radius / computeMapScale(mapViewport);
+        }
+        else {
+             scaledRadius = radius;
+        }
+
 //        double topX = screenX - 2.0*radius;
 //        double topY = screenY - 2.0*radius;
 
         // Convert screen coordinates of midpoint to the topleft coordinates of circle bounding box
         // Distance from midpoint of circle to edge of box is same as diameter
-        double topX = screenX - 2.0*radius;
-        double topY = screenY - 2.0*radius;
+        double topX = screenX - 2.0*scaledRadius;
+        double topY = screenY - 2.0*scaledRadius;
         // Width and height of box is twice the diameter / four times radius
-        double width = 4.0*radius;
-        double height = 4.0*radius;
+        double width = 4.0*scaledRadius;
+        double height = 4.0*scaledRadius;
 
         graphics2D.fill(new Ellipse2D.Double(topX, topY, width, height));
     }
