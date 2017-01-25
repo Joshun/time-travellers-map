@@ -11,12 +11,12 @@ import java.awt.geom.Point2D;
  * Created by joshua on 24/01/17.
  */
 public class PointComponent extends LayerComponent{
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private final static int DEFAULT_RADIUS = 1;
-    private int radius;
+    private double radius;
 
-    public PointComponent(int x, int y, int radius) {
+    public PointComponent(double x, double y, double radius) {
         this.x = x;
         this.y = y;
         this.radius = radius;

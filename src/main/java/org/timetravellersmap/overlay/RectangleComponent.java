@@ -4,6 +4,7 @@ import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 /**
  * Created by joshua on 23/01/17.
@@ -12,10 +13,10 @@ public class RectangleComponent extends LayerComponent {
     // Bounding box coordinates
     // x1,y1: topleft
     // x2,y2: bottomright
-    int x1, y1;
-    int x2, y2;
+    private double x1, y1;
+    private double x2, y2;
 
-    public RectangleComponent(int x1, int y1, int x2, int y2) {
+    public RectangleComponent(double x1, double y1, double x2, double y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -39,8 +40,20 @@ public class RectangleComponent extends LayerComponent {
 //    }
 
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
+        double screenX1, screenY1;
+        double screenX2, screenY2;
+
+        Point2D.Double point1 = worldToScreen(new Point2D.Double(x1, y1), mapContent, mapViewport);
+        Point2D.Double point2 = worldToScreen(new Point2D.Double(x2, y2), mapContent, mapViewport);
+        screenX1 = point1.getX();
+        screenY1 = point1.getY();
+        screenX2 = point2.getX();
+        screenY2 = point2.getY();
+
         System.out.println(this.toString() + " draw called");
-        graphics2D.draw(new Rectangle(x1, y1, (x2-x1), (y2-y1)));
+        System.out.println(screenX1 + " " + screenY1 + " " + screenX2 + " " + screenY2);
+//        graphics2D.setStroke(new BasicStroke(40));
+        graphics2D.draw(new Rectangle.Double(screenX1, screenY1, (screenX2-screenX1), (screenY2-screenY1)));
     }
 
 

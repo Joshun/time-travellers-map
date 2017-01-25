@@ -59,8 +59,8 @@ public class Toplevel {
         // Testing of custom layering system
         LayerList layerList = new LayerList(mapContent);
         org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer();
-//        LayerComponent layerComponent1 = new RectangleComponent(0, 0, 50, 50);
-        LayerComponent layerComponent1 = new PointComponent(20, 20, 5);
+        LayerComponent layerComponent1 = new RectangleComponent(-100, 100, 200, 0);
+//        LayerComponent layerComponent1 = new PointComponent(20, 20, 5);
         layer1.addComponent(layerComponent1);
         mapContent.addLayer(layer1);
     }
