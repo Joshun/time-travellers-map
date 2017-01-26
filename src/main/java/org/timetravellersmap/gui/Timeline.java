@@ -50,8 +50,9 @@ public class Timeline implements Iterable<TimelineCursor> {
             public TimelineCursor next() {
                 if (hasNext()) {
                     double prevValue = currentValue;
+                    boolean prevIsMajor = isMajorInterval();
                     currentValue += minorInterval;
-                    return new TimelineCursor(prevValue, isMajorInterval());
+                    return new TimelineCursor(prevValue, prevIsMajor);
                 }
                 else {
                     throw new NoSuchElementException();
@@ -64,6 +65,7 @@ public class Timeline implements Iterable<TimelineCursor> {
         Timeline t = new Timeline();
         for (TimelineCursor tc: t) {
             System.out.println(tc.getPosition());
+            System.out.println(tc.isMajorInterval());
         }
     }
 }
