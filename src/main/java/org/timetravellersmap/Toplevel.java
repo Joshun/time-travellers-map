@@ -16,6 +16,7 @@ import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.overlay.PointComponent;
 import org.timetravellersmap.overlay.RectangleComponent;
 import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.gui.MapFrame;
 
 import java.io.File;
 
@@ -67,6 +68,7 @@ public class Toplevel {
 
     public void show() {
         // Display the map
-        JMapFrame.showMap(mapContent);
+//        JMapFrame.showMap(mapContent);
+        MapFrame.showMap(mapContent);
     }
 }
