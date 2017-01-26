@@ -290,5 +290,7 @@ public class MapFrame extends JFrame {
 
         this.getContentPane().add(panel);
         uiSet = true;
+
+        timelineWidget.setPointer(1950);
     }
 }

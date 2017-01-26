@@ -10,6 +10,7 @@ import java.awt.geom.Line2D;
 public class TimelineWidget extends JPanel {
     private JPanel paintArea;
     private Timeline timeline;
+    private double pointerPosition;
     private int width;
     private int height;
 
@@ -20,7 +21,7 @@ public class TimelineWidget extends JPanel {
         this.paintArea = new JPanel(new GridLayout(0, 1)) {
             @Override
             public void paintComponent(Graphics g) {
-                paintTimeline((Graphics2D)g, timeline, width, height);
+                paintTimeline((Graphics2D)g, timeline, width, height, pointerPosition);
             }
         };
         paintArea.setMinimumSize(new Dimension(600, 50));
@@ -30,7 +31,11 @@ public class TimelineWidget extends JPanel {
 //        this.setMinimumSize(new Dimension(1000, 1000));
     }
 
-    private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, int width, int height) {
+    public void setPointer(double timePosition) {
+        this.pointerPosition = timePosition;
+    }
+
+    private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, int width, int height, double pointerPosition) {
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         Font font = new Font("Serif", Font.PLAIN, 10);
@@ -52,8 +57,21 @@ public class TimelineWidget extends JPanel {
             double timePosition = timelineCursor.getPosition();
             System.out.println("draw " + timePosition);
             boolean isMajorInterval = timelineCursor.isMajorInterval();
+
             if (isMajorInterval) {
                 graphics2D.drawString(String.valueOf((int)timePosition), screenXCursor, textYOffset);
+            }
+
+            if (timePosition == pointerPosition) {
+                graphics2D.setStroke(new BasicStroke(4));
+                graphics2D.setPaint(new Color(255, 0, 0));
+            }
+            else {
+                graphics2D.setStroke(new BasicStroke(1));
+                graphics2D.setPaint(new Color(0, 0, 0));
+            }
+
+            if (isMajorInterval) {
                 graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset+10));
             }
             else {
