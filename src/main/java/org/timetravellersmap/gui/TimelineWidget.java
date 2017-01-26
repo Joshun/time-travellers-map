@@ -31,11 +31,18 @@ public class TimelineWidget extends JPanel {
     }
 
     private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, int width, int height) {
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        Font font = new Font("Serif", Font.PLAIN, 10);
+        graphics2D.setFont(font);
+
         int timelineSize = (int) (timeline.getEnd() - timeline.getStart());
         double count = timelineSize / timeline.getMinorInterval();
         double increment = width / count;
 
         int screenXCursor = 0;
+        int textYOffset = 10;
+        int lineYOffset = 20;
 
 //        graphics2D.setStroke(new BasicStroke(100));
 
@@ -46,10 +53,11 @@ public class TimelineWidget extends JPanel {
             System.out.println("draw " + timePosition);
             boolean isMajorInterval = timelineCursor.isMajorInterval();
             if (isMajorInterval) {
-                graphics2D.draw(new Line2D.Double(screenXCursor, 10, screenXCursor, 50));
+                graphics2D.drawString(String.valueOf((int)timePosition), screenXCursor, textYOffset);
+                graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset+10));
             }
             else {
-                graphics2D.draw(new Line2D.Double(screenXCursor, 10, screenXCursor, 25));
+                graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset+5));
             }
             screenXCursor += increment;
         }
