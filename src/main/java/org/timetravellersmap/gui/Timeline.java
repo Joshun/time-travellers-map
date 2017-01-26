@@ -25,6 +25,8 @@ public class Timeline implements Iterable<TimelineCursor> {
         this.end = end;
         double minorInterval = (end-start)/10.0;
         double majorInterval = minorInterval*4.0;
+        this.minorInterval = minorInterval;
+        this.majorInterval = majorInterval;
         System.out.println("min " + minorInterval + " maj " + majorInterval);
     }
 
@@ -62,7 +64,7 @@ public class Timeline implements Iterable<TimelineCursor> {
     }
 
     public static void main(String[] args) {
-        Timeline t = new Timeline();
+        Timeline t = new Timeline(1900, 2000);
         for (TimelineCursor tc: t) {
             System.out.println(tc.getPosition());
             System.out.println(tc.isMajorInterval());
