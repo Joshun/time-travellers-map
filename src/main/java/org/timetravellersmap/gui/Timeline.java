@@ -36,6 +36,22 @@ public class Timeline implements Iterable<TimelineCursor> {
         this.majorInterval = majorInterval;
     }
 
+    public double getStart() {
+        return start;
+    }
+
+    public double getEnd() {
+        return end;
+    }
+
+    public double getMinorInterval() {
+        return minorInterval;
+    }
+
+    public double getMajorInterval() {
+        return majorInterval;
+    }
+
     @Override
     public Iterator<TimelineCursor> iterator() {
         return new Iterator<TimelineCursor>() {
