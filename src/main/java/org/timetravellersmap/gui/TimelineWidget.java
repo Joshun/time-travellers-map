@@ -35,6 +35,20 @@ public class TimelineWidget extends JPanel {
         this.pointerPosition = timePosition;
     }
 
+    private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {
+        // Using linear interpolation, compute the year in the timeline nearest to the mouse click
+
+        // Difference between end and start years
+        double yearWidth = end - start;
+
+        // Fraction of timeline bar's screen area that was clicked
+        double proportionOfBar = (xMousePosition-xDrawOffset)/barWidth;
+
+        // start year + (proportion of bar area * bar width)
+        // this returns the nearest year to the click
+        return (int)Math.round(start + (proportionOfBar * yearWidth));
+    }
+
     private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, int width, int height, double pointerPosition) {
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
