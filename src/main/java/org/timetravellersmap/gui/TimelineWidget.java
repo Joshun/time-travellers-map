@@ -12,8 +12,10 @@ import java.awt.geom.Line2D;
  */
 public class TimelineWidget extends JPanel {
     private JPanel paintArea;
-    private JButton prevYearsButton;
-    private JButton nextYearsButton;
+    private JButton prevHundredYearsButton;
+    private JButton nextHundredYearsButton;
+    private JButton prevThousandYearsButton;
+    private JButton nextThousandYearsButton;
 
     private Timeline timeline;
     private double pointerPosition;
@@ -50,30 +52,37 @@ public class TimelineWidget extends JPanel {
         System.out.println("width " + getWidth());
 //        this.add(paintArea);
 
-        nextYearsButton = new JButton("100 >");
-        prevYearsButton = new JButton("< 100");
+        nextHundredYearsButton = new JButton("100 >");
+        prevHundredYearsButton = new JButton("< 100");
+        prevThousandYearsButton = new JButton("< 1000");
+        nextThousandYearsButton = new JButton("1000 >");
 
-        nextYearsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                start += 100;
-                end += 100;
-                setTimeline(start, end, minorInterval, majorInterval);
-                setPointer(pointerPosition+100);
-                paintArea.repaint();
-            }
-        });
+        nextHundredYearsButton.addActionListener(makeSeekButtonListener(100));
+        prevHundredYearsButton.addActionListener(makeSeekButtonListener(-100));
+        nextThousandYearsButton.addActionListener(makeSeekButtonListener(1000));
+        prevThousandYearsButton.addActionListener(makeSeekButtonListener(-1000));
 
-        prevYearsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                start -= 100;
-                end -= 100;
-                setTimeline(start, end, minorInterval, majorInterval);
-                setPointer(pointerPosition-100);
-                paintArea.repaint();
-            }
-        });
+//        nextHundredYearsButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//                start += 100;
+//                end += 100;
+//                setTimeline(start, end, minorInterval, majorInterval);
+//                setPointer(pointerPosition+100);
+//                paintArea.repaint();
+//            }
+//        });
+//
+//        prevHundredYearsButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//                start -= 100;
+//                end -= 100;
+//                setTimeline(start, end, minorInterval, majorInterval);
+//                setPointer(pointerPosition-100);
+//                paintArea.repaint();
+//            }
+//        });
 
 
 
@@ -117,15 +126,26 @@ public class TimelineWidget extends JPanel {
             }
         });
 
-        prevYearsButton.setMaximumSize(new Dimension(50, height));
-        nextYearsButton.setMaximumSize(new Dimension(50, height));
+        prevHundredYearsButton.setMaximumSize(new Dimension(100, height/2));
+        nextHundredYearsButton.setMaximumSize(new Dimension(100, height/2));
+        prevThousandYearsButton.setMaximumSize(new Dimension(100, height/2));
+        nextThousandYearsButton.setMaximumSize(new Dimension(100, height/2));
 
+        JPanel prevYearsContainer = new JPanel();
+        prevYearsContainer.setLayout(new BoxLayout(prevYearsContainer, BoxLayout.PAGE_AXIS));
+        prevYearsContainer.add(prevHundredYearsButton);
+        prevYearsContainer.add(prevThousandYearsButton);
+
+        JPanel nextYearsContainer = new JPanel();
+        nextYearsContainer.setLayout(new BoxLayout(nextYearsContainer, BoxLayout.PAGE_AXIS));
+        nextYearsContainer.add(nextHundredYearsButton);
+        nextYearsContainer.add(nextThousandYearsButton);
 
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.fill = GridBagConstraints.NONE;
-        this.add(prevYearsButton, gridBagConstraints);
+        this.add(prevYearsContainer, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -137,7 +157,7 @@ public class TimelineWidget extends JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.fill = GridBagConstraints.NONE;
-        this.add(nextYearsButton, gridBagConstraints);
+        this.add(nextYearsContainer, gridBagConstraints);
         paintArea.repaint();
     }
 
@@ -155,6 +175,19 @@ public class TimelineWidget extends JPanel {
             setPointer(year);
             paintArea.repaint();
         }
+    }
+
+    private ActionListener makeSeekButtonListener(int yearDifference) {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                start += yearDifference;
+                end += yearDifference;
+                setTimeline(start, end, minorInterval, majorInterval);
+                setPointer(pointerPosition+yearDifference);
+                paintArea.repaint();
+            }
+        };
     }
 
     private void forceRepaint() {
