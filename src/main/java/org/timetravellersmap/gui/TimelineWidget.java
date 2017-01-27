@@ -127,23 +127,25 @@ public class TimelineWidget extends JPanel {
             boolean isMajorInterval = timelineCursor.isMajorInterval();
 
             if (isMajorInterval) {
+                graphics2D.setPaint(new Color(0, 0, 0));
                 graphics2D.drawString(String.valueOf((int)timePosition), screenXCursor, textYOffset);
             }
 
             if (timePosition == pointerPosition) {
                 graphics2D.setStroke(new BasicStroke(4));
                 graphics2D.setPaint(new Color(255, 0, 0));
+
+                graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset + 15));
             }
             else {
                 graphics2D.setStroke(new BasicStroke(1));
                 graphics2D.setPaint(new Color(0, 0, 0));
-            }
 
-            if (isMajorInterval) {
-                graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset+10));
-            }
-            else {
-                graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset+5));
+                if (isMajorInterval) {
+                    graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset + 10));
+                } else {
+                    graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset + 5));
+                }
             }
             screenXCursor += increment;
         }
