@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Line2D;
 
 /**
@@ -39,39 +40,49 @@ public class TimelineWidget extends JPanel {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-
+                updatePointer(mouseEvent.getX());
             }
 
             @Override
             public void mousePressed(MouseEvent mouseEvent) {
-                int xPos = mouseEvent.getX();
-
-                // Ignore out-of-range clicks
-                if (xPos <= 600) {
-                    System.out.println("click " + xPos);
-                    int year = computeYearClicked(xPos, 0, 600, 1900, 2000);
-                    System.out.println("year " + year);
-                    setPointer(year);
-                    repaint();
-                }
             }
 
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {
-
             }
 
             @Override
             public void mouseEntered(MouseEvent mouseEvent) {
-
             }
 
             @Override
             public void mouseExited(MouseEvent mouseEvent) {
+            }
+        });
+
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent mouseEvent) {
+                updatePointer(mouseEvent.getX());
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent mouseEvent) {
 
             }
         });
 
+    }
+
+    private void updatePointer(int xPos) {
+        // Ignore out-of-range clicks
+        if (xPos <= 600) {
+            System.out.println("click " + xPos);
+            int year = computeYearClicked(xPos, 0, 600, 1900, 2000);
+            System.out.println("year " + year);
+            setPointer(year);
+            repaint();
+        }
     }
 
     private void forceRepaint() {
