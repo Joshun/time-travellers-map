@@ -35,8 +35,9 @@ public class TimelineWidget extends JPanel {
         this.majorInterval = 10;
         this.width = width;
         this.height = height;
-//        timeline = new Timeline(startYear, endYear, 1, 10);
         setTimeline(start, end, minorInterval, majorInterval);
+
+        // Setup the paint area, i.e. where the timeline itself is drawn
         this.paintArea = new JPanel(new GridLayout(0, 1)) {
             @Override
             public void paintComponent(Graphics g) {
@@ -46,51 +47,23 @@ public class TimelineWidget extends JPanel {
         };
         paintArea.setMinimumSize(new Dimension(width, height));
         paintArea.setPreferredSize(new Dimension(width, height));
-//        setLayout(new GridLayout(0, 3));
         setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         System.out.println("width " + getWidth());
-//        this.add(paintArea);
 
         nextHundredYearsButton = new JButton("100 >");
         prevHundredYearsButton = new JButton("< 100");
         prevThousandYearsButton = new JButton("< 1000");
         nextThousandYearsButton = new JButton("1000 >");
 
+        // Bind listeners to prev / next year buttons
         nextHundredYearsButton.addActionListener(makeSeekButtonListener(100));
         prevHundredYearsButton.addActionListener(makeSeekButtonListener(-100));
         nextThousandYearsButton.addActionListener(makeSeekButtonListener(1000));
         prevThousandYearsButton.addActionListener(makeSeekButtonListener(-1000));
 
-//        nextHundredYearsButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent actionEvent) {
-//                start += 100;
-//                end += 100;
-//                setTimeline(start, end, minorInterval, majorInterval);
-//                setPointer(pointerPosition+100);
-//                paintArea.repaint();
-//            }
-//        });
-//
-//        prevHundredYearsButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent actionEvent) {
-//                start -= 100;
-//                end -= 100;
-//                setTimeline(start, end, minorInterval, majorInterval);
-//                setPointer(pointerPosition-100);
-//                paintArea.repaint();
-//            }
-//        });
 
-
-
-//        this.setMinimumSize(new Dimension(1000, 1000));
-
-        Graphics graphics = paintArea.getGraphics();
-//        System.out.println(graphics);
-
+        // Register mouse click events on timeline and change pointer accordingly
         paintArea.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
@@ -114,6 +87,7 @@ public class TimelineWidget extends JPanel {
             }
         });
 
+        // Register mouse drag events on timeline and change pointer accordingly
         paintArea.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent mouseEvent) {
@@ -188,12 +162,6 @@ public class TimelineWidget extends JPanel {
                 paintArea.repaint();
             }
         };
-    }
-
-    private void forceRepaint() {
-        Graphics g = getGraphics();
-        g.clearRect(0, 0, getWidth(), getHeight());
-        repaint();
     }
 
     public void setPointer(double timePosition) {
