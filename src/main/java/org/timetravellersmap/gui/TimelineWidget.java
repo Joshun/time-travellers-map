@@ -2,6 +2,8 @@ package org.timetravellersmap.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 
 /**
@@ -21,6 +23,7 @@ public class TimelineWidget extends JPanel {
         this.paintArea = new JPanel(new GridLayout(0, 1)) {
             @Override
             public void paintComponent(Graphics g) {
+                super.paintComponent(g);
                 paintTimeline((Graphics2D)g, timeline, width, height, pointerPosition);
             }
         };
@@ -29,6 +32,57 @@ public class TimelineWidget extends JPanel {
         System.out.println("width " + getWidth());
         this.add(paintArea);
 //        this.setMinimumSize(new Dimension(1000, 1000));
+
+        Graphics graphics = paintArea.getGraphics();
+//        System.out.println(graphics);
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+                int xPos = mouseEvent.getX();
+                System.out.println("click " + xPos);
+                int year = computeYearClicked(xPos, 0, 600, 1900, 2000);
+                System.out.println("year " + year);
+                setPointer(year);
+//                paintComponent(getGraphics());
+                repaint();
+//                SwingUtilities.invokeLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        paintComponent(graphics);
+////                        repaint();
+//                    }
+//                });
+//                forceRepaint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+
+            }
+        });
+
+    }
+
+    private void forceRepaint() {
+        Graphics g = getGraphics();
+        g.clearRect(0, 0, getWidth(), getHeight());
+        repaint();
     }
 
     public void setPointer(double timePosition) {
