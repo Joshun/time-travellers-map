@@ -45,20 +45,15 @@ public class TimelineWidget extends JPanel {
             @Override
             public void mousePressed(MouseEvent mouseEvent) {
                 int xPos = mouseEvent.getX();
-                System.out.println("click " + xPos);
-                int year = computeYearClicked(xPos, 0, 600, 1900, 2000);
-                System.out.println("year " + year);
-                setPointer(year);
-//                paintComponent(getGraphics());
-                repaint();
-//                SwingUtilities.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        paintComponent(graphics);
-////                        repaint();
-//                    }
-//                });
-//                forceRepaint();
+
+                // Ignore out-of-range clicks
+                if (xPos <= 600) {
+                    System.out.println("click " + xPos);
+                    int year = computeYearClicked(xPos, 0, 600, 1900, 2000);
+                    System.out.println("year " + year);
+                    setPointer(year);
+                    repaint();
+                }
             }
 
             @Override
