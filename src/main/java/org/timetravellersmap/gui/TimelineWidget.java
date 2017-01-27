@@ -122,19 +122,22 @@ public class TimelineWidget extends JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.fill = GridBagConstraints.NONE;
+        gridBagConstraints.ipadx = 0;
+//        gridBagConstraints.fill = GridBagConstraints.NONE;
         this.add(prevYearsContainer, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 25;
+//        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         this.add(paintArea, gridBagConstraints);
 
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.fill = GridBagConstraints.NONE;
+        gridBagConstraints.ipadx = 0;
+//        gridBagConstraints.fill = GridBagConstraints.NONE;
         this.add(nextYearsContainer, gridBagConstraints);
         paintArea.repaint();
     }
