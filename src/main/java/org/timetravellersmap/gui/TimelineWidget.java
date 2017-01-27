@@ -1,10 +1,10 @@
 package org.timetravellersmap.gui;
 
+import net.miginfocom.layout.Grid;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.awt.geom.Line2D;
 
 /**
@@ -12,6 +12,9 @@ import java.awt.geom.Line2D;
  */
 public class TimelineWidget extends JPanel {
     private JPanel paintArea;
+    private JButton prevYearsButton;
+    private JButton nextYearsButton;
+
     private Timeline timeline;
     private double pointerPosition;
     private int width;
@@ -20,13 +23,18 @@ public class TimelineWidget extends JPanel {
     // start and end years
     private double start;
     private double end;
+    private double minorInterval;
+    private double majorInterval;
 
     public TimelineWidget(double startYear, double endYear, int width, int height) {
         this.start = startYear;
         this.end = endYear;
+        this.minorInterval = 1;
+        this.majorInterval = 10;
         this.width = width;
         this.height = height;
-        timeline = new Timeline(startYear, endYear, 1, 10);
+//        timeline = new Timeline(startYear, endYear, 1, 10);
+        setTimeline(start, end, minorInterval, majorInterval);
         this.paintArea = new JPanel(new GridLayout(0, 1)) {
             @Override
             public void paintComponent(Graphics g) {
@@ -35,15 +43,46 @@ public class TimelineWidget extends JPanel {
             }
         };
         paintArea.setMinimumSize(new Dimension(width, height));
-        setLayout(new GridLayout(0, 1));
+        paintArea.setPreferredSize(new Dimension(width, height));
+//        setLayout(new GridLayout(0, 3));
+        setLayout(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
         System.out.println("width " + getWidth());
-        this.add(paintArea);
+//        this.add(paintArea);
+
+        nextYearsButton = new JButton("100 >");
+        prevYearsButton = new JButton("< 100");
+
+        nextYearsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                start += 100;
+                end += 100;
+                setTimeline(start, end, minorInterval, majorInterval);
+                setPointer(pointerPosition+100);
+                repaint();
+            }
+        });
+
+        prevYearsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                start -= 100;
+                end -= 100;
+                setTimeline(start, end, minorInterval, majorInterval);
+                setPointer(pointerPosition-100);
+                repaint();
+            }
+        });
+
+
+
 //        this.setMinimumSize(new Dimension(1000, 1000));
 
         Graphics graphics = paintArea.getGraphics();
 //        System.out.println(graphics);
 
-        this.addMouseListener(new MouseListener() {
+        paintArea.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 updatePointer(mouseEvent.getX());
@@ -66,7 +105,7 @@ public class TimelineWidget extends JPanel {
             }
         });
 
-        this.addMouseMotionListener(new MouseMotionListener() {
+        paintArea.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent mouseEvent) {
                 updatePointer(mouseEvent.getX());
@@ -78,6 +117,32 @@ public class TimelineWidget extends JPanel {
             }
         });
 
+        prevYearsButton.setMaximumSize(new Dimension(50, height));
+        nextYearsButton.setMaximumSize(new Dimension(50, height));
+
+
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+        this.add(prevYearsButton, gridBagConstraints);
+
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        this.add(paintArea, gridBagConstraints);
+
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+        this.add(nextYearsButton, gridBagConstraints);
+        paintArea.repaint();
+    }
+
+    private void setTimeline(double start, double end, double minorInterval, double majorInterval) {
+        this.timeline = new Timeline(start, end, minorInterval, majorInterval);
     }
 
     private void updatePointer(int xPos) {
