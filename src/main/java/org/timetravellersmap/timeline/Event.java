@@ -18,4 +18,24 @@ public class Event {
 
     private Event parentEvent;
     private ArrayList<Event> childEvents;
+
+    public Annotation getEventAnnotation() {
+        return eventAnnotation;
+    }
+
+    public int getStartDateAsYear() {
+        return startDate.get(Calendar.YEAR);
+    }
+
+    public Calendar getStartDate() {
+        return startDate;
+    }
+
+    public int getEndDateAsYear() {
+        return endDate.get(Calendar.YEAR);
+    }
+
+    public Calendar getEndDate() {
+        return endDate;
+    }
 }

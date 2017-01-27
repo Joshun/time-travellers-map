@@ -19,4 +19,12 @@ public class Annotation {
     public String toString() {
         return "Annotation name: " + name + " description: " + description;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
