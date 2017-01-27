@@ -214,7 +214,7 @@ public class MapFrame extends JFrame {
 
         // Here the timeline widget will be configured
         JLabel timelinePlaceholder = new JLabel("TIMELINE TO GO HERE");
-        TimelineWidget timelineWidget = new TimelineWidget(1900, 2000, 600, 50);
+        TimelineWidget timelineWidget = new TimelineWidget(-100, 100, 600, 50);
 
 
         panel.add(toolBar, "grow");

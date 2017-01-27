@@ -81,8 +81,9 @@ public class TimelineWidget extends JPanel {
     }
 
     private void updatePointer(int xPos) {
+        System.out.println("end" + end + " xpos " + xPos);
         // Ignore out-of-range clicks
-        if (xPos <= end) {
+        if (xPos < width) {
             System.out.println("click " + xPos);
             int year = computeYearClicked(xPos, 0, width, start, end);
             System.out.println("year " + year);
