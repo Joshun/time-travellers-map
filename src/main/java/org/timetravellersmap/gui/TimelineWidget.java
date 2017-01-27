@@ -51,10 +51,14 @@ public class TimelineWidget extends JPanel {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         System.out.println("width " + getWidth());
 
-        nextHundredYearsButton = new JButton("100 >");
-        prevHundredYearsButton = new JButton("< 100");
-        prevThousandYearsButton = new JButton("< 1000");
-        nextThousandYearsButton = new JButton("1000 >");
+        nextHundredYearsButton = new JButton(">");
+        nextHundredYearsButton.setToolTipText("Forward 100 years");
+        prevHundredYearsButton = new JButton("<");
+        prevHundredYearsButton.setToolTipText("Back 100 years");
+        nextThousandYearsButton = new JButton(">>");
+        nextThousandYearsButton.setToolTipText("Forward 1000 years");
+        prevThousandYearsButton = new JButton("<<");
+        prevThousandYearsButton.setToolTipText("Back 1000 years");
 
         // Bind listeners to prev / next year buttons
         nextHundredYearsButton.addActionListener(makeSeekButtonListener(100));
@@ -100,10 +104,10 @@ public class TimelineWidget extends JPanel {
             }
         });
 
-        prevHundredYearsButton.setMaximumSize(new Dimension(100, height/2));
-        nextHundredYearsButton.setMaximumSize(new Dimension(100, height/2));
-        prevThousandYearsButton.setMaximumSize(new Dimension(100, height/2));
-        nextThousandYearsButton.setMaximumSize(new Dimension(100, height/2));
+        prevHundredYearsButton.setMaximumSize(new Dimension(75, height/2));
+        nextHundredYearsButton.setMaximumSize(new Dimension(75, height/2));
+        prevThousandYearsButton.setMaximumSize(new Dimension(75, height/2));
+        nextThousandYearsButton.setMaximumSize(new Dimension(75, height/2));
 
         JPanel prevYearsContainer = new JPanel();
         prevYearsContainer.setLayout(new BoxLayout(prevYearsContainer, BoxLayout.PAGE_AXIS));
@@ -142,7 +146,7 @@ public class TimelineWidget extends JPanel {
     private void updatePointer(int xPos) {
         System.out.println("end" + end + " xpos " + xPos);
         // Ignore out-of-range clicks
-        if (xPos < width) {
+        if (xPos < width && xPos >= 0) {
             System.out.println("click " + xPos);
             int year = computeYearClicked(xPos, 0, width, start, end);
             System.out.println("year " + year);
