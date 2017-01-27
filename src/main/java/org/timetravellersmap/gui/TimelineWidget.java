@@ -34,7 +34,7 @@ public class TimelineWidget extends JPanel {
                 paintTimeline((Graphics2D)g, timeline, width, height, pointerPosition);
             }
         };
-        paintArea.setMinimumSize(new Dimension(600, 50));
+        paintArea.setMinimumSize(new Dimension(width, height));
         setLayout(new GridLayout(0, 1));
         System.out.println("width " + getWidth());
         this.add(paintArea);
