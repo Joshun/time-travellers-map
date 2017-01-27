@@ -1,5 +1,7 @@
 package org.timetravellersmap.gui;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.data.FileDataStore;
 import org.geotools.data.FileDataStoreFinder;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -11,6 +13,7 @@ import org.geotools.styling.Style;
 import org.geotools.swing.JMapFrame;
 import org.geotools.swing.data.JFileDataStoreChooser;
 
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
@@ -36,6 +39,8 @@ public class Toplevel {
     private Style style;
     private Layer layer;
 
+    private CoordinateReferenceSystem coordinateReferenceSystem = DefaultGeographicCRS.WGS84;
+
     public Toplevel() throws ShapefileException {
         shapeFile = JFileDataStoreChooser.showOpenFile("shp", null);
         if (shapeFile == null) {
@@ -53,6 +58,17 @@ public class Toplevel {
         // Create a map content and add our shapefile to it
         mapContent = new MapContent();
         mapContent.setTitle("Quickstart");
+//        mapContent.getViewport().setCoordinateReferenceSystem(coordinateReferenceSystem);
+
+        // Setup coordinate reference system (crs) and ensure initial view covers entire world
+        mapContent.getViewport().setBounds(new ReferencedEnvelope(
+                -180.0,
+                180.0,
+                -90.0,
+                90.0,
+                coordinateReferenceSystem
+        ));
+//        mapContent.getViewport().setMatchingAspectRatio(false);
 
         style = SLD.createSimpleStyle(featureSource.getSchema());
         layer = new FeatureLayer(featureSource, style);
@@ -63,7 +79,9 @@ public class Toplevel {
         org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer();
 //        LayerComponent layerComponent1 = new RectangleComponent(-100, 100, 200, 0);
         LayerComponent layerComponent1 = new PointComponent(20, 20, 5);
+        LayerComponent layerComponent2 = new PointComponent(151, -33, 5);
         layer1.addComponent(layerComponent1);
+        layer1.addComponent(layerComponent2);
         mapContent.addLayer(layer1);
     }
 
