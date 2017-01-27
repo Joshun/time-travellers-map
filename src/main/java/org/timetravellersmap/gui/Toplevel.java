@@ -1,4 +1,4 @@
-package org.timetravellersmap;
+package org.timetravellersmap.gui;
 
 import org.geotools.data.FileDataStore;
 import org.geotools.data.FileDataStoreFinder;
@@ -11,6 +11,7 @@ import org.geotools.styling.Style;
 import org.geotools.swing.JMapFrame;
 import org.geotools.swing.data.JFileDataStoreChooser;
 
+import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.overlay.PointComponent;

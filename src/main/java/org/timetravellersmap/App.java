@@ -1,5 +1,7 @@
 package org.timetravellersmap;
 
+import org.timetravellersmap.gui.Toplevel;
+
 /**
  * Hello world!
  *
