@@ -60,7 +60,7 @@ public class TimelineWidget extends JPanel {
                 end += 100;
                 setTimeline(start, end, minorInterval, majorInterval);
                 setPointer(pointerPosition+100);
-                repaint();
+                paintArea.repaint();
             }
         });
 
@@ -71,7 +71,7 @@ public class TimelineWidget extends JPanel {
                 end -= 100;
                 setTimeline(start, end, minorInterval, majorInterval);
                 setPointer(pointerPosition-100);
-                repaint();
+                paintArea.repaint();
             }
         });
 
@@ -153,7 +153,7 @@ public class TimelineWidget extends JPanel {
             int year = computeYearClicked(xPos, 0, width, start, end);
             System.out.println("year " + year);
             setPointer(year);
-            repaint();
+            paintArea.repaint();
         }
     }
 
