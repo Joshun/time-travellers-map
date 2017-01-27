@@ -17,7 +17,13 @@ public class TimelineWidget extends JPanel {
     private int width;
     private int height;
 
+    // start and end years
+    private double start;
+    private double end;
+
     public TimelineWidget(double startYear, double endYear, int width, int height) {
+        this.start = startYear;
+        this.end = endYear;
         this.width = width;
         this.height = height;
         timeline = new Timeline(startYear, endYear, 1, 10);
@@ -76,9 +82,9 @@ public class TimelineWidget extends JPanel {
 
     private void updatePointer(int xPos) {
         // Ignore out-of-range clicks
-        if (xPos <= 600) {
+        if (xPos <= end) {
             System.out.println("click " + xPos);
-            int year = computeYearClicked(xPos, 0, 600, 1900, 2000);
+            int year = computeYearClicked(xPos, 0, width, start, end);
             System.out.println("year " + year);
             setPointer(year);
             repaint();
