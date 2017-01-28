@@ -15,9 +15,11 @@ import java.util.GregorianCalendar;
  * Created by joshua on 27/01/17.
  */
 public class EventPane extends JPanel {
+    private JScrollPane eventTableContainer;
     private JTable eventTable;
     private JButton addEventButton;
     private JButton removeEventButton;
+    private JButton editEventButton;
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
 
@@ -26,10 +28,18 @@ public class EventPane extends JPanel {
         GridBagConstraints gc = new GridBagConstraints();
 
         String[] eventTableColumns = new String[] { "Event", "Start", "End" };
+
+        currentEvents.add(new Event(
+                new GregorianCalendar(1900, 0, 1),
+                new GregorianCalendar(1910, 0, 1),
+                new Annotation("Test event", "This is a description")
+        ));
+
         eventTable = new JTable(new TableModel() {
             @Override
             public int getRowCount() {
-                return currentEvents.size();
+//                return currentEvents.size();
+                return 1;
             }
 
             @Override
@@ -39,6 +49,7 @@ public class EventPane extends JPanel {
 
             @Override
             public String getColumnName(int i) {
+                System.out.println("callback");
                 if (i < eventTableColumns.length) {
                     return eventTableColumns[i];
                 }
@@ -49,7 +60,7 @@ public class EventPane extends JPanel {
 
             @Override
             public Class<?> getColumnClass(int i) {
-                return null;
+                return String.class;
             }
 
             @Override
@@ -59,15 +70,17 @@ public class EventPane extends JPanel {
 
             @Override
             public Object getValueAt(int i, int i1) {
-                Event event = currentEvents.get(i);
-                if (i1 == 0) {
-                    return event.getEventAnnotation().getName();
-                }
-                else if (i1 == 1) {
-                    return event.getStartDateAsYear();
-                }
-                else if (i1 == 2) {
-                    return event.getEndDateAsYear();
+                if (i < currentEvents.size() && i1 < eventTableColumns.length) {
+                    Event event = currentEvents.get(i);
+                    if (i1 == 0) {
+                        return event.getEventAnnotation().getName();
+                    } else if (i1 == 1) {
+                        return String.valueOf(event.getStartDateAsYear());
+                    } else if (i1 == 2) {
+                        return String.valueOf(event.getEndDateAsYear());
+                    } else {
+                        return null;
+                    }
                 }
                 else {
                     return null;
@@ -112,17 +125,49 @@ public class EventPane extends JPanel {
 
         addEventButton = new JButton("Add...");
         removeEventButton = new JButton("Remove");
+        editEventButton = new JButton("Edit...");
+
+
+//        gc.insets = new Insets(5, 0, 5, 0);
+        gc.anchor = GridBagConstraints.PAGE_START;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.gridwidth = 1;
+
 
         gc.gridx = 0;
         gc.gridy = 0;
-        this.add(addEventButton);
+        gc.weightx = 0.5;
+        this.add(addEventButton, gc);
 
         gc.gridx = 1;
         gc.gridy = 0;
-        this.add(removeEventButton);
+        gc.weightx = 0.5;
+        this.add(removeEventButton, gc);
+
+        gc.gridx = 2;
+        gc.gridy = 0;
+        gc.weightx = 0.5;
+        this.add(editEventButton, gc);
 
         gc.gridx = 0;
         gc.gridy = 1;
-        this.add(eventTable);
+        gc.gridwidth = 3;
+        gc.weightx = 0.5;
+//        gc.fill = GridBagConstraints.HORIZONTAL;
+//        this.add(eventTable, gc);
+
+        eventTableContainer = new JScrollPane(eventTable);
+        eventTable.setFillsViewportHeight(true);
+        this.add(eventTableContainer, gc);
+    }
+
+    public static void main(String[] args) {
+        // Test harness for EventPane
+        JFrame toplevel = new JFrame("eventpane test");
+        toplevel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        EventPane eventPane = new EventPane();
+        toplevel.add(eventPane);
+        toplevel.pack();
+        toplevel.setVisible(true);
     }
 }

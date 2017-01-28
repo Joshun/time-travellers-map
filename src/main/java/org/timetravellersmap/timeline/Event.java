@@ -5,6 +5,7 @@ import org.timetravellersmap.overlay.LayerList;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by joshua on 24/01/17.
@@ -18,6 +19,12 @@ public class Event {
 
     private Event parentEvent;
     private ArrayList<Event> childEvents;
+
+    public Event(Calendar startDate, Calendar endDate, Annotation eventAnnotation) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.eventAnnotation = eventAnnotation;
+    }
 
     public Annotation getEventAnnotation() {
         return eventAnnotation;
@@ -49,5 +56,23 @@ public class Event {
 
     public void setEventAnnotation(Annotation annotation) {
         this.eventAnnotation = annotation;
+    }
+
+    public static void main(String[] args) {
+        // Test harness for Event
+        Event event = new Event(
+                new GregorianCalendar(1990, 1, 1),
+                new GregorianCalendar(1910, 1, 1),
+                new Annotation("Test event", "this is a description")
+        );
+        System.out.println("Event toString: " + event.toString());
+        System.out.println("getStartDate " + event.getStartDate());
+        System.out.println("getStartDateAsYear " + event.getStartDateAsYear());
+        System.out.println("getEndDate " + event.getEndDate());
+        System.out.println("getStartDateAsYear " + event.getEndDateAsYear());
+
+        ArrayList<Event> elist = new ArrayList<>();
+        elist.add(event);
+        System.out.println(elist.get(0));
     }
 }
