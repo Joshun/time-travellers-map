@@ -38,4 +38,16 @@ public class Event {
     public Calendar getEndDate() {
         return endDate;
     }
+
+    public void setStartDate(Calendar startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setEventAnnotation(Annotation annotation) {
+        this.eventAnnotation = annotation;
+    }
 }

@@ -39,6 +39,7 @@ public class Toplevel {
     private Style style;
     private Layer layer;
 
+    // Set coordinate system to WGS84 (the most commonly used and that used by GPS)
     private CoordinateReferenceSystem coordinateReferenceSystem = DefaultGeographicCRS.WGS84;
 
     public Toplevel() throws ShapefileException {

@@ -252,11 +252,15 @@ public class MapFrame extends JFrame {
              * JSplitPane divider
              */
         userPalettePlaceholder.setPreferredSize(new Dimension(100, -1));
+
+        EventPane eventPane = new EventPane();
+        eventPane.setPreferredSize(new Dimension(100, -1));
+
         mapPane.setPreferredSize(new Dimension(600, -1));
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 false,
                 mapPane,
-                userPalettePlaceholder);
+                eventPane);
         panel.add(splitPane, "grow");
 
 //        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mapPane, userPalettePlaceholder);

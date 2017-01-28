@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui;
 
+import org.timetravellersmap.Annotation;
 import org.timetravellersmap.timeline.Event;
 
 import javax.swing.*;
@@ -7,6 +8,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by joshua on 27/01/17.
@@ -16,7 +19,7 @@ public class EventPane extends JPanel {
     private JButton addEventButton;
     private JButton removeEventButton;
 
-    private ArrayList<Event> currentEvents;
+    private ArrayList<Event> currentEvents = new ArrayList<>();
 
     public EventPane() {
         setLayout(new GridBagLayout());
@@ -73,7 +76,26 @@ public class EventPane extends JPanel {
 
             @Override
             public void setValueAt(Object o, int i, int i1) {
+                if (i < currentEvents.size()) {
+                    Event event = currentEvents.get(i);
+                    Annotation oldAnnotation = event.getEventAnnotation();
 
+                    if (i1 == 0) {
+                        String name = oldAnnotation.getName();
+                        String description = oldAnnotation.getDescription();
+                        name = o.toString();
+                        Annotation newAnnotation = new Annotation(name, description);
+                        event.setEventAnnotation(newAnnotation);
+                    }
+                    else if (i1 == 1) {
+                        Calendar calendar = new GregorianCalendar((int)o, 0, 1);
+                        event.setStartDate(calendar);
+                    }
+                    else if (i1 == 2) {
+                        Calendar calendar = new GregorianCalendar((int)o, 0, 1);
+                        event.setEndDate(calendar);
+                    }
+                }
             }
 
             @Override
