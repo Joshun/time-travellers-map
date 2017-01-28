@@ -159,6 +159,8 @@ public class EventPane extends JPanel {
         eventTableContainer = new JScrollPane(eventTable);
         eventTable.setFillsViewportHeight(true);
         this.add(eventTableContainer, gc);
+
+        eventTableContainer.setMinimumSize(new Dimension(300, 300));
     }
 
     public static void main(String[] args) {
