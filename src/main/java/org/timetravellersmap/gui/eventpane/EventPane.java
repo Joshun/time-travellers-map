@@ -1,4 +1,4 @@
-package org.timetravellersmap.gui;
+package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.Annotation;
 import org.timetravellersmap.timeline.Event;

@@ -2,16 +2,14 @@ package org.timetravellersmap.gui;
 
 import net.miginfocom.swing.MigLayout;
 import org.geotools.map.MapContent;
-import org.geotools.swing.JMapFrame;
 import org.geotools.swing.JMapPane;
-import org.geotools.swing.MapLayerTable;
 import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
+import org.timetravellersmap.gui.eventpane.EventPane;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.EnumSet;
 
 /**
  * Created by joshua on 25/01/17.
