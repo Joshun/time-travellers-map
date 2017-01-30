@@ -38,8 +38,7 @@ public class EventPane extends JPanel {
         eventTable = new JTable(new TableModel() {
             @Override
             public int getRowCount() {
-//                return currentEvents.size();
-                return 1;
+                return currentEvents.size();
             }
 
             @Override
