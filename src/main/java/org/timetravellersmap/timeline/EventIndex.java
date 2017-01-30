@@ -5,7 +5,7 @@ import org.timetravellersmap.Annotation;
 import java.util.*;
 
 /**
- * Created by joshua on 30/01/17.
+ * EventIndex: data structure for storing events indexed by their start and end years
  */
 public class EventIndex {
     private TreeMap<Integer,TreeMap<Integer, ArrayList<Event>>> startYearIndex = new TreeMap<>();
@@ -152,12 +152,12 @@ public class EventIndex {
         eventIndex.removeEvent(georgeWBushPresidency);
         eventIndex.treeWalk(2008);
 
-//        eventIndex.updateEvent(barackObamaPresidency, new Event(
-//                new GregorianCalendar(1861, 3, 4),
-//                new GregorianCalendar(1865, 4, 15),
-//                new Annotation("Abraham Lincoln Presidency", "16th US President")
-//        ));
-//        eventIndex.treeWalk(2010);
-//        eventIndex.treeWalk(1864);
+        eventIndex.updateEvent(barackObamaPresidency, new Event(
+                new GregorianCalendar(1861, 3, 4),
+                new GregorianCalendar(1865, 4, 15),
+                new Annotation("Abraham Lincoln Presidency", "16th US President")
+        ));
+        eventIndex.treeWalk(2010);
+        eventIndex.treeWalk(1864);
     }
 }
