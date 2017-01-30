@@ -57,7 +57,10 @@ public class EventIndex {
         int endYear = oldEvent.getEndDateAsYear();
         TreeMap<Integer, ArrayList<Event>> endYearMap = startYearIndex.get(startYear);
         ArrayList<Event> eventList = endYearMap.get(endYear);
-        eventList.remove(oldEvent);
+//        eventList.remove(oldEvent);
+
+        // Here we are using removeEvent since this carrys out all the relevant cleanup operations
+        removeEvent(oldEvent);
 
         // Here we are using addEvent since this reinserts it into the tree (the year(s) could have changed)
         addEvent(newEvent);
@@ -66,6 +69,21 @@ public class EventIndex {
     public void removeEvent(Event event) {
         int startYear = event.getStartDateAsYear();
         int endYear = event.getEndDateAsYear();
+        TreeMap<Integer, ArrayList<Event>> endYearMap = startYearIndex.get(startYear);
+        ArrayList<Event> eventList = endYearMap.get(endYear);
+
+        // Remove event from list of events
+        eventList.remove(event);
+
+        // If the list of events is now empty, clean up the endYear, events entry
+        if (eventList.size() == 0) {
+            endYearMap.remove(endYear);
+        }
+
+        // If the endYear map is empty, clean up the startYear index entry
+        if (endYearMap.size() == 0) {
+            startYearIndex.remove(endYear);
+        }
     }
 
     public ArrayList<Event> getPointerEvents(int pointerYear) {
@@ -129,6 +147,8 @@ public class EventIndex {
         eventIndex.addEvent(georgeWBushPresidency);
         eventIndex.addEvent(barackObamaPresidency);
         System.out.println(eventIndex.getPointerEvents(2010).get(0).toString());
+        eventIndex.treeWalk(2008);
+        eventIndex.removeEvent(georgeWBushPresidency);
         eventIndex.treeWalk(2008);
     }
 }
