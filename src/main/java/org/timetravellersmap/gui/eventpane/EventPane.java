@@ -2,6 +2,7 @@ package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.Annotation;
 import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.timeline.EventIndex;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
@@ -25,6 +26,7 @@ public class EventPane extends JPanel {
     private JButton editEventButton;
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
+    private EventIndex eventIndex = new EventIndex();
 
     public EventPane() {
         setLayout(new GridBagLayout());
@@ -135,7 +137,7 @@ public class EventPane extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Add event...");
-                new AddModifyEventDialog(parentEventPane);
+                new AddModifyEventDialog(parentEventPane, eventIndex);
             }
         });
 
@@ -146,6 +148,7 @@ public class EventPane extends JPanel {
                 Event event = getSelectedEvent();
                 if (event != null) {
                     currentEvents.remove(event);
+                    eventIndex.removeEvent(event);
                     eventTable.updateUI();
                 }
                 // TODO: implement remove event
@@ -158,7 +161,7 @@ public class EventPane extends JPanel {
                 System.out.println("Edit event...");
                 Event event = getSelectedEvent();
                 if (event != null) {
-                    new AddModifyEventDialog(event, parentEventPane);
+                    new AddModifyEventDialog(event, parentEventPane, eventIndex);
                 }
             }
         });
@@ -217,6 +220,12 @@ public class EventPane extends JPanel {
 
     public void addNewEvent(Event event) {
         this.currentEvents.add(event);
+        eventTable.updateUI();
+    }
+
+    public void replaceCurrentEvents(int pointerYear) {
+        this.currentEvents = eventIndex.getPointerEvents(pointerYear);
+//        this.currentEvents = events;
         eventTable.updateUI();
     }
 

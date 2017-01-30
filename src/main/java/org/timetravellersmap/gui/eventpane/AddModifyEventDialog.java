@@ -2,6 +2,7 @@ package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.Annotation;
 import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.timeline.EventIndex;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,10 +31,12 @@ public class AddModifyEventDialog extends JFrame {
     private int descriptionRows = 3;
 
     private EventPane eventPane;
+    private EventIndex eventIndex;
 
-    public AddModifyEventDialog(Event existingEvent, EventPane eventPane) {
+    public AddModifyEventDialog(Event existingEvent, EventPane eventPane, EventIndex eventIndex) {
         this.event = existingEvent;
         this.eventPane = eventPane;
+        this.eventIndex = eventIndex;
 
         if (event == null) {
             setTitle("Create new event");
@@ -151,8 +154,8 @@ public class AddModifyEventDialog extends JFrame {
         this.setVisible(true);
     }
 
-    public AddModifyEventDialog(EventPane eventPane) {
-        this(null, eventPane);
+    public AddModifyEventDialog(EventPane eventPane, EventIndex eventIndex) {
+        this(null, eventPane, eventIndex);
     }
 
     private void loadExistingEvent(Event existingEvent) {
@@ -182,9 +185,11 @@ public class AddModifyEventDialog extends JFrame {
         );
         if (existingEvent != null) {
             eventPane.updateExistingEvent(existingEvent, newEvent);
+            eventIndex.updateEvent(existingEvent, newEvent);
         }
         else {
             eventPane.addNewEvent(newEvent);
+            eventIndex.addEvent(newEvent);
         }
         this.dispose();
     }
@@ -196,12 +201,12 @@ public class AddModifyEventDialog extends JFrame {
 //        toplevel.add(new AddModifyEventDialog());
 //        toplevel.pack();
 //        toplevel.setVisible(true);
-        new AddModifyEventDialog(new EventPane());
+        new AddModifyEventDialog(new EventPane(), new EventIndex());
         Event hastings = new Event(
                 new GregorianCalendar(1066, 6, 14),
                 new GregorianCalendar(1066, 6, 15),
                 new Annotation("Battle of Hastings", "William Duke of Normandy vs Harold Godwinson")
             );
-        new AddModifyEventDialog(hastings, new EventPane());
+        new AddModifyEventDialog(hastings, new EventPane(), new EventIndex());
     }
 }

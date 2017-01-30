@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui;
 
+import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.timeline.Timeline;
 import org.timetravellersmap.timeline.TimelineCursor;
 
@@ -30,13 +31,16 @@ public class TimelineWidget extends JPanel {
     private double minorInterval;
     private double majorInterval;
 
-    public TimelineWidget(double startYear, double endYear, int width, int height) {
+    private EventPane eventPane;
+
+    public TimelineWidget(double startYear, double endYear, int width, int height, EventPane eventPane) {
         this.start = startYear;
         this.end = endYear;
         this.minorInterval = 1;
         this.majorInterval = 10;
         this.width = width;
         this.height = height;
+        this.eventPane = eventPane;
         setTimeline(start, end, minorInterval, majorInterval);
 
         // Setup the paint area, i.e. where the timeline itself is drawn
@@ -158,6 +162,7 @@ public class TimelineWidget extends JPanel {
             setPointer(year);
             paintArea.repaint();
         }
+        eventPane.replaceCurrentEvents((int)pointerPosition);
     }
 
     private ActionListener makeSeekButtonListener(int yearDifference) {

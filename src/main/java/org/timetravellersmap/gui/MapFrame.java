@@ -210,10 +210,12 @@ public class MapFrame extends JFrame {
         // Here the user palette will be configured
         JLabel userPalettePlaceholder = new JLabel("USER LAYERS PALETTE TO GO HERE");
 
+        EventPane eventPane = new EventPane();
+
 
         // Here the timeline widget will be configured
         JLabel timelinePlaceholder = new JLabel("TIMELINE TO GO HERE");
-        TimelineWidget timelineWidget = new TimelineWidget(1900, 2000, 600, 50);
+        TimelineWidget timelineWidget = new TimelineWidget(1900, 2000, 600, 50, eventPane);
 
 
         panel.add(toolBar, "grow");
@@ -252,7 +254,7 @@ public class MapFrame extends JFrame {
              */
         userPalettePlaceholder.setPreferredSize(new Dimension(100, -1));
 
-        EventPane eventPane = new EventPane();
+//        EventPane eventPane = new EventPane();
         eventPane.setPreferredSize(new Dimension(100, -1));
 
         mapPane.setPreferredSize(new Dimension(600, -1));
