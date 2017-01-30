@@ -53,10 +53,10 @@ public class EventIndex {
 
 
     public void updateEvent(Event oldEvent, Event newEvent) {
-        int startYear = oldEvent.getStartDateAsYear();
-        int endYear = oldEvent.getEndDateAsYear();
-        TreeMap<Integer, ArrayList<Event>> endYearMap = startYearIndex.get(startYear);
-        ArrayList<Event> eventList = endYearMap.get(endYear);
+//        int startYear = oldEvent.getStartDateAsYear();
+//        int endYear = oldEvent.getEndDateAsYear();
+//        TreeMap<Integer, ArrayList<Event>> endYearMap = startYearIndex.get(startYear);
+////        ArrayList<Event> eventList = endYearMap.get(endYear);
 //        eventList.remove(oldEvent);
 
         // Here we are using removeEvent since this carrys out all the relevant cleanup operations
@@ -82,7 +82,8 @@ public class EventIndex {
 
         // If the endYear map is empty, clean up the startYear index entry
         if (endYearMap.size() == 0) {
-            startYearIndex.remove(endYear);
+            System.out.println("map " + endYearMap);
+            startYearIndex.remove(startYear);
         }
     }
 
@@ -147,8 +148,16 @@ public class EventIndex {
         eventIndex.addEvent(georgeWBushPresidency);
         eventIndex.addEvent(barackObamaPresidency);
         System.out.println(eventIndex.getPointerEvents(2010).get(0).toString());
-        eventIndex.treeWalk(2008);
+//        eventIndex.treeWalk(2008);
         eventIndex.removeEvent(georgeWBushPresidency);
         eventIndex.treeWalk(2008);
+
+//        eventIndex.updateEvent(barackObamaPresidency, new Event(
+//                new GregorianCalendar(1861, 3, 4),
+//                new GregorianCalendar(1865, 4, 15),
+//                new Annotation("Abraham Lincoln Presidency", "16th US President")
+//        ));
+//        eventIndex.treeWalk(2010);
+//        eventIndex.treeWalk(1864);
     }
 }
