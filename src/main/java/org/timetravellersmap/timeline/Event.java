@@ -58,6 +58,10 @@ public class Event {
         this.eventAnnotation = annotation;
     }
 
+    public String toString() {
+        return "event start="+getStartDateAsYear()+" end="+getEndDateAsYear()+" annotation="+eventAnnotation;
+    }
+
     public static void main(String[] args) {
         // Test harness for Event
         Event event = new Event(

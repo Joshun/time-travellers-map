@@ -1,6 +1,6 @@
 package org.timetravellersmap.timeline;
 
-import sun.reflect.generics.tree.Tree;
+import org.timetravellersmap.Annotation;
 
 import java.util.*;
 
@@ -82,5 +82,53 @@ public class EventIndex {
             }
         }
         return allPointerEvents;
+    }
+
+    public void treeWalk(int pointerYear) {
+        // Given pointerYear, walk through tree
+        // Used for debugging purposes
+        ArrayList<Event> allPointerEvents = new ArrayList<>();
+        System.out.println("startYearIndex");
+        System.out.println(startYearIndex.entrySet());
+        // Get subset of startYearIndex: all nodes with year indexes before or including the pointer year
+        NavigableMap<Integer, TreeMap<Integer, ArrayList<Event>>> eventsOnOrBeforePointer = startYearIndex.headMap(pointerYear, true);
+        // Loop through the <Year, TreeMap> values
+        System.out.println("Select on or before pointer date...");
+        System.out.println(eventsOnOrBeforePointer.values());
+        for (TreeMap<Integer, ArrayList<Event>> endYearMaps: eventsOnOrBeforePointer.values()) {
+            System.out.println("Select on or after pointer from each...");
+            // Get subset of <Year, TreeMap> entry with year indexes after or including the pointer year
+            NavigableMap<Integer, ArrayList<Event>> eventsOnOrAfterPointer = endYearMaps.tailMap(pointerYear, true);
+            System.out.println(eventsOnOrAfterPointer);
+            // Loop through each of ArrayList<Event> values
+            System.out.println("Get events");
+            for (ArrayList<Event> eventList: eventsOnOrAfterPointer.values()) {
+                System.out.println(eventList);
+                allPointerEvents.addAll(eventList);
+            }
+        }
+        System.out.println("...Final list of events");
+        System.out.println(allPointerEvents);
+    }
+
+    public static void main(String[] args) {
+        // Test harness for eventIndex
+        EventIndex eventIndex = new EventIndex();
+
+        Event georgeWBushPresidency = new Event(
+                new GregorianCalendar(2001, 0, 20),
+                new GregorianCalendar(2009, 0, 20),
+                new Annotation("George W Bush Presidency", "43rd US President")
+        );
+
+        Event barackObamaPresidency = new Event(
+                new GregorianCalendar(2009, 0, 20),
+                new GregorianCalendar(2017, 0, 20),
+                new Annotation("Barack Obama Presidency", "44th US President")
+        );
+        eventIndex.addEvent(georgeWBushPresidency);
+        eventIndex.addEvent(barackObamaPresidency);
+        System.out.println(eventIndex.getPointerEvents(2010).get(0).toString());
+        eventIndex.treeWalk(2008);
     }
 }
