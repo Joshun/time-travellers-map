@@ -1,6 +1,7 @@
 package org.timetravellersmap.gui;
 
-import net.miginfocom.layout.Grid;
+import org.timetravellersmap.timeline.Timeline;
+import org.timetravellersmap.timeline.TimelineCursor;
 
 import javax.swing.*;
 import java.awt.*;

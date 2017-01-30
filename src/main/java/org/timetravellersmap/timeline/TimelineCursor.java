@@ -1,4 +1,4 @@
-package org.timetravellersmap.gui;
+package org.timetravellersmap.timeline;
 
 /**
  * TimelineCursor: the object returned by Timeline iterable

@@ -1,6 +1,5 @@
-package org.timetravellersmap.gui;
+package org.timetravellersmap.timeline;
 
-import java.sql.Time;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
