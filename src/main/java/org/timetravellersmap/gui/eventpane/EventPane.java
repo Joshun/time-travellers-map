@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -126,6 +128,39 @@ public class EventPane extends JPanel {
         removeEventButton = new JButton("Remove");
         editEventButton = new JButton("Edit...");
 
+        EventPane parentEventPane = this;
+
+        addEventButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Add event...");
+                new AddModifyEventDialog(parentEventPane);
+            }
+        });
+
+        removeEventButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Remove event...");
+                Event event = getSelectedEvent();
+                if (event != null) {
+                    currentEvents.remove(event);
+                    eventTable.updateUI();
+                }
+                // TODO: implement remove event
+            }
+        });
+
+        editEventButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Edit event...");
+                Event event = getSelectedEvent();
+                if (event != null) {
+                    new AddModifyEventDialog(event, parentEventPane);
+                }
+            }
+        });
 
 //        gc.insets = new Insets(5, 0, 5, 0);
         gc.anchor = GridBagConstraints.PAGE_START;
@@ -160,6 +195,28 @@ public class EventPane extends JPanel {
         this.add(eventTableContainer, gc);
 
         eventTableContainer.setMinimumSize(new Dimension(300, 300));
+    }
+
+    private Event getSelectedEvent() {
+        int eventIndex = eventTable.getSelectedRow();
+        System.out.println("index " + eventIndex);
+        if (eventIndex == -1 || eventTable.getRowCount() == 0) {
+            return null;
+        }
+        else {
+            return currentEvents.get(eventIndex);
+        }
+    }
+
+    public void updateExistingEvent(Event oldEvent, Event newEvent) {
+        this.currentEvents.remove(oldEvent);
+        this.currentEvents.add(newEvent);
+        eventTable.updateUI();
+    }
+
+    public void addNewEvent(Event event) {
+        this.currentEvents.add(event);
+        eventTable.updateUI();
     }
 
     public static void main(String[] args) {

@@ -28,8 +28,11 @@ public class AddModifyEventDialog extends JFrame {
     private int textBoxWidth = 25;
     private int descriptionRows = 3;
 
-    public AddModifyEventDialog(Event existingEvent) {
+    private EventPane eventPane;
+
+    public AddModifyEventDialog(Event existingEvent, EventPane eventPane) {
         this.event = existingEvent;
+        this.eventPane = eventPane;
 
         if (event == null) {
             setTitle("Create new event");
@@ -99,7 +102,7 @@ public class AddModifyEventDialog extends JFrame {
         gc.gridx = 1;
         gc.gridy = 3;
         endDateField = new JSpinner(new SpinnerNumberModel(1900, -4000, 4000, 1));
-        endDateField.setEditor(new JSpinner.NumberEditor(startDateField, "#"));
+        endDateField.setEditor(new JSpinner.NumberEditor(endDateField, "#"));
         panel.add(endDateField, gc);
 
         gc.gridx = 0;
@@ -125,10 +128,11 @@ public class AddModifyEventDialog extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (existingEvent != null) {
-                    updateEvent(existingEvent);
+                    updateOrAddEvent(existingEvent);
                 }
                 else {
-                    System.out.println("TODO: adding events");
+//                    System.out.println("TODO: adding events");
+                    updateOrAddEvent(null);
                 }
             }
         });
@@ -146,8 +150,8 @@ public class AddModifyEventDialog extends JFrame {
         this.setVisible(true);
     }
 
-    public AddModifyEventDialog() {
-        this(null);
+    public AddModifyEventDialog(EventPane eventPane) {
+        this(null, eventPane);
     }
 
     private void loadExistingEvent(Event existingEvent) {
@@ -158,20 +162,30 @@ public class AddModifyEventDialog extends JFrame {
         eventNameField.setText(existingEvent.getEventAnnotation().getName());
         eventDescriptionField.setText(existingEvent.getEventAnnotation().getDescription());
         startDateField.setValue(existingEvent.getStartDateAsYear());
+        endDateField.setValue(existingEvent.getEndDateAsYear());
     }
 
-    private void updateEvent(Event existingEvent) {
+    private void updateOrAddEvent(Event existingEvent) {
+        // if existingEvent is null, add new event
+        // else update existing event
         System.out.println("Updating event " + existingEvent);
         String eventName = eventNameField.getText();
         String eventDescription = eventDescriptionField.getText();
         int startDate = (int)startDateField.getValue();
         int endDate = (int)endDateField.getValue();
 
-        existingEvent = new Event(
+        Event newEvent = new Event(
                 new GregorianCalendar(startDate, 0, 1),
                 new GregorianCalendar(endDate, 0, 1),
                 new Annotation(eventName, eventDescription)
         );
+        if (existingEvent != null) {
+            eventPane.updateExistingEvent(existingEvent, newEvent);
+        }
+        else {
+            eventPane.addNewEvent(newEvent);
+        }
+        this.dispose();
     }
 
     public static void main(String[] args) {
@@ -181,12 +195,12 @@ public class AddModifyEventDialog extends JFrame {
 //        toplevel.add(new AddModifyEventDialog());
 //        toplevel.pack();
 //        toplevel.setVisible(true);
-        new AddModifyEventDialog();
+        new AddModifyEventDialog(new EventPane());
         Event hastings = new Event(
                 new GregorianCalendar(1066, 6, 14),
                 new GregorianCalendar(1066, 6, 15),
                 new Annotation("Battle of Hastings", "William Duke of Normandy vs Harold Godwinson")
             );
-        new AddModifyEventDialog(hastings);
+        new AddModifyEventDialog(hastings, new EventPane());
     }
 }
