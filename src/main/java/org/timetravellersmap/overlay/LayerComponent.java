@@ -11,7 +11,7 @@ import java.awt.geom.Point2D;
 import java.awt.Rectangle;
 
 /**
- * Created by joshua on 23/01/17.
+ * LayerComponent: represents components to be drawn on top of the map
  */
 public abstract class LayerComponent {
     private Annotation layerAnnotation;

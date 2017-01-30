@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Created by joshua on 23/01/17.
+ * Layer: representation of a screen annotation drawing layer
  */
 public class Layer extends org.geotools.map.DirectLayer {
     private ArrayList<LayerComponent> layerComponents = new ArrayList<>();

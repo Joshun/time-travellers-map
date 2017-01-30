@@ -5,7 +5,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Created by joshua on 26/01/17.
+ * Timeline: an iterable object for generating timeline rulers
+ * The minor intervals are the small lines, e.g. 1 year, and the major intervals large lines,
+ * e.g. 10 years
+ * Used by TimelineWidget to draw the timeline ruler
  */
 public class Timeline implements Iterable<TimelineCursor> {
     private double start;

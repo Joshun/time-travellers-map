@@ -1,7 +1,7 @@
 package org.timetravellersmap;
 
 /**
- * Created by joshua on 23/01/17.
+ * ShapefileException: exception for when shapefile could not be read correctly
  */
 public class ShapefileException extends TimeTravellersMapException {
     public ShapefileException() {

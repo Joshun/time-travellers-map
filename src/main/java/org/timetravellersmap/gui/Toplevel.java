@@ -26,7 +26,7 @@ import java.io.File;
 
 
 /**
- * Created by joshua on 23/01/17.
+ * Toplevel: the class which sets up the GUI components
  */
 public class Toplevel {
     // Shapefile and its parsed data

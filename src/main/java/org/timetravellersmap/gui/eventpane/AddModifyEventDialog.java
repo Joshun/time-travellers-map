@@ -12,7 +12,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by joshua on 28/01/17.
+ * AddModifyEventDialog: dialog for adding new events or modifying existing events
+ * Used by EventPane which displays the list of current events for the time period
  */
 public class AddModifyEventDialog extends JFrame {
 //    private JFrame parentFrame;

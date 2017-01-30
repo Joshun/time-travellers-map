@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Created by joshua on 24/01/17.
+ * Event: a class to represent an event with start, end and annotation
  */
 public class Event {
     private LayerList layerList;

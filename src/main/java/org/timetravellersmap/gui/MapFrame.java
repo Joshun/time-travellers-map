@@ -12,7 +12,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Created by joshua on 25/01/17.
+ * MapFrame: the GUI component in which the main GUI components reside
+ * Based off Geotools' JMapFrame but customising to include timeline and other components
  */
 public class MapFrame extends JFrame {
     /** Name assigned to toolbar button for feature info queries. */

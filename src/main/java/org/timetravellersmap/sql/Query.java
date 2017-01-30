@@ -3,7 +3,7 @@ package org.timetravellersmap.sql;
 import org.timetravellersmap.timeline.Event;
 
 /**
- * Created by joshua on 24/01/17.
+ * Query: class which all query engines must inherit from
  */
 public abstract class Query {
     public abstract void writeEvent(Event event);

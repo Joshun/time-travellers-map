@@ -1,7 +1,7 @@
 package org.timetravellersmap;
 
 /**
- * Created by joshua on 23/01/17.
+ * Annotation: representation of name and description for various objects
  */
 public class Annotation {
     private final String name;

@@ -1,7 +1,8 @@
 package org.timetravellersmap.gui;
 
 /**
- * Created by joshua on 26/01/17.
+ * TimelineCursor: the object returned by Timeline iterable
+ * Gives current position and the type of interval (major/minor)
  */
 public class TimelineCursor {
     private double position;

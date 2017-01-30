@@ -14,7 +14,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Created by joshua on 27/01/17.
+ * EventPane: displays a list of events for the current time period
+ * This will display events that start, finish or are taking place during the selected year
  */
 public class EventPane extends JPanel {
     private JScrollPane eventTableContainer;

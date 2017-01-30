@@ -3,7 +3,7 @@ package org.timetravellersmap;
 import org.timetravellersmap.gui.Toplevel;
 
 /**
- * Hello world!
+ * App: the launcher for the program
  *
  */
 public class App

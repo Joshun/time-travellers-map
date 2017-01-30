@@ -1,7 +1,8 @@
 package org.timetravellersmap;
 
 /**
- * Created by joshua on 23/01/17.
+ * TimeTravellersMapException: generic exception for the program
+ * All other exceptions in the program should inherit from this
  */
 public class TimeTravellersMapException extends Exception {
     public TimeTravellersMapException() {

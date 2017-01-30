@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Created by joshua on 24/01/17.
+ * LayerList: represents a list of layers drawn on the map and their order
+ * Currently not used
  */
 public class LayerList {
     private TreeMap<Integer,Layer> layers = new TreeMap<>();

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.timetravellersmap.timeline.Event;
 
 /**
- * Created by joshua on 24/01/17.
+ * SqliteQuery: carries out queries using SQLite
  */
 public class SqliteQuery extends Query {
     private Connection connection;

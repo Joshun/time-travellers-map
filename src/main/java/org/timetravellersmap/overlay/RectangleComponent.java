@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 /**
- * Created by joshua on 23/01/17.
+ * RectangleComponent: represents a bounding box rectangle to draw
  */
 public class RectangleComponent extends LayerComponent {
     // Bounding box coordinates

@@ -8,7 +8,8 @@ import java.awt.event.*;
 import java.awt.geom.Line2D;
 
 /**
- * Created by joshua on 26/01/17.
+ * TimelineWidget: a widget for selecting the current year / date
+ * Allows selecting within a century and skipping 100 and 1000 year periods
  */
 public class TimelineWidget extends JPanel {
     private JPanel paintArea;

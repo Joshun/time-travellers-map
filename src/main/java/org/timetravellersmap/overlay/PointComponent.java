@@ -8,7 +8,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
 /**
- * Created by joshua on 24/01/17.
+ * PointComponent: represents a point to draw with optional radius parameter
  */
 public class PointComponent extends LayerComponent{
     private double x;
