@@ -58,7 +58,7 @@ public class Toplevel {
 
         // Create a map content and add our shapefile to it
         mapContent = new MapContent();
-        mapContent.setTitle("Quickstart");
+        mapContent.setTitle("Time Traveller's Map");
 //        mapContent.getViewport().setCoordinateReferenceSystem(coordinateReferenceSystem);
 
         // Setup coordinate reference system (crs) and ensure initial view covers entire world
