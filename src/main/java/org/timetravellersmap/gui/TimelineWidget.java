@@ -211,7 +211,7 @@ public class TimelineWidget extends JPanel {
     private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, EventPane eventPane, int width, int height, double pointerPosition) {
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        Font font = new Font("Serif", Font.PLAIN, 10);
+        Font font = new Font("Serif", Font.PLAIN, 8);
         graphics2D.setFont(font);
 
         int timelineSize = (int) (timeline.getEnd() - timeline.getStart());
@@ -254,19 +254,32 @@ public class TimelineWidget extends JPanel {
                     graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset + 5));
                 }
             }
-            int eventCount = eventIndex.countStartEventsForYear((int)timePosition);
-            if (eventCount > 0) {
+            int eventStartCount = eventIndex.countStartEventsForYear((int)timePosition);
+            if (eventStartCount > 0) {
                 graphics2D.setPaint(new Color(0, 0, 0));
-                String eventCountString;
-                if (eventCount > 9) {
-                    eventCountString = "+";
+                String eventStartCountString;
+                if (eventStartCount > 9) {
+                    eventStartCountString = "+";
                 }
                 else {
-                    eventCountString = String.valueOf(eventCount);
+                    eventStartCountString = String.valueOf(eventStartCount);
                 }
-                graphics2D.drawString(eventCountString, screenXCursor, lineYOffset + 20);
+                graphics2D.drawString(eventStartCountString, screenXCursor, lineYOffset + 20);
             }
 
+            int eventEndCount = eventIndex.countEndEventsForYear((int)timePosition);
+            if (eventEndCount > 0) {
+                System.out.println("eventendcount="+eventEndCount);
+                graphics2D.setPaint(new Color(0, 0, 0));
+                String eventEndCountString;
+                if (eventEndCount > 9) {
+                    eventEndCountString = "+";
+                }
+                else {
+                    eventEndCountString = String.valueOf(eventEndCount);
+                }
+                graphics2D.drawString(eventEndCountString, screenXCursor, lineYOffset + 28);
+            }
             screenXCursor += increment;
         }
     }
