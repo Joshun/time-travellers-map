@@ -146,6 +146,7 @@ public class TimelineWidget extends JPanel {
 //        gridBagConstraints.fill = GridBagConstraints.NONE;
         this.add(nextYearsContainer, gridBagConstraints);
         paintArea.repaint();
+
     }
 
     private void setTimeline(double start, double end, double minorInterval, double majorInterval) {
@@ -163,6 +164,7 @@ public class TimelineWidget extends JPanel {
             paintArea.repaint();
         }
         eventPane.replaceCurrentEvents((int)pointerPosition);
+        eventPane.setPointerYear((int)pointerPosition);
     }
 
     private ActionListener makeSeekButtonListener(int yearDifference) {
@@ -180,6 +182,7 @@ public class TimelineWidget extends JPanel {
 
     public void setPointer(double timePosition) {
         this.pointerPosition = timePosition;
+        updatePointer((int)timePosition);
     }
 
     private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {

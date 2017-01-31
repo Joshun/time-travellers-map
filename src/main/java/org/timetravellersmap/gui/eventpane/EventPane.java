@@ -27,6 +27,7 @@ public class EventPane extends JPanel {
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
     private EventIndex eventIndex = new EventIndex();
+    private int pointerYear;
 
     public EventPane() {
         setLayout(new GridBagLayout());
@@ -137,7 +138,7 @@ public class EventPane extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Add event...");
-                new AddModifyEventDialog(parentEventPane, eventIndex);
+                new AddModifyEventDialog(parentEventPane, eventIndex, pointerYear);
             }
         });
 
@@ -161,7 +162,7 @@ public class EventPane extends JPanel {
                 System.out.println("Edit event...");
                 Event event = getSelectedEvent();
                 if (event != null) {
-                    new AddModifyEventDialog(event, parentEventPane, eventIndex);
+                    new AddModifyEventDialog(event, parentEventPane, eventIndex, pointerYear);
                 }
             }
         });
@@ -227,6 +228,10 @@ public class EventPane extends JPanel {
         this.currentEvents = eventIndex.getPointerEvents(pointerYear);
 //        this.currentEvents = events;
         eventTable.updateUI();
+    }
+
+    public void setPointerYear(int pointerYear) {
+        this.pointerYear = pointerYear;
     }
 
     public static void main(String[] args) {

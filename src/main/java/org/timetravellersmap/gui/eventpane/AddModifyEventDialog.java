@@ -33,10 +33,13 @@ public class AddModifyEventDialog extends JFrame {
     private EventPane eventPane;
     private EventIndex eventIndex;
 
-    public AddModifyEventDialog(Event existingEvent, EventPane eventPane, EventIndex eventIndex) {
+    private Integer pointerYear = null;
+
+    public AddModifyEventDialog(Event existingEvent, EventPane eventPane, EventIndex eventIndex, Integer pointerYear) {
         this.event = existingEvent;
         this.eventPane = eventPane;
         this.eventIndex = eventIndex;
+        this.pointerYear = pointerYear;
 
         if (event == null) {
             setTitle("Create new event");
@@ -53,6 +56,14 @@ public class AddModifyEventDialog extends JFrame {
 //            this.parentFrame = new JFrame("Edit event");
 //        }
 //        this.parentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        int startYearInitialValue;
+        if (pointerYear == null) {
+            startYearInitialValue = 1900;
+        }
+        else {
+            startYearInitialValue = pointerYear;
+        }
 
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -89,7 +100,7 @@ public class AddModifyEventDialog extends JFrame {
 
         gc.gridx = 1;
         gc.gridy = 2;
-        startDateField = new JSpinner(new SpinnerNumberModel(1900, -4000, 4000, 1));
+        startDateField = new JSpinner(new SpinnerNumberModel(startYearInitialValue, -4000, 4000, 1));
         startDateField.setEditor(new JSpinner.NumberEditor(startDateField, "#"));
 //        Date initialDate = new GregorianCalendar(-2, 0, 1).getTime();
 //        Date earliestDate = new GregorianCalendar(-4000, 0, 1).getTime();
@@ -105,7 +116,7 @@ public class AddModifyEventDialog extends JFrame {
 
         gc.gridx = 1;
         gc.gridy = 3;
-        endDateField = new JSpinner(new SpinnerNumberModel(1900, -4000, 4000, 1));
+        endDateField = new JSpinner(new SpinnerNumberModel(startYearInitialValue+1, -4000, 4000, 1));
         endDateField.setEditor(new JSpinner.NumberEditor(endDateField, "#"));
         panel.add(endDateField, gc);
 
@@ -154,8 +165,12 @@ public class AddModifyEventDialog extends JFrame {
         this.setVisible(true);
     }
 
-    public AddModifyEventDialog(EventPane eventPane, EventIndex eventIndex) {
-        this(null, eventPane, eventIndex);
+//    public AddModifyEventDialog(EventPane eventPane, EventIndex eventIndex) {
+//        this(null, eventPane, eventIndex, null);
+//    }
+
+    public AddModifyEventDialog(EventPane eventPane, EventIndex eventIndex, Integer pointerYear) {
+        this(null, eventPane, eventIndex, pointerYear);
     }
 
     private void loadExistingEvent(Event existingEvent) {
@@ -201,12 +216,12 @@ public class AddModifyEventDialog extends JFrame {
 //        toplevel.add(new AddModifyEventDialog());
 //        toplevel.pack();
 //        toplevel.setVisible(true);
-        new AddModifyEventDialog(new EventPane(), new EventIndex());
+//        new AddModifyEventDialog(new EventPane(), new EventIndex());
         Event hastings = new Event(
                 new GregorianCalendar(1066, 6, 14),
                 new GregorianCalendar(1066, 6, 15),
                 new Annotation("Battle of Hastings", "William Duke of Normandy vs Harold Godwinson")
             );
-        new AddModifyEventDialog(hastings, new EventPane(), new EventIndex());
+        new AddModifyEventDialog(hastings, new EventPane(), new EventIndex(), null);
     }
 }
