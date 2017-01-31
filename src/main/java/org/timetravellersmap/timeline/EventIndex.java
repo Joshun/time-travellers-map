@@ -51,8 +51,8 @@ public class EventIndex {
             // Case 3: add event to existing ArrayList
             // Add event to eventArrayList
             eventArrayList.add(event);
-            increaseYearCounts(startYear, endYear);
         }
+        increaseYearCounts(startYear, endYear);
     }
 
     private void increaseYearCounts(int startYear, int endYear) {
@@ -72,6 +72,7 @@ public class EventIndex {
             countSet.put(year, yearCountValue);
         }
         else {
+            System.out.println("increment=" + increment + "year=" + year);
             yearCountValue += increment;
             if (yearCountValue <= 0) {
                 countSet.remove(year);
