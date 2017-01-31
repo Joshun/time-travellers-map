@@ -24,6 +24,7 @@ public class EventPane extends JPanel {
     private JButton addEventButton;
     private JButton removeEventButton;
     private JButton editEventButton;
+    private JButton annotateEventButton;
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
     private EventIndex eventIndex = new EventIndex();
@@ -131,6 +132,7 @@ public class EventPane extends JPanel {
         addEventButton = new JButton("Add...");
         removeEventButton = new JButton("Remove");
         editEventButton = new JButton("Edit...");
+        annotateEventButton = new JButton("Annotate...");
 
         EventPane parentEventPane = this;
 
@@ -188,9 +190,14 @@ public class EventPane extends JPanel {
         gc.weightx = 0.5;
         this.add(editEventButton, gc);
 
+        gc.gridx = 3;
+        gc.gridy = 0;
+        gc.weightx = 0.5;
+        this.add(annotateEventButton, gc);
+
         gc.gridx = 0;
         gc.gridy = 1;
-        gc.gridwidth = 3;
+        gc.gridwidth = 4;
         gc.weightx = 0.5;
 //        gc.fill = GridBagConstraints.HORIZONTAL;
 //        this.add(eventTable, gc);
