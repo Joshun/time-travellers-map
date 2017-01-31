@@ -196,6 +196,7 @@ public class EventIndex {
             return null;
         }
         String eventString = "<html>";
+        eventString += "<b>" + year + "</b><br>";
 
         int count = 0;
         for (Event event: events) {
