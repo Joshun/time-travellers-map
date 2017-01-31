@@ -10,6 +10,9 @@ import java.util.*;
 public class EventIndex {
     private TreeMap<Integer,TreeMap<Integer, ArrayList<Event>>> startYearIndex = new TreeMap<>();
 
+    private TreeMap<Integer, Integer> startYearCounts = new TreeMap<>();
+    private TreeMap<Integer, Integer> endYearCounts = new TreeMap<>();
+
     public EventIndex() {
 
     }
@@ -48,8 +51,37 @@ public class EventIndex {
             // Case 3: add event to existing ArrayList
             // Add event to eventArrayList
             eventArrayList.add(event);
+            increaseYearCounts(startYear, endYear);
         }
     }
+
+    private void increaseYearCounts(int startYear, int endYear) {
+        updateCount(startYearCounts, startYear, 1);
+        updateCount(endYearCounts, endYear, 1);
+    }
+
+    private void reduceYearCounts(int startYear, int endYear) {
+        updateCount(startYearCounts, startYear, -1);
+        updateCount(endYearCounts, endYear, -1);
+    }
+
+    private void updateCount(TreeMap<Integer,Integer> countSet, int year, int increment) {
+        Integer yearCountValue = countSet.get(year);
+        if (yearCountValue == null) {
+            yearCountValue = increment;
+            countSet.put(year, yearCountValue);
+        }
+        else {
+            yearCountValue += increment;
+            if (yearCountValue <= 0) {
+                countSet.remove(year);
+            }
+            else {
+                countSet.replace(year, yearCountValue);
+            }
+        }
+    }
+
 
 
     public void updateEvent(Event oldEvent, Event newEvent) {
@@ -61,9 +93,11 @@ public class EventIndex {
 
         // Here we are using removeEvent since this carrys out all the relevant cleanup operations
         removeEvent(oldEvent);
+        reduceYearCounts(oldEvent.getStartDateAsYear(), oldEvent.getEndDateAsYear());
 
         // Here we are using addEvent since this reinserts it into the tree (the year(s) could have changed)
         addEvent(newEvent);
+        increaseYearCounts(newEvent.getStartDateAsYear(), newEvent.getEndDateAsYear());
     }
 
     public void removeEvent(Event event) {
@@ -85,6 +119,7 @@ public class EventIndex {
             System.out.println("map " + endYearMap);
             startYearIndex.remove(startYear);
         }
+        reduceYearCounts(startYear, endYear);
     }
 
     public ArrayList<Event> getPointerEvents(int pointerYear) {
@@ -130,14 +165,14 @@ public class EventIndex {
         System.out.println(allPointerEvents);
     }
 
-    public int countStartEventsForStartYear(int year) {
-        int count = 0;
-        if (startYearIndex.containsKey(year)) {
-            for (ArrayList<Event> events: startYearIndex.get(year).values()) {
-                count += events.size();
-            }
-        }
-        return count;
+    public int countStartEventsForYear(int year) {
+        Integer count = startYearCounts.get(year);
+        return (count != null) ? count : 0;
+    }
+
+    public int countEndEventsForYear(int year) {
+        Integer count = endYearCounts.get(year);
+        return (count != null) ? count : 0;
     }
 
     public static void main(String[] args) {
