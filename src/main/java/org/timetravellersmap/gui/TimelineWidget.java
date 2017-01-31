@@ -257,7 +257,14 @@ public class TimelineWidget extends JPanel {
             int eventCount = eventIndex.countStartEventsForStartYear((int)timePosition);
             if (eventCount > 0) {
                 graphics2D.setPaint(new Color(0, 0, 0));
-                graphics2D.drawString(String.valueOf(eventCount), screenXCursor, lineYOffset + 20);
+                String eventCountString;
+                if (eventCount > 9) {
+                    eventCountString = "+";
+                }
+                else {
+                    eventCountString = String.valueOf(eventCount);
+                }
+                graphics2D.drawString(eventCountString, screenXCursor, lineYOffset + 20);
             }
 
             screenXCursor += increment;
