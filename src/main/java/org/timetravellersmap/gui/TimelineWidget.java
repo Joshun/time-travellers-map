@@ -182,7 +182,7 @@ public class TimelineWidget extends JPanel {
 
     public void setPointer(double timePosition) {
         this.pointerPosition = timePosition;
-        updatePointer((int)timePosition);
+//        updatePointer((int)timePosition);
     }
 
     private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {

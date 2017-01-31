@@ -184,6 +184,20 @@ public class AddModifyEventDialog extends JFrame {
         endDateField.setValue(existingEvent.getEndDateAsYear());
     }
 
+    private Calendar yearToCalendar(int year) {
+        int eraField;
+        if (year < 0) {
+            eraField = GregorianCalendar.BC;
+            year = -year;
+        }
+        else {
+            eraField = GregorianCalendar.AD;
+        }
+        Calendar calendar = new GregorianCalendar(year, 0, 1);
+        calendar.set(Calendar.ERA, eraField);
+        return calendar;
+    }
+
     private void updateOrAddEvent(Event existingEvent) {
         // if existingEvent is null, add new event
         // else update existing event
@@ -194,8 +208,10 @@ public class AddModifyEventDialog extends JFrame {
         int endDate = (int)endDateField.getValue();
 
         Event newEvent = new Event(
-                new GregorianCalendar(startDate, 0, 1),
-                new GregorianCalendar(endDate, 0, 1),
+//                new GregorianCalendar(startDate, 0, 1),
+//                new GregorianCalendar(endDate, 0, 1),
+                yearToCalendar(startDate),
+                yearToCalendar(endDate),
                 new Annotation(eventName, eventDescription)
         );
         if (existingEvent != null) {

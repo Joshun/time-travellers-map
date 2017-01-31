@@ -31,7 +31,8 @@ public class Event {
     }
 
     public int getStartDateAsYear() {
-        return startDate.get(Calendar.YEAR);
+//        return startDate.get(Calendar.YEAR);
+        return retrieveCalendarYear(startDate, Calendar.YEAR);
     }
 
     public Calendar getStartDate() {
@@ -39,7 +40,25 @@ public class Event {
     }
 
     public int getEndDateAsYear() {
-        return endDate.get(Calendar.YEAR);
+//        int year = endDate.get(Calendar.YEAR);
+//        if (endDate.get(Calendar.ERA) == GregorianCalendar.BC) {
+//            return -year;
+//        }
+//        else {
+//            return year;
+//        }
+        return retrieveCalendarYear(endDate, Calendar.YEAR);
+    }
+
+    private int retrieveCalendarYear(Calendar calendar, int calendarField) {
+        // This ensures BC dates are handled properly
+        int year = calendar.get(calendarField);
+        if (calendar.get(Calendar.ERA) == GregorianCalendar.BC) {
+            return -year;
+        }
+        else {
+            return year;
+        }
     }
 
     public Calendar getEndDate() {
