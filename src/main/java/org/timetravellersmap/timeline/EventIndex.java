@@ -130,6 +130,16 @@ public class EventIndex {
         System.out.println(allPointerEvents);
     }
 
+    public int countStartEventsForStartYear(int year) {
+        int count = 0;
+        if (startYearIndex.containsKey(year)) {
+            for (ArrayList<Event> events: startYearIndex.get(year).values()) {
+                count += events.size();
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         // Test harness for eventIndex
         EventIndex eventIndex = new EventIndex();
