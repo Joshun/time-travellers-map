@@ -10,6 +10,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -25,6 +26,10 @@ public class EventPane extends JPanel {
     private JButton removeEventButton;
     private JButton editEventButton;
     private JButton annotateEventButton;
+
+    private AnnotateMenu annotateMenu = new AnnotateMenu();
+    private int annotateMenuSpawnX = 0;
+    private int annotateMenuSpawnY = 0;
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
     private EventIndex eventIndex = new EventIndex();
@@ -169,6 +174,17 @@ public class EventPane extends JPanel {
             }
         });
 
+        annotateEventButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Annotate");
+                JButton btn = (JButton) actionEvent.getSource();
+                int x = btn.getX();
+                int y = btn.getY() + btn.getHeight();
+                annotateMenu.show(parentEventPane, x, y);
+            }
+        });
+
 //        gc.insets = new Insets(5, 0, 5, 0);
         gc.anchor = GridBagConstraints.PAGE_START;
         gc.fill = GridBagConstraints.HORIZONTAL;
@@ -207,6 +223,7 @@ public class EventPane extends JPanel {
         this.add(eventTableContainer, gc);
 
         eventTableContainer.setMinimumSize(new Dimension(300, 300));
+
     }
 
     private Event getSelectedEvent() {
@@ -240,6 +257,7 @@ public class EventPane extends JPanel {
     public void setPointerYear(int pointerYear) {
         this.pointerYear = pointerYear;
     }
+
 
     public static void main(String[] args) {
         // Test harness for EventPane
