@@ -1,8 +1,10 @@
 package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.Annotation;
+import org.timetravellersmap.gui.TimelineWidget;
 import org.timetravellersmap.timeline.Event;
 import org.timetravellersmap.timeline.EventIndex;
+import org.timetravellersmap.timeline.Timeline;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -36,6 +38,8 @@ public class EventPane extends JPanel {
     private ArrayList<Event> currentEvents = new ArrayList<>();
     private EventIndex eventIndex = new EventIndex();
     private int pointerYear;
+
+    private TimelineWidget timelineWidget = null;
 
     public EventPane() {
         setLayout(new GridBagLayout());
@@ -159,6 +163,7 @@ public class EventPane extends JPanel {
                 System.out.println("Add event...");
                 new AddModifyEventDialog(parentEventPane, eventIndex, pointerYear);
             }
+
         });
 
         removeEventButton.addActionListener(new ActionListener() {
@@ -172,6 +177,7 @@ public class EventPane extends JPanel {
                     eventTable.updateUI();
                     setContextDependentButtonsEnabled(false);
                     eventTable.clearSelection();
+                    redrawTimeline();
                 }
                 // TODO: implement remove event
             }
@@ -271,6 +277,7 @@ public class EventPane extends JPanel {
     public void addNewEvent(Event event) {
         this.currentEvents.add(event);
         eventTable.updateUI();
+
     }
 
     public void replaceCurrentEvents(int pointerYear) {
@@ -283,14 +290,28 @@ public class EventPane extends JPanel {
         this.pointerYear = pointerYear;
     }
 
+    public EventIndex getEventIndex() {
+        return eventIndex;
+    }
+
+    public void setTimelineWidget(TimelineWidget timelineWidget) {
+        System.out.println(timelineWidget);
+        this.timelineWidget = timelineWidget;
+    }
+
+    public void redrawTimeline() {
+        if (timelineWidget != null) {
+            timelineWidget.redraw();
+        }
+    }
 
     public static void main(String[] args) {
         // Test harness for EventPane
-        JFrame toplevel = new JFrame("eventpane test");
-        toplevel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        EventPane eventPane = new EventPane();
-        toplevel.add(eventPane);
-        toplevel.pack();
-        toplevel.setVisible(true);
+//        JFrame toplevel = new JFrame("eventpane test");
+//        toplevel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        EventPane eventPane = new EventPane();
+//        toplevel.add(eventPane);
+//        toplevel.pack();
+//        toplevel.setVisible(true);
     }
 }

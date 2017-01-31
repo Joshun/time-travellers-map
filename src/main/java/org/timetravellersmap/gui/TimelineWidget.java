@@ -1,6 +1,7 @@
 package org.timetravellersmap.gui;
 
 import org.timetravellersmap.gui.eventpane.EventPane;
+import org.timetravellersmap.timeline.EventIndex;
 import org.timetravellersmap.timeline.Timeline;
 import org.timetravellersmap.timeline.TimelineCursor;
 
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Line2D;
+import java.util.EventListener;
 
 /**
  * TimelineWidget: a widget for selecting the current year / date
@@ -48,7 +50,7 @@ public class TimelineWidget extends JPanel {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                paintTimeline((Graphics2D)g, timeline, width, height, pointerPosition);
+                paintTimeline((Graphics2D)g, timeline, eventPane, width, height, pointerPosition);
             }
         };
         paintArea.setMinimumSize(new Dimension(width, height));
@@ -167,6 +169,10 @@ public class TimelineWidget extends JPanel {
 //        eventPane.setPointerYear((int)pointerPosition);
     }
 
+    public void redraw() {
+        repaint();
+    }
+
     private ActionListener makeSeekButtonListener(int yearDifference) {
         return new ActionListener() {
             @Override
@@ -202,7 +208,7 @@ public class TimelineWidget extends JPanel {
         return (int)Math.round(start + (proportionOfBar * yearWidth));
     }
 
-    private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, int width, int height, double pointerPosition) {
+    private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, EventPane eventPane, int width, int height, double pointerPosition) {
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         Font font = new Font("Serif", Font.PLAIN, 10);
@@ -215,6 +221,8 @@ public class TimelineWidget extends JPanel {
         int screenXCursor = 0;
         int textYOffset = 10;
         int lineYOffset = 20;
+
+        EventIndex eventIndex = eventPane.getEventIndex();
 
 //        graphics2D.setStroke(new BasicStroke(100));
 
@@ -246,6 +254,12 @@ public class TimelineWidget extends JPanel {
                     graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset + 5));
                 }
             }
+            int eventCount = eventIndex.countStartEventsForStartYear((int)timePosition);
+            if (eventCount > 0) {
+                graphics2D.setPaint(new Color(0, 0, 0));
+                graphics2D.drawString(String.valueOf(eventCount), screenXCursor, lineYOffset + 20);
+            }
+
             screenXCursor += increment;
         }
     }

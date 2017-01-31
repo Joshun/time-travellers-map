@@ -179,6 +179,7 @@ public class MapFrame extends JFrame {
 
         // Here the timeline widget will be configured
         TimelineWidget timelineWidget = new TimelineWidget(1900, 2000, 600, 50, eventPane);
+        eventPane.setTimelineWidget(timelineWidget);
 
 
         panel.add(toolBar, "grow");
