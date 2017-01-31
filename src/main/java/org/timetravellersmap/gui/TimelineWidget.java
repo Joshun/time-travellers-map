@@ -163,8 +163,8 @@ public class TimelineWidget extends JPanel {
             setPointer(year);
             paintArea.repaint();
         }
-        eventPane.replaceCurrentEvents((int)pointerPosition);
-        eventPane.setPointerYear((int)pointerPosition);
+//        eventPane.replaceCurrentEvents((int)pointerPosition);
+//        eventPane.setPointerYear((int)pointerPosition);
     }
 
     private ActionListener makeSeekButtonListener(int yearDifference) {
@@ -182,6 +182,9 @@ public class TimelineWidget extends JPanel {
 
     public void setPointer(double timePosition) {
         this.pointerPosition = timePosition;
+        System.out.println("position " + timePosition);
+        eventPane.replaceCurrentEvents((int)timePosition);
+        eventPane.setPointerYear((int)timePosition);
 //        updatePointer((int)timePosition);
     }
 
@@ -219,7 +222,7 @@ public class TimelineWidget extends JPanel {
 
         for (TimelineCursor timelineCursor: timeline) {
             double timePosition = timelineCursor.getPosition();
-            System.out.println("draw " + timePosition);
+//            System.out.println("draw " + timePosition);
             boolean isMajorInterval = timelineCursor.isMajorInterval();
 
             if (isMajorInterval) {
