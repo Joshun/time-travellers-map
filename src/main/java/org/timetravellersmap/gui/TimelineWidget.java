@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 import java.util.EventListener;
 
 /**
@@ -108,7 +109,20 @@ public class TimelineWidget extends JPanel {
 
             @Override
             public void mouseMoved(MouseEvent mouseEvent) {
+                int year = computeYearClicked(mouseEvent.getX(), 0, width, start, end);
+                String eventSummary = eventPane.getEventIndex().generateStartEventSummary(year);
+                if (eventSummary != null) {
+//                    JToolTip toolTip = new JToolTip();
+//                    toolTip.setToolTipText(eventSummary);
+//                    toolTip.setVisible(true);
+//                    toolTip.setComponent(paintArea);
+                    paintArea.setToolTipText(eventSummary);
 
+                    System.out.println(eventSummary);
+                }
+                else {
+                    paintArea.setToolTipText("");
+                }
             }
         });
 

@@ -176,6 +176,40 @@ public class EventIndex {
         return (count != null) ? count : 0;
     }
 
+    public ArrayList<Event> getStartEventsForYear(int year) {
+        ArrayList<Event> events = new ArrayList<>();
+        TreeMap<Integer, ArrayList<Event>> endYearEventIndex = startYearIndex.get(year);
+        if (endYearEventIndex != null) {
+            for (ArrayList<Event> el: endYearEventIndex.values()) {
+                events.addAll(el);
+            }
+            return events;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public String generateStartEventSummary(int year) {
+        ArrayList<Event> events = getStartEventsForYear(year);
+        if (events == null) {
+            return null;
+        }
+        String eventString = "<html>";
+
+        int count = 0;
+        for (Event event: events) {
+            eventString += event.getEventAnnotation().getName() + "<br>";
+            count++;
+            if (count > 9) {
+                eventString += "...";
+                break;
+            }
+        }
+        eventString += "</html>";
+        return eventString;
+    }
+
     public static void main(String[] args) {
         // Test harness for eventIndex
         EventIndex eventIndex = new EventIndex();
