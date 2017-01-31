@@ -5,6 +5,8 @@ import org.timetravellersmap.timeline.Event;
 import org.timetravellersmap.timeline.EventIndex;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
@@ -133,6 +135,16 @@ public class EventPane extends JPanel {
             }
         });
 
+        eventTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                System.out.println("select " + listSelectionEvent);
+                if (eventTable.getRowCount() > 0) {
+                    setContextDependentButtonsEnabled(true);
+                }
+            }
+        });
+
 
         addEventButton = new JButton("Add...");
         removeEventButton = new JButton("Remove");
@@ -158,6 +170,8 @@ public class EventPane extends JPanel {
                     currentEvents.remove(event);
                     eventIndex.removeEvent(event);
                     eventTable.updateUI();
+                    setContextDependentButtonsEnabled(false);
+                    eventTable.clearSelection();
                 }
                 // TODO: implement remove event
             }
@@ -178,10 +192,13 @@ public class EventPane extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Annotate");
-                JButton btn = (JButton) actionEvent.getSource();
-                int x = btn.getX();
-                int y = btn.getY() + btn.getHeight();
-                annotateMenu.show(parentEventPane, x, y);
+                Event event = getSelectedEvent();
+                if (event != null) {
+                    JButton btn = (JButton) actionEvent.getSource();
+                    int x = btn.getX();
+                    int y = btn.getY() + btn.getHeight();
+                    annotateMenu.show(parentEventPane, x, y);
+                }
             }
         });
 
@@ -223,7 +240,15 @@ public class EventPane extends JPanel {
         this.add(eventTableContainer, gc);
 
         eventTableContainer.setMinimumSize(new Dimension(300, 300));
+        setContextDependentButtonsEnabled(false);
 
+    }
+
+    private void setContextDependentButtonsEnabled(boolean enabled) {
+        System.out.println("toggle");
+        editEventButton.setEnabled(enabled);
+        removeEventButton.setEnabled(enabled);
+        annotateEventButton.setEnabled(enabled);
     }
 
     private Event getSelectedEvent() {
