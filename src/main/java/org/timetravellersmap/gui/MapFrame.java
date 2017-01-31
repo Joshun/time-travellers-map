@@ -17,38 +17,21 @@ import java.awt.event.*;
  */
 public class MapFrame extends JFrame {
     /** Name assigned to toolbar button for feature info queries. */
-    public static final String TOOLBAR_INFO_BUTTON_NAME = "ToolbarInfoButton";
+    private static final String TOOLBAR_INFO_BUTTON_NAME = "ToolbarInfoButton";
     /** Name assigned to toolbar button for map panning. */
-    public static final String TOOLBAR_PAN_BUTTON_NAME = "ToolbarPanButton";
+    private static final String TOOLBAR_PAN_BUTTON_NAME = "ToolbarPanButton";
     /** Name assigned to toolbar button for default pointer. */
-    public static final String TOOLBAR_POINTER_BUTTON_NAME = "ToolbarPointerButton";
+    private static final String TOOLBAR_POINTER_BUTTON_NAME = "ToolbarPointerButton";
     /** Name assigned to toolbar button for map reset. */
-    public static final String TOOLBAR_RESET_BUTTON_NAME = "ToolbarResetButton";
+    private static final String TOOLBAR_RESET_BUTTON_NAME = "ToolbarResetButton";
     /** Name assigned to toolbar button for map zoom in. */
-    public static final String TOOLBAR_ZOOMIN_BUTTON_NAME = "ToolbarZoomInButton";
+    private static final String TOOLBAR_ZOOMIN_BUTTON_NAME = "ToolbarZoomInButton";
     /** Name assigned to toolbar button for map zoom out. */
-    public static final String TOOLBAR_ZOOMOUT_BUTTON_NAME = "ToolbarZoomOutButton";
+    private static final String TOOLBAR_ZOOMOUT_BUTTON_NAME = "ToolbarZoomOutButton";
 
     private JMapPane mapPane;
     private JToolBar toolBar;
     private boolean uiSet;
-//    private boolean showStatusBar;
-//    private boolean showToolBar;
-//    private boolean showLayerTable;
-
-//    public void enableToolBar(boolean enabled) {
-////        if (enabled) {
-////            toolSet = EnumSet.allOf(JMapFrame.Tool.class);
-////        } else {
-////            toolSet.clear();
-////        }
-//        showToolBar = enabled;
-//    }
-
-//    public void enableStatusBar(boolean enabled) {
-//        showStatusBar = enabled;
-//    }
-
 
 
     public MapFrame(MapContent content) {
@@ -112,8 +95,6 @@ public class MapFrame extends JFrame {
     private static void doShowMap(MapContent content) {
         System.out.println("doshowmapcontent.");
         final MapFrame frame = new MapFrame(content);
-//        frame.enableStatusBar(true);
-//        frame.enableToolBar(true);
         frame.initComponents();
         frame.setSize(800, 600);
         frame.setVisible(true);
@@ -135,9 +116,7 @@ public class MapFrame extends JFrame {
         sb.append("[]");
 
         sb.append("[grow]"); // map pane and optionally layer table fill space
-//        if (showStatusBar) {
         sb.append("[min!]"); // status bar height
-//        }
 
         JPanel panel = new JPanel(new MigLayout(
                 "wrap 1, insets 0", // layout constrains: 1 component per row, no insets
@@ -155,7 +134,6 @@ public class MapFrame extends JFrame {
          * Note the use of the XXXAction objects which makes constructing
          * the tool bar buttons very simple.
          */
-//        if (showToolBar) {
         toolBar = new JToolBar();
         toolBar.setOrientation(JToolBar.HORIZONTAL);
         toolBar.setFloatable(false);
@@ -163,14 +141,11 @@ public class MapFrame extends JFrame {
         JButton btn;
         ButtonGroup cursorToolGrp = new ButtonGroup();
 
-//        if (toolSet.contains(JMapFrame.Tool.POINTER)) {
         btn = new JButton(new NoToolAction(mapPane));
         btn.setName(TOOLBAR_POINTER_BUTTON_NAME);
         toolBar.add(btn);
         cursorToolGrp.add(btn);
-//        }
 
-//        if (toolSet.contains(JMapFrame.Tool.ZOOM)) {
         btn = new JButton(new ZoomInAction(mapPane));
         btn.setName(TOOLBAR_ZOOMIN_BUTTON_NAME);
         toolBar.add(btn);
@@ -182,39 +157,27 @@ public class MapFrame extends JFrame {
         cursorToolGrp.add(btn);
 
         toolBar.addSeparator();
-//        }
 
-//        if (toolSet.contains(JMapFrame.Tool.PAN)) {
         btn = new JButton(new PanAction(mapPane));
         btn.setName(TOOLBAR_PAN_BUTTON_NAME);
         toolBar.add(btn);
         cursorToolGrp.add(btn);
 
         toolBar.addSeparator();
-//        }
 
-//        if (toolSet.contains(JMapFrame.Tool.INFO)) {
         btn = new JButton(new InfoAction(mapPane));
         btn.setName(TOOLBAR_INFO_BUTTON_NAME);
         toolBar.add(btn);
 
         toolBar.addSeparator();
-//        }
 
-//        if (toolSet.contains(JMapFrame.Tool.RESET)) {
         btn = new JButton(new ResetAction(mapPane));
         btn.setName(TOOLBAR_RESET_BUTTON_NAME);
         toolBar.add(btn);
-//        }
-
-        // Here the user palette will be configured
-        JLabel userPalettePlaceholder = new JLabel("USER LAYERS PALETTE TO GO HERE");
 
         EventPane eventPane = new EventPane();
 
-
         // Here the timeline widget will be configured
-        JLabel timelinePlaceholder = new JLabel("TIMELINE TO GO HERE");
         TimelineWidget timelineWidget = new TimelineWidget(1900, 2000, 600, 50, eventPane);
 
 
@@ -252,9 +215,7 @@ public class MapFrame extends JFrame {
              * panel has the effect of setting the initial position of the
              * JSplitPane divider
              */
-        userPalettePlaceholder.setPreferredSize(new Dimension(100, -1));
 
-//        EventPane eventPane = new EventPane();
         eventPane.setPreferredSize(new Dimension(100, -1));
 
         mapPane.setPreferredSize(new Dimension(600, -1));
@@ -264,32 +225,7 @@ public class MapFrame extends JFrame {
                 eventPane);
         panel.add(splitPane, "grow");
 
-//        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mapPane, userPalettePlaceholder);
-//        double panelWidth = panel.getWidth();
-//        System.out.println("width " + panelWidth);
-//        double baseWidth = panelWidth / 3.0;
-//
-//        Dimension minMapSize = new Dimension((int)baseWidth*2, 400);
-//        Dimension minPaletteSize = new Dimension((int)baseWidth, 400);
-//        mapPane.setMinimumSize(minMapSize);
-//        userPalettePlaceholder.setMinimumSize(minPaletteSize);
-//        splitPane.setDividerLocation(500);
-//        splitPane.setOneTouchExpandable(true);
-//        splitPane.setResizeWeight(0.5);
-//
-////        panel.add(mapPane, "grow");
-//        panel.add(splitPane);
-//        panel.add(userPalettePlaceholder, "align right");
-
-
-//        }
-
-//        panel.add(timelinePlaceholder, "wrap");
-
-//        if (showStatusBar) {
         panel.add(JMapStatusBar.createDefaultStatusBar(mapPane), "grow");
-//        panel.add(timelinePlaceholder, "grow");
-//        }
 
         panel.add(timelineWidget, "grow");
 
