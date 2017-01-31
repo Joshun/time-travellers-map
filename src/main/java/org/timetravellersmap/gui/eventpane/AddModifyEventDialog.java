@@ -214,15 +214,27 @@ public class AddModifyEventDialog extends JFrame {
                 yearToCalendar(endDate),
                 new Annotation(eventName, eventDescription)
         );
-        if (existingEvent != null) {
-            eventPane.updateExistingEvent(existingEvent, newEvent);
-            eventIndex.updateEvent(existingEvent, newEvent);
+        if (datesAreOk(startDate, endDate)) {
+            if (existingEvent != null) {
+                eventPane.updateExistingEvent(existingEvent, newEvent);
+                eventIndex.updateEvent(existingEvent, newEvent);
+            } else {
+                eventPane.addNewEvent(newEvent);
+                eventIndex.addEvent(newEvent);
+            }
+            this.dispose();
         }
         else {
-            eventPane.addNewEvent(newEvent);
-            eventIndex.addEvent(newEvent);
+            showDateError();
         }
-        this.dispose();
+    }
+
+    private boolean datesAreOk(int startDate, int endDate) {
+        return endDate >= startDate;
+    }
+
+    private void showDateError() {
+        JOptionPane.showMessageDialog(this, "End date cannot occur before start date!","Date error", JOptionPane.ERROR_MESSAGE);
     }
 
     public static void main(String[] args) {
