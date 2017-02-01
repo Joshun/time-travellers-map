@@ -1,6 +1,7 @@
 package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.Annotation;
+import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.TimelineWidget;
 import org.timetravellersmap.timeline.Event;
 import org.timetravellersmap.timeline.EventIndex;
@@ -36,12 +37,17 @@ public class EventPane extends JPanel {
     private int annotateMenuSpawnY = 0;
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
-    private EventIndex eventIndex = new EventIndex();
+    private EventIndex eventIndex;
     private int pointerYear;
 
+    private MapFrame mapFrame = null;
     private TimelineWidget timelineWidget = null;
 
-    public EventPane() {
+
+    public EventPane(MapFrame parentMapFrame) {
+        this.mapFrame = parentMapFrame;
+        this.eventIndex = parentMapFrame.getEventIndex();
+        this.timelineWidget = parentMapFrame.getTimelineWidget();
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
@@ -161,7 +167,7 @@ public class EventPane extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Add event...");
-                new AddModifyEventDialog(parentEventPane, eventIndex, pointerYear);
+                new AddModifyEventDialog(mapFrame);
             }
 
         });
@@ -189,7 +195,7 @@ public class EventPane extends JPanel {
                 System.out.println("Edit event...");
                 Event event = getSelectedEvent();
                 if (event != null) {
-                    new AddModifyEventDialog(event, parentEventPane, eventIndex, pointerYear);
+                    new AddModifyEventDialog(event, mapFrame);
                 }
             }
         });
@@ -286,18 +292,18 @@ public class EventPane extends JPanel {
         eventTable.updateUI();
     }
 
-    public void setPointerYear(int pointerYear) {
-        this.pointerYear = pointerYear;
-    }
+//    public void setPointerYear(int pointerYear) {
+//        this.pointerYear = pointerYear;
+//    }
 
-    public EventIndex getEventIndex() {
-        return eventIndex;
-    }
+//    public EventIndex getEventIndex() {
+//        return eventIndex;
+//    }
 
-    public void setTimelineWidget(TimelineWidget timelineWidget) {
-        System.out.println(timelineWidget);
-        this.timelineWidget = timelineWidget;
-    }
+//    public void setTimelineWidget(TimelineWidget timelineWidget) {
+//        System.out.println(timelineWidget);
+//        this.timelineWidget = timelineWidget;
+//    }
 
     public void redrawTimeline() {
         if (timelineWidget != null) {

@@ -6,6 +6,7 @@ import org.geotools.swing.JMapPane;
 import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
 import org.timetravellersmap.gui.eventpane.EventPane;
+import org.timetravellersmap.timeline.EventIndex;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +33,10 @@ public class MapFrame extends JFrame {
     private JMapPane mapPane;
     private JToolBar toolBar;
     private boolean uiSet;
+
+    private EventIndex eventIndex = new EventIndex();
+    private EventPane eventPane;
+    private TimelineWidget timelineWidget;
 
 
     public MapFrame(MapContent content) {
@@ -175,11 +180,11 @@ public class MapFrame extends JFrame {
         btn.setName(TOOLBAR_RESET_BUTTON_NAME);
         toolBar.add(btn);
 
-        EventPane eventPane = new EventPane();
+        eventPane = new EventPane(this);
 
         // Here the timeline widget will be configured
-        TimelineWidget timelineWidget = new TimelineWidget(1900, 2000, 600, 50, eventPane);
-        eventPane.setTimelineWidget(timelineWidget);
+        timelineWidget = new TimelineWidget(1900, 2000, 600, 50, this);
+//        eventPane.setTimelineWidget(timelineWidget);
 
 
         panel.add(toolBar, "grow");
@@ -234,5 +239,17 @@ public class MapFrame extends JFrame {
         uiSet = true;
 
         timelineWidget.setPointer(1950);
+    }
+
+    public EventIndex getEventIndex() {
+        return eventIndex;
+    }
+
+    public EventPane getEventPane() {
+        return eventPane;
+    }
+
+    public TimelineWidget getTimelineWidget() {
+        return timelineWidget;
     }
 }

@@ -1,6 +1,7 @@
 package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.Annotation;
+import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.timeline.Event;
 import org.timetravellersmap.timeline.EventIndex;
 
@@ -30,16 +31,18 @@ public class AddModifyEventDialog extends JFrame {
     private int textBoxWidth = 25;
     private int descriptionRows = 3;
 
+    private MapFrame mapFrame;
     private EventPane eventPane;
     private EventIndex eventIndex;
 
     private Integer pointerYear = null;
 
-    public AddModifyEventDialog(Event existingEvent, EventPane eventPane, EventIndex eventIndex, Integer pointerYear) {
+    public AddModifyEventDialog(Event existingEvent, MapFrame parentMapFrame) {
+        this.mapFrame = parentMapFrame;
         this.event = existingEvent;
-        this.eventPane = eventPane;
-        this.eventIndex = eventIndex;
-        this.pointerYear = pointerYear;
+        this.eventPane = parentMapFrame.getEventPane();
+        this.eventIndex = parentMapFrame.getEventIndex();
+        this.pointerYear = parentMapFrame.getTimelineWidget().getPointerYear();
 
         if (event == null) {
             setTitle("Create new event");
@@ -169,8 +172,12 @@ public class AddModifyEventDialog extends JFrame {
 //        this(null, eventPane, eventIndex, null);
 //    }
 
-    public AddModifyEventDialog(EventPane eventPane, EventIndex eventIndex, Integer pointerYear) {
-        this(null, eventPane, eventIndex, pointerYear);
+//    public AddModifyEventDialog(EventPane eventPane, EventIndex eventIndex, Integer pointerYear) {
+//        this(null, eventPane, eventIndex, pointerYear);
+//    }
+
+    public AddModifyEventDialog(MapFrame parentMapFrame) {
+        this(null, parentMapFrame);
     }
 
     private void loadExistingEvent(Event existingEvent) {
@@ -246,11 +253,11 @@ public class AddModifyEventDialog extends JFrame {
 //        toplevel.pack();
 //        toplevel.setVisible(true);
 //        new AddModifyEventDialog(new EventPane(), new EventIndex());
-        Event hastings = new Event(
-                new GregorianCalendar(1066, 6, 14),
-                new GregorianCalendar(1066, 6, 15),
-                new Annotation("Battle of Hastings", "William Duke of Normandy vs Harold Godwinson")
-            );
-        new AddModifyEventDialog(hastings, new EventPane(), new EventIndex(), null);
+//        Event hastings = new Event(
+//                new GregorianCalendar(1066, 6, 14),
+//                new GregorianCalendar(1066, 6, 15),
+//                new Annotation("Battle of Hastings", "William Duke of Normandy vs Harold Godwinson")
+//            );
+//        new AddModifyEventDialog(hastings, new EventPane(), new EventIndex(), null);
     }
 }

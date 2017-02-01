@@ -34,16 +34,18 @@ public class TimelineWidget extends JPanel {
     private double minorInterval;
     private double majorInterval;
 
+    private MapFrame mapFrame;
     private EventPane eventPane;
 
-    public TimelineWidget(double startYear, double endYear, int width, int height, EventPane eventPane) {
+    public TimelineWidget(double startYear, double endYear, int width, int height, MapFrame parentMapFrame) {
         this.start = startYear;
         this.end = endYear;
         this.minorInterval = 1;
         this.majorInterval = 10;
         this.width = width;
         this.height = height;
-        this.eventPane = eventPane;
+        this.mapFrame = parentMapFrame;
+        this.eventPane = parentMapFrame.getEventPane();
         setTimeline(start, end, minorInterval, majorInterval);
 
         // Setup the paint area, i.e. where the timeline itself is drawn
@@ -51,7 +53,7 @@ public class TimelineWidget extends JPanel {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                paintTimeline((Graphics2D)g, timeline, eventPane, width, height, pointerPosition);
+                paintTimeline((Graphics2D)g, timeline, mapFrame, width, height, pointerPosition);
             }
         };
         paintArea.setMinimumSize(new Dimension(width, height));
@@ -110,7 +112,7 @@ public class TimelineWidget extends JPanel {
             @Override
             public void mouseMoved(MouseEvent mouseEvent) {
                 int year = computeYearClicked(mouseEvent.getX(), 0, width, start, end);
-                String eventSummary = eventPane.getEventIndex().generateStartEventSummary(year);
+                String eventSummary = mapFrame.getEventIndex().generateStartEventSummary(year);
                 if (eventSummary != null) {
 //                    JToolTip toolTip = new JToolTip();
 //                    toolTip.setToolTipText(eventSummary);
@@ -204,7 +206,7 @@ public class TimelineWidget extends JPanel {
         this.pointerPosition = timePosition;
         System.out.println("position " + timePosition);
         eventPane.replaceCurrentEvents((int)timePosition);
-        eventPane.setPointerYear((int)timePosition);
+//        eventPane.setPointerYear((int)timePosition);
 //        updatePointer((int)timePosition);
     }
 
@@ -222,7 +224,7 @@ public class TimelineWidget extends JPanel {
         return (int)Math.round(start + (proportionOfBar * yearWidth));
     }
 
-    private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, EventPane eventPane, int width, int height, double pointerPosition) {
+    private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, MapFrame mapFrame, int width, int height, double pointerPosition) {
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         Font font = new Font("Serif", Font.PLAIN, 8);
@@ -236,7 +238,7 @@ public class TimelineWidget extends JPanel {
         int textYOffset = 10;
         int lineYOffset = 20;
 
-        EventIndex eventIndex = eventPane.getEventIndex();
+        EventIndex eventIndex = mapFrame.getEventIndex();
 
 //        graphics2D.setStroke(new BasicStroke(100));
 
@@ -296,5 +298,8 @@ public class TimelineWidget extends JPanel {
             }
             screenXCursor += increment;
         }
+    }
+    public int getPointerYear() {
+        return (int)pointerPosition;
     }
 }
