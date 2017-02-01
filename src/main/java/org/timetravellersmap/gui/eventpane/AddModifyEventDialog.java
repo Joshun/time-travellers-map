@@ -229,7 +229,8 @@ public class AddModifyEventDialog extends JFrame {
                 eventPane.addNewEvent(newEvent);
                 eventIndex.addEvent(newEvent);
             }
-            eventPane.redrawTimeline();
+//            eventPane.redrawTimeline();
+            mapFrame.getTimelineWidget().redraw();
             this.dispose();
         }
         else {

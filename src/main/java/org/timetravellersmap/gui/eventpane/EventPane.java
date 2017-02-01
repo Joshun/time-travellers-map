@@ -37,17 +37,17 @@ public class EventPane extends JPanel {
     private int annotateMenuSpawnY = 0;
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
-    private EventIndex eventIndex;
+//    private EventIndex eventIndex;
     private int pointerYear;
 
     private MapFrame mapFrame = null;
-    private TimelineWidget timelineWidget = null;
+//    private TimelineWidget timelineWidget = null;
 
 
     public EventPane(MapFrame parentMapFrame) {
         this.mapFrame = parentMapFrame;
-        this.eventIndex = parentMapFrame.getEventIndex();
-        this.timelineWidget = parentMapFrame.getTimelineWidget();
+//        this.eventIndex = parentMapFrame.getEventIndex();
+//        this.timelineWidget = parentMapFrame.getTimelineWidget();
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
@@ -179,11 +179,11 @@ public class EventPane extends JPanel {
                 Event event = getSelectedEvent();
                 if (event != null) {
                     currentEvents.remove(event);
-                    eventIndex.removeEvent(event);
+                    mapFrame.getEventIndex().removeEvent(event);
                     eventTable.updateUI();
                     setContextDependentButtonsEnabled(false);
                     eventTable.clearSelection();
-                    redrawTimeline();
+                    mapFrame.getTimelineWidget().redraw();
                 }
                 // TODO: implement remove event
             }
@@ -287,7 +287,7 @@ public class EventPane extends JPanel {
     }
 
     public void replaceCurrentEvents(int pointerYear) {
-        this.currentEvents = eventIndex.getPointerEvents(pointerYear);
+        this.currentEvents = mapFrame.getEventIndex().getPointerEvents(pointerYear);
 //        this.currentEvents = events;
         eventTable.updateUI();
     }
@@ -305,11 +305,11 @@ public class EventPane extends JPanel {
 //        this.timelineWidget = timelineWidget;
 //    }
 
-    public void redrawTimeline() {
-        if (timelineWidget != null) {
-            timelineWidget.redraw();
-        }
-    }
+//    public void redrawTimeline() {
+//        if (timelineWidget != null) {
+//            timelineWidget.redraw();
+//        }
+//    }
 
     public static void main(String[] args) {
         // Test harness for EventPane
