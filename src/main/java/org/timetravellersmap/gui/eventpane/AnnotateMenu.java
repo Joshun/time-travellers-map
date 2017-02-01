@@ -11,17 +11,11 @@ public class AnnotateMenu extends JPopupMenu {
     private JMenuItem newPointerAction = new JMenuItem("Pointer");
     private JMenuItem newRectangleAction = new JMenuItem("Rectangle");
     public AnnotateMenu() {
-        newPointerAction.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("TODO: create new pointer");
-            }
+        newPointerAction.addActionListener(actionEvent ->  {
+            System.out.println("TODO: create new pointer");
         });
-        newRectangleAction.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("TODO: create new rectangle");
-            }
+        newRectangleAction.addActionListener(actionEvent -> {
+            System.out.println("TODO: create new rectangle");
         });
 
         this.add(newPointerAction);

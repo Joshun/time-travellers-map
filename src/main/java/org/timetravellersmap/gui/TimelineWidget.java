@@ -190,15 +190,12 @@ public class TimelineWidget extends JPanel {
     }
 
     private ActionListener makeSeekButtonListener(int yearDifference) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
+        return actionEvent -> {
                 start += yearDifference;
                 end += yearDifference;
                 setTimeline(start, end, minorInterval, majorInterval);
                 setPointer(pointerPosition+yearDifference);
                 paintArea.repaint();
-            }
         };
     }
 

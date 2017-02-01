@@ -127,26 +127,21 @@ public class AddModifyEventDialog extends JFrame {
             loadExistingEvent(existingEvent);
         }
 
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (existingEvent != null) {
-                    updateOrAddEvent(existingEvent);
-                }
-                else {
+        confirmButton.addActionListener(actionEvent ->  {
+            if (existingEvent != null) {
+                updateOrAddEvent(existingEvent);
+            }
+            else {
 //                    System.out.println("TODO: adding events");
-                    updateOrAddEvent(null);
-                }
+                updateOrAddEvent(null);
             }
         });
 
         JFrame parentFrame = this;
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
+        cancelButton.addActionListener(actionEvent ->  {
                 parentFrame.dispose();
             }
-        });
+        );
 
         this.add(panel);
         this.pack();

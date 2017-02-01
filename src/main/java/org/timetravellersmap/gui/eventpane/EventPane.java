@@ -156,55 +156,42 @@ public class EventPane extends JPanel {
 
         EventPane parentEventPane = this;
 
-        addEventButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("Add event...");
-                new AddModifyEventDialog(mapFrame, parentEventPane);
-            }
-
+        addEventButton.addActionListener(actionEvent ->  {
+            System.out.println("Add event...");
+            new AddModifyEventDialog(mapFrame, parentEventPane);
         });
 
-        removeEventButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("Remove event...");
-                Event event = getSelectedEvent();
-                if (event != null) {
-                    currentEvents.remove(event);
-                    mapFrame.removeEventFromIndex(event);
-                    eventTable.updateUI();
-                    setContextDependentButtonsEnabled(false);
-                    eventTable.clearSelection();
-                    mapFrame.redrawTimeline();
-                }
-                // TODO: implement remove event
+        removeEventButton.addActionListener(actionEvent ->  {
+            System.out.println("Remove event...");
+            Event event = getSelectedEvent();
+            if (event != null) {
+                currentEvents.remove(event);
+                mapFrame.removeEventFromIndex(event);
+                eventTable.updateUI();
+                setContextDependentButtonsEnabled(false);
+                eventTable.clearSelection();
+                mapFrame.redrawTimeline();
             }
+            // TODO: implement remove event
         });
 
-        editEventButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("Edit event...");
-                Event event = getSelectedEvent();
-                if (event != null) {
-                    new AddModifyEventDialog(event, mapFrame, parentEventPane);
-                }
+        editEventButton.addActionListener(actionEvent ->  {
+            System.out.println("Edit event...");
+            Event event = getSelectedEvent();
+            if (event != null) {
+                new AddModifyEventDialog(event, mapFrame, parentEventPane);
             }
         });
 
-        annotateEventButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("Annotate");
-                Event event = getSelectedEvent();
-                if (event != null) {
-                    JButton btn = (JButton) actionEvent.getSource();
-                    // Spawn popup annotate menu underneath button
-                    int x = btn.getX();
-                    int y = btn.getY() + btn.getHeight();
-                    annotateMenu.show(parentEventPane, x, y);
-                }
+        annotateEventButton.addActionListener(actionEvent ->  {
+            System.out.println("Annotate");
+            Event event = getSelectedEvent();
+            if (event != null) {
+                JButton btn = (JButton) actionEvent.getSource();
+                // Spawn popup annotate menu underneath button
+                int x = btn.getX();
+                int y = btn.getY() + btn.getHeight();
+                annotateMenu.show(parentEventPane, x, y);
             }
         });
 
