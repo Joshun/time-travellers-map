@@ -7,6 +7,8 @@ import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
 import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.timeline.EventIndex;
+import org.timetravellersmap.timeline.Event;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -251,5 +253,18 @@ public class MapFrame extends JFrame {
 
     public TimelineWidget getTimelineWidget() {
         return timelineWidget;
+    }
+
+
+    public void redrawTimeline() {
+        timelineWidget.redraw();
+    }
+
+    public void addEventToIndex(Event e) {
+        eventIndex.addEvent(e);
+    }
+
+    public void removeEventFromIndex(Event e) {
+        eventIndex.removeEvent(e);
     }
 }

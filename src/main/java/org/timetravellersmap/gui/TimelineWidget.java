@@ -35,7 +35,7 @@ public class TimelineWidget extends JPanel {
     private double majorInterval;
 
     private MapFrame mapFrame;
-    private EventPane eventPane;
+//    private EventPane eventPane;
 
     public TimelineWidget(double startYear, double endYear, int width, int height, MapFrame parentMapFrame) {
         this.start = startYear;
@@ -45,7 +45,7 @@ public class TimelineWidget extends JPanel {
         this.width = width;
         this.height = height;
         this.mapFrame = parentMapFrame;
-        this.eventPane = parentMapFrame.getEventPane();
+//        this.eventPane = parentMapFrame.getEventPane();
         setTimeline(start, end, minorInterval, majorInterval);
 
         // Setup the paint area, i.e. where the timeline itself is drawn
@@ -205,7 +205,7 @@ public class TimelineWidget extends JPanel {
     public void setPointer(double timePosition) {
         this.pointerPosition = timePosition;
         System.out.println("position " + timePosition);
-        eventPane.replaceCurrentEvents((int)timePosition);
+        mapFrame.getEventPane().replaceCurrentEvents((int)timePosition);
 //        eventPane.setPointerYear((int)timePosition);
 //        updatePointer((int)timePosition);
     }

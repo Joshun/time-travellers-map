@@ -33,21 +33,15 @@ public class EventPane extends JPanel {
     private JButton annotateEventButton;
 
     private AnnotateMenu annotateMenu = new AnnotateMenu();
-    private int annotateMenuSpawnX = 0;
-    private int annotateMenuSpawnY = 0;
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
-//    private EventIndex eventIndex;
-    private int pointerYear;
 
     private MapFrame mapFrame = null;
-//    private TimelineWidget timelineWidget = null;
 
 
     public EventPane(MapFrame parentMapFrame) {
         this.mapFrame = parentMapFrame;
-//        this.eventIndex = parentMapFrame.getEventIndex();
-//        this.timelineWidget = parentMapFrame.getTimelineWidget();
+
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
@@ -119,7 +113,6 @@ public class EventPane extends JPanel {
                     if (i1 == 0) {
                         String name = oldAnnotation.getName();
                         String description = oldAnnotation.getDescription();
-                        name = o.toString();
                         Annotation newAnnotation = new Annotation(name, description);
                         event.setEventAnnotation(newAnnotation);
                     }
@@ -167,7 +160,7 @@ public class EventPane extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Add event...");
-                new AddModifyEventDialog(mapFrame);
+                new AddModifyEventDialog(mapFrame, parentEventPane);
             }
 
         });
@@ -179,11 +172,11 @@ public class EventPane extends JPanel {
                 Event event = getSelectedEvent();
                 if (event != null) {
                     currentEvents.remove(event);
-                    mapFrame.getEventIndex().removeEvent(event);
+                    mapFrame.removeEventFromIndex(event);
                     eventTable.updateUI();
                     setContextDependentButtonsEnabled(false);
                     eventTable.clearSelection();
-                    mapFrame.getTimelineWidget().redraw();
+                    mapFrame.redrawTimeline();
                 }
                 // TODO: implement remove event
             }
@@ -195,7 +188,7 @@ public class EventPane extends JPanel {
                 System.out.println("Edit event...");
                 Event event = getSelectedEvent();
                 if (event != null) {
-                    new AddModifyEventDialog(event, mapFrame);
+                    new AddModifyEventDialog(event, mapFrame, parentEventPane);
                 }
             }
         });
@@ -207,6 +200,7 @@ public class EventPane extends JPanel {
                 Event event = getSelectedEvent();
                 if (event != null) {
                     JButton btn = (JButton) actionEvent.getSource();
+                    // Spawn popup annotate menu underneath button
                     int x = btn.getX();
                     int y = btn.getY() + btn.getHeight();
                     annotateMenu.show(parentEventPane, x, y);
@@ -244,9 +238,6 @@ public class EventPane extends JPanel {
         gc.gridy = 1;
         gc.gridwidth = 4;
         gc.weightx = 0.5;
-//        gc.fill = GridBagConstraints.HORIZONTAL;
-//        this.add(eventTable, gc);
-
         eventTableContainer = new JScrollPane(eventTable);
         eventTable.setFillsViewportHeight(true);
         this.add(eventTableContainer, gc);
@@ -264,13 +255,13 @@ public class EventPane extends JPanel {
     }
 
     private Event getSelectedEvent() {
-        int eventIndex = eventTable.getSelectedRow();
-        System.out.println("index " + eventIndex);
-        if (eventIndex == -1 || eventTable.getRowCount() == 0) {
+        int eventReference = eventTable.getSelectedRow();
+        System.out.println("index " + eventReference);
+        if (eventReference == -1 || eventTable.getRowCount() == 0) {
             return null;
         }
         else {
-            return currentEvents.get(eventIndex);
+            return currentEvents.get(eventReference);
         }
     }
 
@@ -288,28 +279,9 @@ public class EventPane extends JPanel {
 
     public void replaceCurrentEvents(int pointerYear) {
         this.currentEvents = mapFrame.getEventIndex().getPointerEvents(pointerYear);
-//        this.currentEvents = events;
         eventTable.updateUI();
     }
 
-//    public void setPointerYear(int pointerYear) {
-//        this.pointerYear = pointerYear;
-//    }
-
-//    public EventIndex getEventIndex() {
-//        return eventIndex;
-//    }
-
-//    public void setTimelineWidget(TimelineWidget timelineWidget) {
-//        System.out.println(timelineWidget);
-//        this.timelineWidget = timelineWidget;
-//    }
-
-//    public void redrawTimeline() {
-//        if (timelineWidget != null) {
-//            timelineWidget.redraw();
-//        }
-//    }
 
     public static void main(String[] args) {
         // Test harness for EventPane

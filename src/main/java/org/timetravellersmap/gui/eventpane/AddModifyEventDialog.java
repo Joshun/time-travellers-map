@@ -33,16 +33,13 @@ public class AddModifyEventDialog extends JFrame {
 
     private MapFrame mapFrame;
     private EventPane eventPane;
-    private EventIndex eventIndex;
 
-    private Integer pointerYear = null;
-
-    public AddModifyEventDialog(Event existingEvent, MapFrame parentMapFrame) {
-        this.mapFrame = parentMapFrame;
+    public AddModifyEventDialog(Event existingEvent, MapFrame ancestorMapFrame, EventPane parentEventPane) {
+        this.mapFrame = ancestorMapFrame;
         this.event = existingEvent;
-        this.eventPane = parentMapFrame.getEventPane();
-        this.eventIndex = parentMapFrame.getEventIndex();
-        this.pointerYear = parentMapFrame.getTimelineWidget().getPointerYear();
+        this.eventPane = parentEventPane;
+
+        Integer pointerYear = ancestorMapFrame.getTimelineWidget().getPointerYear();
 
         if (event == null) {
             setTitle("Create new event");
@@ -51,14 +48,6 @@ public class AddModifyEventDialog extends JFrame {
             setTitle("Edit event");
         }
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-//        if (event == null) {
-//            this.parentFrame = new JFrame("Create new event");
-//        }
-//        else {
-//            this.parentFrame = new JFrame("Edit event");
-//        }
-//        this.parentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         int startYearInitialValue;
         if (pointerYear == null) {
@@ -105,11 +94,7 @@ public class AddModifyEventDialog extends JFrame {
         gc.gridy = 2;
         startDateField = new JSpinner(new SpinnerNumberModel(startYearInitialValue, -4000, 4000, 1));
         startDateField.setEditor(new JSpinner.NumberEditor(startDateField, "#"));
-//        Date initialDate = new GregorianCalendar(-2, 0, 1).getTime();
-//        Date earliestDate = new GregorianCalendar(-4000, 0, 1).getTime();
-//        Date latestDate = new GregorianCalendar(4000, 0, 1).getTime();
-//        startDateField = new JSpinner(new SpinnerDateModel(initialDate, earliestDate, latestDate, Calendar.YEAR));
-//        startDateField.setEditor(new JSpinner.DateEditor(startDateField, "MM/yyyy"));
+
         panel.add(startDateField, gc);
 
         gc.gridx = 0;
@@ -168,16 +153,8 @@ public class AddModifyEventDialog extends JFrame {
         this.setVisible(true);
     }
 
-//    public AddModifyEventDialog(EventPane eventPane, EventIndex eventIndex) {
-//        this(null, eventPane, eventIndex, null);
-//    }
-
-//    public AddModifyEventDialog(EventPane eventPane, EventIndex eventIndex, Integer pointerYear) {
-//        this(null, eventPane, eventIndex, pointerYear);
-//    }
-
-    public AddModifyEventDialog(MapFrame parentMapFrame) {
-        this(null, parentMapFrame);
+    public AddModifyEventDialog(MapFrame parentMapFrame, EventPane eventPane) {
+        this(null, parentMapFrame, eventPane);
     }
 
     private void loadExistingEvent(Event existingEvent) {
@@ -215,8 +192,6 @@ public class AddModifyEventDialog extends JFrame {
         int endDate = (int)endDateField.getValue();
 
         Event newEvent = new Event(
-//                new GregorianCalendar(startDate, 0, 1),
-//                new GregorianCalendar(endDate, 0, 1),
                 yearToCalendar(startDate),
                 yearToCalendar(endDate),
                 new Annotation(eventName, eventDescription)
@@ -224,12 +199,11 @@ public class AddModifyEventDialog extends JFrame {
         if (datesAreOk(startDate, endDate)) {
             if (existingEvent != null) {
                 eventPane.updateExistingEvent(existingEvent, newEvent);
-                eventIndex.updateEvent(existingEvent, newEvent);
+                mapFrame.getEventIndex().updateEvent(existingEvent, newEvent);
             } else {
                 eventPane.addNewEvent(newEvent);
-                eventIndex.addEvent(newEvent);
+                mapFrame.getEventIndex().addEvent(newEvent);
             }
-//            eventPane.redrawTimeline();
             mapFrame.getTimelineWidget().redraw();
             this.dispose();
         }
