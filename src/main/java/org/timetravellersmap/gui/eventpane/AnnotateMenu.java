@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 public class AnnotateMenu extends JPopupMenu {
     private JMenuItem newPointerAction = new JMenuItem("Point");
     private JMenuItem newRectangleAction = new JMenuItem("Rectangle");
+
+    private boolean visible = false;
+
     public AnnotateMenu() {
         newPointerAction.addActionListener(actionEvent ->  {
             new AddPoint().setVisible(true);
@@ -21,4 +24,6 @@ public class AnnotateMenu extends JPopupMenu {
         this.add(newPointerAction);
         this.add(newRectangleAction);
     }
+
+
 }

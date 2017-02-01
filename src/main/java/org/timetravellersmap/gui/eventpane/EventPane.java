@@ -30,9 +30,10 @@ public class EventPane extends JPanel {
     private JButton addEventButton;
     private JButton removeEventButton;
     private JButton editEventButton;
-    private JButton annotateEventButton;
+//    private JButton annotateEventButton;
+    private JButton toggleAnnotationButton;
 
-    private AnnotateMenu annotateMenu = new AnnotateMenu();
+//    private AnnotateMenu annotateMenu = new AnnotateMenu();
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
 
@@ -152,7 +153,8 @@ public class EventPane extends JPanel {
         addEventButton = new JButton("Add...");
         removeEventButton = new JButton("Remove");
         editEventButton = new JButton("Edit...");
-        annotateEventButton = new JButton("Annotate...");
+        toggleAnnotationButton = new JButton("Annotations...");
+//        annotateEventButton = new JButton("Annotate...");
 
         EventPane parentEventPane = this;
 
@@ -183,17 +185,22 @@ public class EventPane extends JPanel {
             }
         });
 
-        annotateEventButton.addActionListener(actionEvent ->  {
-            System.out.println("Annotate");
-            Event event = getSelectedEvent();
-            if (event != null) {
-                JButton btn = (JButton) actionEvent.getSource();
-                // Spawn popup annotate menu underneath button
-                int x = btn.getX();
-                int y = btn.getY() + btn.getHeight();
-                annotateMenu.show(parentEventPane, x, y);
-            }
+        toggleAnnotationButton.addActionListener(actionEvent -> {
+//            mapFrame.getAnnotatePane().toggleVisibleState();
+            mapFrame.toggleAnnotatePane();
         });
+
+//        annotateEventButton.addActionListener(actionEvent ->  {
+//            System.out.println("Annotate");
+//            Event event = getSelectedEvent();
+//            if (event != null) {
+//                JButton btn = (JButton) actionEvent.getSource();
+//                // Spawn popup annotate menu underneath button
+//                int x = btn.getX();
+//                int y = btn.getY() + btn.getHeight();
+//                annotateMenu.show(parentEventPane, x, y);
+//            }
+//        });
 
 //        gc.insets = new Insets(5, 0, 5, 0);
         gc.anchor = GridBagConstraints.PAGE_START;
@@ -204,27 +211,37 @@ public class EventPane extends JPanel {
         gc.gridx = 0;
         gc.gridy = 0;
         gc.weightx = 0.5;
+        gc.weighty = 0.1;
         this.add(addEventButton, gc);
 
         gc.gridx = 1;
         gc.gridy = 0;
         gc.weightx = 0.5;
+        gc.weighty = 0.1;
         this.add(removeEventButton, gc);
 
         gc.gridx = 2;
         gc.gridy = 0;
         gc.weightx = 0.5;
+        gc.weighty = 0.1;
         this.add(editEventButton, gc);
+
+//        gc.gridx = 3;
+//        gc.gridy = 0;
+//        gc.weightx = 0.5;
+//        this.add(annotateEventButton, gc);
 
         gc.gridx = 3;
         gc.gridy = 0;
         gc.weightx = 0.5;
-        this.add(annotateEventButton, gc);
+        gc.weighty = 0.1;
+        this.add(toggleAnnotationButton, gc);
 
         gc.gridx = 0;
         gc.gridy = 1;
         gc.gridwidth = 4;
         gc.weightx = 0.5;
+        gc.weighty = 0.7;
         eventTableContainer = new JScrollPane(eventTable);
         eventTable.setFillsViewportHeight(true);
         this.add(eventTableContainer, gc);
@@ -238,10 +255,16 @@ public class EventPane extends JPanel {
         System.out.println("toggle");
         editEventButton.setEnabled(enabled);
         removeEventButton.setEnabled(enabled);
-        annotateEventButton.setEnabled(enabled);
+        toggleAnnotationButton.setEnabled(enabled);
+
+        // Hide annotation pane when buttons are disabled if it shown
+        if (!enabled && mapFrame.getAnnotatePane() != null && mapFrame.getAnnotatePane().isVisible()) {
+            mapFrame.toggleAnnotatePane();
+        }
+//        annotateEventButton.setEnabled(enabled);
     }
 
-    private Event getSelectedEvent() {
+    public Event getSelectedEvent() {
         int eventReference = eventTable.getSelectedRow();
         System.out.println("index " + eventReference);
         if (eventReference == -1 || eventTable.getRowCount() == 0) {

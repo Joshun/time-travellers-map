@@ -5,6 +5,7 @@ import org.geotools.map.MapContent;
 import org.geotools.swing.JMapPane;
 import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
+import org.timetravellersmap.gui.eventpane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.timeline.EventIndex;
 import org.timetravellersmap.timeline.Event;
@@ -38,6 +39,8 @@ public class MapFrame extends JFrame {
 
     private EventIndex eventIndex = new EventIndex();
     private EventPane eventPane;
+    private AnnotatePane annotatePane;
+    private JSplitPane eventAnnotateSplitPane;
     private TimelineWidget timelineWidget;
 
 
@@ -224,13 +227,27 @@ public class MapFrame extends JFrame {
              * JSplitPane divider
              */
 
-        eventPane.setPreferredSize(new Dimension(100, -1));
+        eventPane.setPreferredSize(new Dimension(100, 300));
 
         mapPane.setPreferredSize(new Dimension(600, -1));
+
+        annotatePane = new AnnotatePane(this);
+        annotatePane.setPreferredSize(new Dimension(100, 300));
+        eventAnnotateSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                false,
+                eventPane,
+                annotatePane);
+        annotatePane.setVisible(false);
+//        eventAnnotateSplitPane.setDividerLocation(300);
+
+//        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+//                false,
+//                mapPane,
+//                eventPane);
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 false,
                 mapPane,
-                eventPane);
+                eventAnnotateSplitPane);
         panel.add(splitPane, "grow");
 
         panel.add(JMapStatusBar.createDefaultStatusBar(mapPane), "grow");
@@ -255,6 +272,10 @@ public class MapFrame extends JFrame {
         return timelineWidget;
     }
 
+    public AnnotatePane getAnnotatePane() {
+        return annotatePane;
+    }
+
 
     public void redrawTimeline() {
         timelineWidget.redraw();
@@ -267,4 +288,14 @@ public class MapFrame extends JFrame {
     public void removeEventFromIndex(Event e) {
         eventIndex.removeEvent(e);
     }
+
+    public void toggleAnnotatePane() {
+        if (annotatePane.toggleVisibleState()) {
+            eventAnnotateSplitPane.setDividerLocation(300);
+        }
+        else {
+            eventAnnotateSplitPane.setDividerLocation(600);
+        }
+    }
+
 }
