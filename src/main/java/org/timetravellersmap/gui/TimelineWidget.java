@@ -35,7 +35,6 @@ public class TimelineWidget extends JPanel {
     private double majorInterval;
 
     private MapFrame mapFrame;
-//    private EventPane eventPane;
 
     public TimelineWidget(double startYear, double endYear, int width, int height, MapFrame parentMapFrame) {
         this.start = startYear;
@@ -45,7 +44,6 @@ public class TimelineWidget extends JPanel {
         this.width = width;
         this.height = height;
         this.mapFrame = parentMapFrame;
-//        this.eventPane = parentMapFrame.getEventPane();
         setTimeline(start, end, minorInterval, majorInterval);
 
         // Setup the paint area, i.e. where the timeline itself is drawn
@@ -114,10 +112,6 @@ public class TimelineWidget extends JPanel {
                 int year = computeYearClicked(mouseEvent.getX(), 0, width, start, end);
                 String eventSummary = mapFrame.getEventIndex().generateStartEventSummary(year);
                 if (eventSummary != null) {
-//                    JToolTip toolTip = new JToolTip();
-//                    toolTip.setToolTipText(eventSummary);
-//                    toolTip.setVisible(true);
-//                    toolTip.setComponent(paintArea);
                     paintArea.setToolTipText(eventSummary);
 
                     System.out.println(eventSummary);
@@ -147,21 +141,18 @@ public class TimelineWidget extends JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.ipadx = 0;
-//        gridBagConstraints.fill = GridBagConstraints.NONE;
         this.add(prevYearsContainer, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.ipadx = 25;
-//        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         this.add(paintArea, gridBagConstraints);
 
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.ipadx = 0;
-//        gridBagConstraints.fill = GridBagConstraints.NONE;
         this.add(nextYearsContainer, gridBagConstraints);
         paintArea.repaint();
 
@@ -181,8 +172,6 @@ public class TimelineWidget extends JPanel {
             setPointer(year);
             paintArea.repaint();
         }
-//        eventPane.replaceCurrentEvents((int)pointerPosition);
-//        eventPane.setPointerYear((int)pointerPosition);
     }
 
     public void redraw() {
@@ -203,8 +192,6 @@ public class TimelineWidget extends JPanel {
         this.pointerPosition = timePosition;
         System.out.println("position " + timePosition);
         mapFrame.getEventPane().replaceCurrentEvents((int)timePosition);
-//        eventPane.setPointerYear((int)timePosition);
-//        updatePointer((int)timePosition);
     }
 
     private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {
