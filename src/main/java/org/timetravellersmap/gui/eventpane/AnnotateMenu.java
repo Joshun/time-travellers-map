@@ -8,11 +8,11 @@ import java.awt.event.ActionListener;
  * Created by joshua on 31/01/17.
  */
 public class AnnotateMenu extends JPopupMenu {
-    private JMenuItem newPointerAction = new JMenuItem("Pointer");
+    private JMenuItem newPointerAction = new JMenuItem("Point");
     private JMenuItem newRectangleAction = new JMenuItem("Rectangle");
     public AnnotateMenu() {
         newPointerAction.addActionListener(actionEvent ->  {
-            System.out.println("TODO: create new pointer");
+            new AddPoint().setVisible(true);
         });
         newRectangleAction.addActionListener(actionEvent -> {
             System.out.println("TODO: create new rectangle");
