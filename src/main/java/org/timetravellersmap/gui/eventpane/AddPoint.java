@@ -16,6 +16,8 @@ public class AddPoint extends JFrame {
     private JButton addPointButton = new JButton("Add point");
     private JButton cancelButton = new JButton("Cancel");
 
+    private NameAndDescriptionInput nameAndDescriptionInput = new NameAndDescriptionInput(this);
+
     public AddPoint() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel.setLayout(new GridBagLayout());
@@ -23,35 +25,49 @@ public class AddPoint extends JFrame {
 
         gc.gridx = 0;
         gc.gridy = 0;
+        gc.weighty = 0.2;
         panel.add(new JLabel("Longitude:"), gc);
 
         gc.gridx = 1;
         gc.gridy = 0;
+        gc.weighty = 0.2;
         panel.add(longitudeEntry, gc);
 
         gc.gridx = 0;
         gc.gridy = 1;
+        gc.weighty = 0.2;
         panel.add(new JLabel("Latitude:"), gc);
 
         gc.gridx = 1;
         gc.gridy = 1;
+        gc.weighty = 0.2;
         panel.add(latitudeEntry, gc);
 
         gc.gridx = 0;
         gc.gridy = 2;
+        gc.weighty = 0.2;
         panel.add(new JLabel("Size:"), gc);
 
         gc.gridx = 1;
         gc.gridy = 2;
+        gc.weighty = 0.2;
         panel.add(diameterEntry, gc);
 
         gc.gridx = 0;
         gc.gridy = 3;
+        gc.weighty = 0.2;
         panel.add(addPointButton, gc);
 
         gc.gridx = 1;
         gc.gridy = 3;
+        gc.weighty = 0.2;
         panel.add(cancelButton, gc);
+
+        gc.gridx = 0;
+        gc.gridy = 4;
+        gc.gridwidth = 2;
+        gc.weighty = 0.2;
+        panel.add(nameAndDescriptionInput, gc);
 
         setTitle("Add new point");
         this.add(panel);
