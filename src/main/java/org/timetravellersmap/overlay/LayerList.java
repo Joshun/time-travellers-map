@@ -26,6 +26,10 @@ public class LayerList {
         layers.remove(Integer.valueOf(orderIndex));
     }
 
+    public int getCount() {
+        return layers.size();
+    }
+
 //    public void draw() {
 //        for (Map.Entry<Integer,Layer> layerEntry: layers.entrySet()) {
 //            int orderIndex = layerEntry.getKey().intValue();
