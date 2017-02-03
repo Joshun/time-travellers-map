@@ -18,7 +18,6 @@ public class AnnotatePane extends JPanel {
     private AnnotateMenu annotateMenu;
     private JButton addAnnotationButton = new JButton("Add...");
     private JButton removeAnnotationButton = new JButton("Remove");
-    private JButton manageLayersButton = new JButton("Manage layers...");
     private JComboBox<Layer> layerSelectCombo = new JComboBox<>();
     private JTable annotationTable = new JTable();
     private JScrollPane annotationTableContainer = new JScrollPane(annotationTable);
@@ -46,8 +45,6 @@ public class AnnotatePane extends JPanel {
             }
         });
 
-        manageLayersButton.addActionListener(actionEvent -> new LayerManager(mapFrame.getLayerList()).setVisible(true));
-
         gc.anchor = GridBagConstraints.PAGE_START;
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.gridwidth = 1;
@@ -65,21 +62,31 @@ public class AnnotatePane extends JPanel {
         gc.weighty = 0.1;
         this.add(removeAnnotationButton, gc);
 
+//        gc.gridx = 2;
+//        gc.gridy = 0;
+//        gc.weightx = 0.5;
+//        gc.weighty = 0.1;
+//        this.add(manageLayersButton, gc);
+
+
         gc.gridx = 2;
         gc.gridy = 0;
         gc.weightx = 0.5;
         gc.weighty = 0.1;
-        this.add(manageLayersButton, gc);
+        add(new JLabel("Event layer"), gc);
 
-        gc.gridx = 0;
-        gc.gridy = 1;
-        add(new JLabel("Event annotation layer"), gc);
-
-        gc.gridx = 1;
-        gc.gridy = 1;
-        gc.gridwidth = 2;
+        gc.gridx = 3;
+        gc.gridy = 0;
+        gc.weightx = 0.5;
+        gc.weighty = 0.1;
         add(layerSelectCombo, gc);
         layerSelectCombo.setModel(new LayerComboBoxModel(mapFrame.getLayerList()));
+
+//        gc.gridx = 1;
+//        gc.gridy = 1;
+//        gc.gridwidth = 2;
+//        add(layerSelectCombo, gc);
+//        layerSelectCombo.setModel(new LayerComboBoxModel(mapFrame.getLayerList()));
 //        if (mapFrame.getEventPane().getSelectedEvent() != null) {
 //            layerSelectCombo.setSelectedItem(mapFrame.getEventPane().getSelectedEvent().getLayer());
 //        }
@@ -88,7 +95,7 @@ public class AnnotatePane extends JPanel {
         gc.gridx = 0;
         gc.gridy = 2;
         gc.weightx = 0.5;
-        gc.gridwidth = 3;
+        gc.gridwidth = 4;
         gc.weighty = 0.9;
         gc.ipady = 0;
         this.add(annotationTableContainer, gc);

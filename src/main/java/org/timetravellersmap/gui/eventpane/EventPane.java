@@ -32,6 +32,7 @@ public class EventPane extends JPanel {
     private JButton editEventButton;
 //    private JButton annotateEventButton;
     private JButton toggleAnnotationButton;
+    private JButton showLayerManagerButton;
 
 //    private AnnotateMenu annotateMenu = new AnnotateMenu();
 
@@ -154,6 +155,7 @@ public class EventPane extends JPanel {
         removeEventButton = new JButton("Remove");
         editEventButton = new JButton("Edit...");
         toggleAnnotationButton = new JButton("Annotations...");
+        showLayerManagerButton = new JButton("Layers...");
 //        annotateEventButton = new JButton("Annotate...");
 
         EventPane parentEventPane = this;
@@ -188,6 +190,10 @@ public class EventPane extends JPanel {
         toggleAnnotationButton.addActionListener(actionEvent -> {
 //            mapFrame.getAnnotatePane().toggleVisibleState();
             mapFrame.toggleAnnotatePane();
+        });
+
+        showLayerManagerButton.addActionListener(actionEvent -> {
+            new LayerManager(mapFrame.getLayerList()).setVisible(true);
         });
 
 //        annotateEventButton.addActionListener(actionEvent ->  {
@@ -237,9 +243,15 @@ public class EventPane extends JPanel {
         gc.weighty = 0.1;
         this.add(toggleAnnotationButton, gc);
 
+        gc.gridx = 4;
+        gc.gridy = 0;
+        gc.weightx = 0.5;
+        gc.weightx = 0.1;
+        this.add(showLayerManagerButton, gc);
+
         gc.gridx = 0;
         gc.gridy = 1;
-        gc.gridwidth = 4;
+        gc.gridwidth = 5;
         gc.weightx = 0.5;
         gc.weighty = 0.7;
         eventTableContainer = new JScrollPane(eventTable);
