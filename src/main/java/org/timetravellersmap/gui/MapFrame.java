@@ -108,7 +108,7 @@ public class MapFrame extends JFrame {
         System.out.println("doshowmapcontent.");
         final MapFrame frame = new MapFrame(content);
         frame.initComponents();
-        frame.setSize(800, 800);
+        frame.setSize(1024, 800);
         frame.setVisible(true);
     }
 
@@ -250,6 +250,7 @@ public class MapFrame extends JFrame {
                 false,
                 mapPane,
                 eventAnnotateSplitPane);
+        splitPane.setDividerLocation(0.7);
         panel.add(splitPane, "grow");
 
         panel.add(JMapStatusBar.createDefaultStatusBar(mapPane), "grow");
