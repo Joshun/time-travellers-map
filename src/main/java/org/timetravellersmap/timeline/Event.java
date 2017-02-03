@@ -1,6 +1,8 @@
 package org.timetravellersmap.timeline;
 
+import org.geotools.map.MapContent;
 import org.timetravellersmap.Annotation;
+import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerList;
 
 import java.util.ArrayList;
@@ -11,19 +13,22 @@ import java.util.GregorianCalendar;
  * Event: a class to represent an event with start, end and annotation
  */
 public class Event {
-    private LayerList layerList;
+//    private LayerList layerList;
     private Annotation eventAnnotation;
 
     private Calendar startDate;
     private Calendar endDate;
 
-    private Event parentEvent;
-    private ArrayList<Event> childEvents;
+    private Event parentEvent = null;
+    private ArrayList<Event> childEvents = null;
+
+    private Layer layer = LayerList.DEFAULT_LAYER;
 
     public Event(Calendar startDate, Calendar endDate, Annotation eventAnnotation) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventAnnotation = eventAnnotation;
+//        this.layerList = new LayerList();
     }
 
     public Annotation getEventAnnotation() {
@@ -71,6 +76,10 @@ public class Event {
         this.eventAnnotation = annotation;
     }
 
+    public Layer getLayer() {
+        return layer;
+    }
+
     public String toString() {
         return "event start="+getStartDateAsYear()+" end="+getEndDateAsYear()+" annotation="+eventAnnotation;
     }
@@ -92,4 +101,8 @@ public class Event {
         elist.add(event);
         System.out.println(elist.get(0));
     }
+
+//    public LayerList getLayerList() {
+//        return layerList;
+//    }
 }

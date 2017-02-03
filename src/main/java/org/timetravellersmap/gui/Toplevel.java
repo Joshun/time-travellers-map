@@ -14,6 +14,7 @@ import org.geotools.swing.JMapFrame;
 import org.geotools.swing.data.JFileDataStoreChooser;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.timetravellersmap.Annotation;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
@@ -23,6 +24,8 @@ import org.timetravellersmap.timeline.Event;
 import org.timetravellersmap.gui.MapFrame;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -76,14 +79,25 @@ public class Toplevel {
         mapContent.addLayer(layer);
 
         // Testing of custom layering system
-        LayerList layerList = new LayerList(mapContent);
-        org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer();
+        LayerList layerList = new LayerList();
+//        org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer("layer1");
+        org.timetravellersmap.overlay.Layer defaultLayer = LayerList.DEFAULT_LAYER;
 //        LayerComponent layerComponent1 = new RectangleComponent(-100, 100, 200, 0);
+        Event wwii = new Event(
+                new GregorianCalendar(1939, 0, 1),
+                new GregorianCalendar(1945, 0, 1),
+                new Annotation("WWII")
+        );
         LayerComponent layerComponent1 = new PointComponent(20, 20, 5);
         LayerComponent layerComponent2 = new PointComponent(151, -33, 5);
-        layer1.addComponent(layerComponent1);
-        layer1.addComponent(layerComponent2);
-        mapContent.addLayer(layer1);
+        defaultLayer.addComponent(layerComponent1, wwii);
+        defaultLayer.addComponent(layerComponent2, wwii);
+        mapContent.addLayer(defaultLayer);
+        ArrayList<Event> eventsToDraw = new ArrayList<>();
+        eventsToDraw.add(wwii);
+        defaultLayer.setEventsToDraw(eventsToDraw);
+        layerList.updateMapContent(mapContent);
+        layerList.removeLayer(defaultLayer);
     }
 
     public void show() {

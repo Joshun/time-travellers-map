@@ -1,5 +1,9 @@
 package org.timetravellersmap.gui.eventpane;
 
+import org.timetravellersmap.gui.MapFrame;
+import org.timetravellersmap.overlay.Layer;
+import org.timetravellersmap.timeline.Event;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,10 +20,14 @@ public class AddPoint extends JFrame {
     private JButton addPointButton = new JButton("Add point");
     private JButton cancelButton = new JButton("Cancel");
 
+//    private LayerManager layerManager;
+
     private NameAndDescriptionInput nameAndDescriptionInput = new NameAndDescriptionInput(this);
 
-    public AddPoint() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private MapFrame mapFrame;
+
+    public AddPoint(MapFrame ancestorMapFrame) {
+        this.mapFrame = ancestorMapFrame;
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
@@ -69,6 +77,7 @@ public class AddPoint extends JFrame {
         gc.weighty = 0.2;
         panel.add(nameAndDescriptionInput, gc);
 
+
         setTitle("Add new point");
         this.add(panel);
         pack();
@@ -83,8 +92,9 @@ public class AddPoint extends JFrame {
         cancelButton.addActionListener(actionEvent -> {
             this.dispose();
         });
+
     }
     public static void main(String[] args) {
-        new AddPoint().setVisible(true);
+//        new AddPoint().setVisible(true);
     }
 }

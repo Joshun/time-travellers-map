@@ -7,6 +7,7 @@ import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
 import org.timetravellersmap.gui.eventpane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
+import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.timeline.EventIndex;
 import org.timetravellersmap.timeline.Event;
 
@@ -38,6 +39,7 @@ public class MapFrame extends JFrame {
     private boolean uiSet;
 
     private EventIndex eventIndex = new EventIndex();
+    private LayerList layerList = new LayerList();
     private EventPane eventPane;
     private AnnotatePane annotatePane;
     private JSplitPane eventAnnotateSplitPane;
@@ -274,6 +276,10 @@ public class MapFrame extends JFrame {
 
     public AnnotatePane getAnnotatePane() {
         return annotatePane;
+    }
+
+    public LayerList getLayerList() {
+        return layerList;
     }
 
 
