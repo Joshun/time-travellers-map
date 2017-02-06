@@ -364,7 +364,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         replaceCurrentEvents(year);
     }
 
-    public void replaceCurrentEvents(int pointerYear) {
+    private void replaceCurrentEvents(int pointerYear) {
         this.currentEvents = mapFrame.getEventIndex().getPointerEvents(pointerYear);
         timelinePointerYear = pointerYear;
         eventTable.updateUI();
