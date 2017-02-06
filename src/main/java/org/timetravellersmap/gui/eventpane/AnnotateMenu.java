@@ -22,7 +22,7 @@ public class AnnotateMenu extends JPopupMenu {
     public AnnotateMenu(AnnotatePane parentAnnotatePane) {
         this.annotatePane = parentAnnotatePane;
         newPointerAction.addActionListener(actionEvent ->  {
-            new AddPoint(annotatePane).setVisible(true);
+            new AddPoint(annotatePane, annotatePane.getSelectedEvent()).setVisible(true);
         });
         newRectangleAction.addActionListener(actionEvent -> {
             System.out.println("TODO: create new rectangle");

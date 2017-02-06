@@ -141,11 +141,11 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         return selectedEvent;
     }
 
-    public void annotateEvent(Event event, LayerComponent layerComponent) {
-        System.out.println(event);
-        Layer eventLayer = event.getLayer();
-        eventLayer.addComponent(layerComponent, event);
-    }
+//    public void annotateEvent(Event event, LayerComponent layerComponent) {
+//        System.out.println(event);
+//        Layer eventLayer = event.getLayer();
+//        eventLayer.addComponent(layerComponent, event);
+//    }
 
 //    public void loadEvent() {
 //        Event event = mapFrame.getEventPane().getSelectedEvent();
