@@ -3,12 +3,14 @@ package org.timetravellersmap.gui.eventpane;
 import org.timetravellersmap.Annotation;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.timeline.EventChangeListener;
 import org.timetravellersmap.timeline.EventIndex;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -34,12 +36,17 @@ public class AddModifyEventDialog extends JFrame {
     private MapFrame mapFrame;
     private EventPane eventPane;
 
-    public AddModifyEventDialog(Event existingEvent, MapFrame ancestorMapFrame, EventPane parentEventPane) {
+    private ArrayList<EventChangeListener> changeListeners = new ArrayList<>();
+
+    public AddModifyEventDialog(Event existingEvent, MapFrame ancestorMapFrame, EventPane parentEventPane, int timelinePointerYear) {
         this.mapFrame = ancestorMapFrame;
         this.event = existingEvent;
         this.eventPane = parentEventPane;
 
-        Integer pointerYear = ancestorMapFrame.getTimelineWidget().getPointerYear();
+        this.changeListeners = parentEventPane.getChangeListeners();
+
+//        Integer pointerYear = ancestorMapFrame.getTimelineWidget().getPointerYear();
+        int pointerYear = timelinePointerYear;
 
         if (event == null) {
             setTitle("Create new event");
@@ -49,13 +56,13 @@ public class AddModifyEventDialog extends JFrame {
         }
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        int startYearInitialValue;
-        if (pointerYear == null) {
-            startYearInitialValue = 1900;
-        }
-        else {
-            startYearInitialValue = pointerYear;
-        }
+        int startYearInitialValue = pointerYear;
+//        if (pointerYear == null) {
+//            startYearInitialValue = 1900;
+//        }
+//        else {
+//        startYearInitialValue = pointerYear;
+//        }
 
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -148,8 +155,8 @@ public class AddModifyEventDialog extends JFrame {
         this.setVisible(true);
     }
 
-    public AddModifyEventDialog(MapFrame parentMapFrame, EventPane eventPane) {
-        this(null, parentMapFrame, eventPane);
+    public AddModifyEventDialog(MapFrame parentMapFrame, EventPane eventPane, int timelinePointerYear) {
+        this(null, parentMapFrame, eventPane, timelinePointerYear);
     }
 
     private void loadExistingEvent(Event existingEvent) {
@@ -199,7 +206,8 @@ public class AddModifyEventDialog extends JFrame {
                 eventPane.addNewEvent(newEvent);
                 mapFrame.getEventIndex().addEvent(newEvent);
             }
-            mapFrame.getTimelineWidget().redraw();
+//            mapFrame.getTimelineWidget().redraw();
+            fireChangeListeners();
             this.dispose();
         }
         else {
@@ -213,6 +221,20 @@ public class AddModifyEventDialog extends JFrame {
 
     private void showDateError() {
         JOptionPane.showMessageDialog(this, "End date cannot occur before start date!","Date error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void addChangeListener(EventChangeListener changeListener) {
+        changeListeners.add(changeListener);
+    }
+
+    public void removeChangeListener(EventChangeListener changeListener) {
+        changeListeners.remove(changeListener);
+    }
+
+    public void fireChangeListeners() {
+        for (EventChangeListener changeListener: changeListeners) {
+            changeListener.eventChanged();
+        }
     }
 
     public static void main(String[] args) {

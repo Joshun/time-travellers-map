@@ -3,9 +3,8 @@ package org.timetravellersmap.gui.eventpane;
 import org.timetravellersmap.Annotation;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.TimelineWidget;
+import org.timetravellersmap.timeline.*;
 import org.timetravellersmap.timeline.Event;
-import org.timetravellersmap.timeline.EventIndex;
-import org.timetravellersmap.timeline.Timeline;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -24,7 +23,7 @@ import java.util.GregorianCalendar;
  * EventPane: displays a list of events for the current time period
  * This will display events that start, finish or are taking place during the selected year
  */
-public class EventPane extends JPanel {
+public class EventPane extends JPanel implements TimelineChangeListener {
     private JScrollPane eventTableContainer;
     private JTable eventTable;
     private JButton addEventButton;
@@ -34,11 +33,18 @@ public class EventPane extends JPanel {
     private JButton toggleAnnotationButton;
     private JButton showLayerManagerButton;
 
+    private boolean eventSelected = false;
+
+    private ArrayList<EventChangeListener> changeListeners = new ArrayList<>();
+    private ArrayList<EventSelectChangeListener> selectChangeListeners = new ArrayList<>();
+
 //    private AnnotateMenu annotateMenu = new AnnotateMenu();
 
     private ArrayList<Event> currentEvents = new ArrayList<>();
 
     private MapFrame mapFrame = null;
+
+    private int timelinePointerYear;
 
 
     public EventPane(MapFrame parentMapFrame) {
@@ -48,6 +54,8 @@ public class EventPane extends JPanel {
         GridBagConstraints gc = new GridBagConstraints();
 
         String[] eventTableColumns = new String[] { "Event", "Start", "End" };
+
+        timelinePointerYear = parentMapFrame.INITIAL_START_YEAR;
 
         currentEvents.add(new Event(
                 new GregorianCalendar(1900, 0, 1),
@@ -146,6 +154,8 @@ public class EventPane extends JPanel {
                 System.out.println("select " + listSelectionEvent);
                 if (eventTable.getRowCount() > 0) {
                     setContextDependentButtonsEnabled(true);
+                    fireSelectChangeListenersSelect(getSelectedEvent());
+                    eventSelected = true;
                 }
             }
         });
@@ -161,8 +171,9 @@ public class EventPane extends JPanel {
         EventPane parentEventPane = this;
 
         addEventButton.addActionListener(actionEvent ->  {
+            eventSelected = false;
             System.out.println("Add event...");
-            new AddModifyEventDialog(mapFrame, parentEventPane);
+            new AddModifyEventDialog(mapFrame, parentEventPane, timelinePointerYear);
         });
 
         removeEventButton.addActionListener(actionEvent ->  {
@@ -173,8 +184,11 @@ public class EventPane extends JPanel {
                 mapFrame.removeEventFromIndex(event);
                 eventTable.updateUI();
                 setContextDependentButtonsEnabled(false);
+                fireSelectChangeListenersDeselect();
                 eventTable.clearSelection();
-                mapFrame.redrawTimeline();
+                eventSelected = false;
+//                mapFrame.redrawTimeline();
+                fireChangeListeners();
             }
             // TODO: implement remove event
         });
@@ -183,13 +197,17 @@ public class EventPane extends JPanel {
             System.out.println("Edit event...");
             Event event = getSelectedEvent();
             if (event != null) {
-                new AddModifyEventDialog(event, mapFrame, parentEventPane);
+                new AddModifyEventDialog(event, mapFrame, parentEventPane, timelinePointerYear);
+//                addModifyEventDialog.addChangeListener(mapFrame.getTimelineWidget());
             }
         });
 
         toggleAnnotationButton.addActionListener(actionEvent -> {
 //            mapFrame.getAnnotatePane().toggleVisibleState();
             mapFrame.toggleAnnotatePane();
+            if (!mapFrame.getAnnotatePane().isVisible()) {
+                eventSelected = false;
+            }
         });
 
         showLayerManagerButton.addActionListener(actionEvent -> {
@@ -263,16 +281,58 @@ public class EventPane extends JPanel {
 
     }
 
+    public void addChangeListener(EventChangeListener changeListener) {
+        changeListeners.add(changeListener);
+    }
+
+    public void removeChangeListener(EventChangeListener changeListener) {
+        changeListeners.remove(changeListener);
+    }
+
+    public ArrayList<EventChangeListener> getChangeListeners() {
+        return changeListeners;
+    }
+
+    private void fireChangeListeners() {
+        for (EventChangeListener changeListener: changeListeners) {
+            changeListener.eventChanged();
+        }
+    }
+
+    public void addSelectChangeListener(EventSelectChangeListener selectChangeListener) {
+        selectChangeListeners.add(selectChangeListener);
+    }
+
+    public void removeSelectChangeListener(EventSelectChangeListener selectChangeListener) {
+        selectChangeListeners.remove(selectChangeListener);
+    }
+
+    public ArrayList<EventSelectChangeListener> getSelectChangeListeners() {
+        return selectChangeListeners;
+    }
+
+    public void fireSelectChangeListenersSelect(Event event) {
+        for (EventSelectChangeListener eventSelectChangeListener: selectChangeListeners) {
+            eventSelectChangeListener.eventSelected(event);
+        }
+    }
+
+    public void fireSelectChangeListenersDeselect() {
+        for (EventSelectChangeListener eventSelectChangeListener: selectChangeListeners) {
+            eventSelectChangeListener.eventDeselected();
+        }
+    }
+
     private void setContextDependentButtonsEnabled(boolean enabled) {
         System.out.println("toggle");
         editEventButton.setEnabled(enabled);
         removeEventButton.setEnabled(enabled);
         toggleAnnotationButton.setEnabled(enabled);
 
-        // Hide annotation pane when buttons are disabled if it shown
-        if (!enabled && mapFrame.getAnnotatePane() != null && mapFrame.getAnnotatePane().isVisible()) {
-            mapFrame.toggleAnnotatePane();
-        }
+//        // Hide annotation pane when buttons are disabled if it shown
+//        if (!enabled && mapFrame.getAnnotatePane() != null && mapFrame.getAnnotatePane().isVisible()) {
+//            mapFrame.toggleAnnotatePane();
+//        }
 //        annotateEventButton.setEnabled(enabled);
     }
 
@@ -299,8 +359,20 @@ public class EventPane extends JPanel {
 
     }
 
+    public void timelineChanged(int year) {
+        if (eventSelected) {
+            fireSelectChangeListenersDeselect();
+            eventTable.clearSelection();
+            eventSelected = false;
+        }
+        setContextDependentButtonsEnabled(false);
+        System.out.println("Changing to year " + year + "...");
+        replaceCurrentEvents(year);
+    }
+
     public void replaceCurrentEvents(int pointerYear) {
         this.currentEvents = mapFrame.getEventIndex().getPointerEvents(pointerYear);
+        timelinePointerYear = pointerYear;
         eventTable.updateUI();
     }
 

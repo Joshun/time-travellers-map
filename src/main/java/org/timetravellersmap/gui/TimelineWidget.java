@@ -1,9 +1,7 @@
 package org.timetravellersmap.gui;
 
 import org.timetravellersmap.gui.eventpane.EventPane;
-import org.timetravellersmap.timeline.EventIndex;
-import org.timetravellersmap.timeline.Timeline;
-import org.timetravellersmap.timeline.TimelineCursor;
+import org.timetravellersmap.timeline.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +14,7 @@ import java.util.EventListener;
  * TimelineWidget: a widget for selecting the current year / date
  * Allows selecting within a century and skipping 100 and 1000 year periods
  */
-public class TimelineWidget extends JPanel {
+public class TimelineWidget extends JPanel implements EventChangeListener{
     private JPanel paintArea;
     private JButton prevHundredYearsButton;
     private JButton nextHundredYearsButton;
@@ -35,6 +33,8 @@ public class TimelineWidget extends JPanel {
     private double majorInterval;
 
     private MapFrame mapFrame;
+
+    private ArrayList<TimelineChangeListener> changeListeners = new ArrayList<>();
 
     public TimelineWidget(double startYear, double endYear, int width, int height, MapFrame parentMapFrame) {
         this.start = startYear;
@@ -158,6 +158,20 @@ public class TimelineWidget extends JPanel {
 
     }
 
+    public void addChangeListener(TimelineChangeListener changeListener) {
+        changeListeners.add(changeListener);
+    }
+
+    public void removeChangeListener(TimelineChangeListener changeListener) {
+        changeListeners.remove(changeListener);
+    }
+
+    private void fireChangeListeners(int year) {
+        for (TimelineChangeListener changeListener: changeListeners) {
+            changeListener.timelineChanged(year);
+        }
+    }
+
     private void setTimeline(double start, double end, double minorInterval, double majorInterval) {
         this.timeline = new Timeline(start, end, minorInterval, majorInterval);
     }
@@ -170,6 +184,7 @@ public class TimelineWidget extends JPanel {
             int year = computeYearClicked(xPos, 0, width, start, end);
             System.out.println("year " + year);
             setPointer(year);
+            fireChangeListeners(year);
             paintArea.repaint();
         }
     }
@@ -191,7 +206,7 @@ public class TimelineWidget extends JPanel {
     public void setPointer(double timePosition) {
         this.pointerPosition = timePosition;
         System.out.println("position " + timePosition);
-        mapFrame.getEventPane().replaceCurrentEvents((int)timePosition);
+//        mapFrame.getEventPane().replaceCurrentEvents((int)timePosition);
     }
 
     private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {
@@ -206,6 +221,10 @@ public class TimelineWidget extends JPanel {
         // start year + (proportion of bar area * bar width)
         // this returns the nearest year to the click
         return (int)Math.round(start + (proportionOfBar * yearWidth));
+    }
+
+    public void eventChanged() {
+        redraw();
     }
 
     private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, MapFrame mapFrame, int width, int height, double pointerPosition) {

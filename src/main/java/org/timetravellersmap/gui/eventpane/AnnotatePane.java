@@ -10,11 +10,12 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by joshua on 01/02/17.
  */
-public class AnnotatePane extends JPanel {
+public class AnnotatePane extends JPanel implements EventSelectChangeListener {
     private AnnotateMenu annotateMenu;
     private JButton addAnnotationButton = new JButton("Add...");
     private JButton removeAnnotationButton = new JButton("Remove");
@@ -90,7 +91,7 @@ public class AnnotatePane extends JPanel {
 //        if (mapFrame.getEventPane().getSelectedEvent() != null) {
 //            layerSelectCombo.setSelectedItem(mapFrame.getEventPane().getSelectedEvent().getLayer());
 //        }
-        loadEvent();
+//        loadEvent();
 
         gc.gridx = 0;
         gc.gridy = 2;
@@ -109,19 +110,37 @@ public class AnnotatePane extends JPanel {
     public boolean toggleVisibleState() {
         visible = !visible;
         System.out.println("AnnotatePane.visible="+visible);
-        loadEvent();
+//        loadEvent();
         setVisible(visible);
         return visible;
     }
 
-    public void loadEvent() {
-        Event event = mapFrame.getEventPane().getSelectedEvent();
+    public void eventDeselected() {
+        System.out.println("DESELECT");
+//        visible = false;
+//        setVisible(false);
+        if (visible) {
+            mapFrame.toggleAnnotatePane();
+        }
+    }
+
+    public void eventSelected(Event event) {
+//        Event event = mapFrame.getEventPane().getSelectedEvent();
         if (event != null) {
             System.out.println("OK");
             System.out.println(event.getLayer());
             layerSelectCombo.setSelectedItem(event.getLayer());
         }
     }
+
+//    public void loadEvent() {
+//        Event event = mapFrame.getEventPane().getSelectedEvent();
+//        if (event != null) {
+//            System.out.println("OK");
+//            System.out.println(event.getLayer());
+//            layerSelectCombo.setSelectedItem(event.getLayer());
+//        }
+//    }
 
     public boolean isVisible() {
         return visible;

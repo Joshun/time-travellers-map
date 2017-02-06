@@ -34,6 +34,9 @@ public class MapFrame extends JFrame {
     /** Name assigned to toolbar button for map zoom out. */
     private static final String TOOLBAR_ZOOMOUT_BUTTON_NAME = "ToolbarZoomOutButton";
 
+    public static final int INITIAL_START_YEAR = 1900;
+    public static final int INITIAL_END_YEAR = 2000;
+
     private JMapPane mapPane;
     private JToolBar toolBar;
     private boolean uiSet;
@@ -231,9 +234,14 @@ public class MapFrame extends JFrame {
 
         eventPane.setPreferredSize(new Dimension(100, 300));
 
+        timelineWidget.addChangeListener(eventPane);
+        eventPane.addChangeListener(timelineWidget);
+
         mapPane.setPreferredSize(new Dimension(600, -1));
 
         annotatePane = new AnnotatePane(this);
+        eventPane.addSelectChangeListener(annotatePane);
+
         annotatePane.setPreferredSize(new Dimension(100, 300));
         eventAnnotateSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                 false,
