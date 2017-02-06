@@ -76,4 +76,10 @@ public class LayerList {
         mapContent.addLayers(layers);
     }
 
+    public void setEventsToDraw(ArrayList<Event> events) {
+        for (Layer layer: layers) {
+            layer.setEventsToDraw(events);
+        }
+    }
+
 }

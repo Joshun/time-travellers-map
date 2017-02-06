@@ -2,6 +2,7 @@ package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.overlay.Layer;
+import org.timetravellersmap.overlay.PointComponent;
 import org.timetravellersmap.timeline.Event;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class AddPoint extends JFrame {
 
     private JTextField longitudeEntry = new JTextField(10);
     private JTextField latitudeEntry = new JTextField(10);
-    private JSpinner diameterEntry = new JSpinner(new SpinnerNumberModel(4, 1, 10, 1));
+    private JSpinner radiusEntry = new JSpinner(new SpinnerNumberModel(4, 1, 10, 1));
 
     private JButton addPointButton = new JButton("Add point");
     private JButton cancelButton = new JButton("Cancel");
@@ -24,10 +25,13 @@ public class AddPoint extends JFrame {
 
     private NameAndDescriptionInput nameAndDescriptionInput = new NameAndDescriptionInput(this);
 
-    private MapFrame mapFrame;
+//    private MapFrame mapFrame;
+    private AnnotatePane annotatePane;
+    private Event event;
 
-    public AddPoint(MapFrame ancestorMapFrame) {
-        this.mapFrame = ancestorMapFrame;
+    public AddPoint(AnnotatePane annotatePane) {
+        this.annotatePane = annotatePane;
+        this.event = annotatePane.getSelectedEvent();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
@@ -59,7 +63,7 @@ public class AddPoint extends JFrame {
         gc.gridx = 1;
         gc.gridy = 2;
         gc.weighty = 0.2;
-        panel.add(diameterEntry, gc);
+        panel.add(radiusEntry, gc);
 
         gc.gridx = 0;
         gc.gridy = 3;
@@ -87,12 +91,17 @@ public class AddPoint extends JFrame {
 
         addPointButton.addActionListener(actionEvent -> {
             System.out.println("TODO: add point");
+            annotatePane.annotateEvent(event, createPointComponent());
         });
 
         cancelButton.addActionListener(actionEvent -> {
             this.dispose();
         });
 
+    }
+
+    private PointComponent createPointComponent() {
+        return new PointComponent(Double.valueOf(longitudeEntry.getText()), Double.valueOf(latitudeEntry.getText()), Double.valueOf((int)radiusEntry.getValue()));
     }
     public static void main(String[] args) {
 //        new AddPoint().setVisible(true);

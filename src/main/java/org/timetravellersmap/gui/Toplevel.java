@@ -79,7 +79,7 @@ public class Toplevel {
         mapContent.addLayer(layer);
 
         // Testing of custom layering system
-        LayerList layerList = new LayerList();
+//        LayerList layerList = new LayerList(layer);
 //        org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer("layer1");
         org.timetravellersmap.overlay.Layer defaultLayer = LayerList.DEFAULT_LAYER;
 //        LayerComponent layerComponent1 = new RectangleComponent(-100, 100, 200, 0);
@@ -96,8 +96,8 @@ public class Toplevel {
         ArrayList<Event> eventsToDraw = new ArrayList<>();
         eventsToDraw.add(wwii);
         defaultLayer.setEventsToDraw(eventsToDraw);
-        layerList.updateMapContent(mapContent);
-        layerList.removeLayer(defaultLayer);
+//        layerList.updateMapContent(mapContent);
+//        layerList.removeLayer(defaultLayer);
     }
 
     public void show() {

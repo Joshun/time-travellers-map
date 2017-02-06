@@ -3,6 +3,7 @@ package org.timetravellersmap.overlay;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
+import org.geotools.map.event.MapLayerEvent;
 import org.timetravellersmap.Annotation;
 import org.timetravellersmap.gui.eventpane.AnnotatePane;
 import org.timetravellersmap.timeline.Event;
@@ -36,19 +37,24 @@ public class Layer extends org.geotools.map.DirectLayer {
         else {
             componentArrayList.add(component);
         }
+        fireChanged();
+        System.out.println(eventLayerComponents);
     }
 
     public void removeComponent(LayerComponent component, Event associatedEvent) {
         ArrayList<LayerComponent> componentArrayList = eventLayerComponents.get(associatedEvent);
         componentArrayList.remove(component);
+        fireChanged();
     }
     
     public void setEventsToDraw(ArrayList<Event> eventsToDraw) {
         this.eventsToDraw = eventsToDraw;
+        fireChanged();
     }
     
     public void clearEventsToDraw() {
         this.eventsToDraw = null;
+        fireChanged();
     }
 
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
@@ -65,6 +71,10 @@ public class Layer extends org.geotools.map.DirectLayer {
 //            System.out.println("Trying to draw " + layerComponent.toString());
 //            layerComponent.draw(graphics2D, mapContent, mapViewport);
 //        }
+    }
+
+    private void fireChanged() {
+        fireMapLayerListenerLayerChanged(MapLayerEvent.DATA_CHANGED);
     }
 
     public ReferencedEnvelope getBounds() {

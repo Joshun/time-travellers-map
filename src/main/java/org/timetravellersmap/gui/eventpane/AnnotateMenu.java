@@ -16,12 +16,13 @@ public class AnnotateMenu extends JPopupMenu {
 
     private boolean visible = false;
 
-    private MapFrame mapFrame;
+//    private MapFrame mapFrame;
+    private AnnotatePane annotatePane;
 
-    public AnnotateMenu(MapFrame ancestorMapFrame) {
-        this.mapFrame = ancestorMapFrame;
+    public AnnotateMenu(AnnotatePane parentAnnotatePane) {
+        this.annotatePane = parentAnnotatePane;
         newPointerAction.addActionListener(actionEvent ->  {
-            new AddPoint(ancestorMapFrame).setVisible(true);
+            new AddPoint(annotatePane).setVisible(true);
         });
         newRectangleAction.addActionListener(actionEvent -> {
             System.out.println("TODO: create new rectangle");

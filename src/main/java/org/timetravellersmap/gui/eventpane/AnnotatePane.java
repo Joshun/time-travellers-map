@@ -2,6 +2,7 @@ package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.overlay.Layer;
+import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.timeline.*;
 import org.timetravellersmap.timeline.Event;
 
@@ -28,8 +29,10 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
 
     private boolean visible = false;
 
+    private Event selectedEvent = null;
+
     public AnnotatePane(MapFrame parentMapFrame) {
-        this.annotateMenu = new AnnotateMenu(parentMapFrame);
+        this.annotateMenu = new AnnotateMenu(this);
         this.mapFrame = parentMapFrame;
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
@@ -130,7 +133,18 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
             System.out.println("OK");
             System.out.println(event.getLayer());
             layerSelectCombo.setSelectedItem(event.getLayer());
+            selectedEvent = event;
         }
+    }
+
+    public Event getSelectedEvent() {
+        return selectedEvent;
+    }
+
+    public void annotateEvent(Event event, LayerComponent layerComponent) {
+        System.out.println(event);
+        Layer eventLayer = event.getLayer();
+        eventLayer.addComponent(layerComponent, event);
     }
 
 //    public void loadEvent() {

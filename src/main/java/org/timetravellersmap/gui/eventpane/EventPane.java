@@ -3,6 +3,8 @@ package org.timetravellersmap.gui.eventpane;
 import org.timetravellersmap.Annotation;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.TimelineWidget;
+import org.timetravellersmap.overlay.Layer;
+import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.timeline.*;
 import org.timetravellersmap.timeline.Event;
 
@@ -362,6 +364,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         setContextDependentButtonsEnabled(false);
         System.out.println("Changing to year " + year + "...");
         replaceCurrentEvents(year);
+        mapFrame.getLayerList().setEventsToDraw(currentEvents);
     }
 
     private void replaceCurrentEvents(int pointerYear) {
