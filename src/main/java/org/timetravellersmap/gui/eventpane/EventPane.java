@@ -328,12 +328,6 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         editEventButton.setEnabled(enabled);
         removeEventButton.setEnabled(enabled);
         toggleAnnotationButton.setEnabled(enabled);
-
-//        // Hide annotation pane when buttons are disabled if it shown
-//        if (!enabled && mapFrame.getAnnotatePane() != null && mapFrame.getAnnotatePane().isVisible()) {
-//            mapFrame.toggleAnnotatePane();
-//        }
-//        annotateEventButton.setEnabled(enabled);
     }
 
     public Event getSelectedEvent() {
