@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
+import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerList;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class LayerManager extends JFrame {
     private JButton moveDownButton = new JButton("Move down");
 
     private JTable layerTable = new JTable();
+    private TableModel layerTableModel;
     private JScrollPane layerTableContainer = new JScrollPane(layerTable);
     private String[] layerTableColumns = {"Index", "Name"};
 
@@ -24,8 +26,42 @@ public class LayerManager extends JFrame {
 
     public LayerManager(LayerList layerList) {
         this.layerList = layerList;
+        layerTableModel = new LayerTableModel(this.layerList);
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
+
+        addLayerButton.addActionListener(actionEvent -> {
+            String layerName = JOptionPane.showInputDialog(this, "Layer name", "New layer", JOptionPane.PLAIN_MESSAGE);
+            layerList.addLayer(new Layer(layerName));
+            layerTable.updateUI();
+        });
+
+        removeLayerButton.addActionListener(actionEvent -> {
+            Layer layer = getSelectedLayer();
+            if (layer != null) {
+                layerList.removeLayer(getSelectedLayer());
+                layerTable.updateUI();
+                layerTable.clearSelection();
+            }
+        });
+
+        moveUpButton.addActionListener(actionEvent -> {
+            Layer layer = getSelectedLayer();
+            if (layer != null) {
+                layerList.moveLayerUp(getSelectedLayer());
+                layerTable.updateUI();
+                layerTable.clearSelection();
+            }
+        });
+
+        moveDownButton.addActionListener(actionEvent -> {
+            Layer layer = getSelectedLayer();
+            if (layer != null) {
+                layerList.moveLayerDown(getSelectedLayer());
+                layerTable.updateUI();
+                layerTable.clearSelection();
+            }
+        });
 
         gc.gridx = 0;
         gc.gridy = 0;
@@ -103,5 +139,14 @@ public class LayerManager extends JFrame {
 //            }
 //        });
         pack();
+    }
+    private Layer getSelectedLayer() {
+        int layerIndex = layerTable.getSelectedRow();
+        if (layerIndex != -1) {
+            return layerList.getLayerAtPosition(layerIndex);
+        }
+        else {
+            return null;
+        }
     }
 }

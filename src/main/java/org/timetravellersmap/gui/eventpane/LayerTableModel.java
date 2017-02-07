@@ -44,7 +44,7 @@ public class LayerTableModel implements TableModel {
     @Override
     public Object getValueAt(int i, int i1) {
         if (i1 == 0) {
-            return i1;
+            return i;
         }
         else {
             return layerList.getLayerAtPosition(i).getName();

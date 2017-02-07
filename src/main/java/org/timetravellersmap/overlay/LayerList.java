@@ -47,6 +47,26 @@ public class LayerList {
         Collections.swap(layers, layers.indexOf(layer1), layers.indexOf(layer2));
     }
 
+    public void moveLayerDown(Layer layer) {
+        int layerIndex = layers.indexOf(layer);
+        if (moreThanOneLayer() && layerIndex != layers.size()-1) {
+            Layer layerToSwap = layers.get(layerIndex+1);
+            swapLayers(layer, layerToSwap);
+        }
+    }
+
+    public void moveLayerUp(Layer layer) {
+        int layerIndex = layers.indexOf(layer);
+        if (moreThanOneLayer() && layerIndex != 0) {
+            Layer layerToSwap = layers.get(layerIndex-1);
+            swapLayers(layer, layerToSwap);
+        }
+    }
+
+    private boolean moreThanOneLayer() {
+        return layers.size() > 1;
+    }
+
     public int getLayerPosition(Layer layer) {
         return layers.indexOf(layer);
     }
