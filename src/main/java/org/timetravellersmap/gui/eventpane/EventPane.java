@@ -207,9 +207,9 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         toggleAnnotationButton.addActionListener(actionEvent -> {
 //            mapFrame.getAnnotatePane().toggleVisibleState();
             mapFrame.toggleAnnotatePane();
-            if (!mapFrame.getAnnotatePane().isVisible()) {
-                eventSelected = false;
-            }
+//            if (!mapFrame.getAnnotatePane().isVisible()) {
+//                eventSelected = false;
+//            }
         });
 
         showLayerManagerButton.addActionListener(actionEvent -> {
@@ -362,6 +362,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
             eventSelected = false;
         }
         setContextDependentButtonsEnabled(false);
+        mapFrame.setAnnotatePaneVisible(false);
         System.out.println("Changing to year " + year + "...");
         replaceCurrentEvents(year);
         mapFrame.getLayerList().setEventsToDraw(currentEvents);

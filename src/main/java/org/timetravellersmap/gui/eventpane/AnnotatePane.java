@@ -127,6 +127,11 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         return visible;
     }
 
+   public void setVisibilityState(boolean visible) {
+        this.visible = visible;
+        setVisible(visible);
+   }
+
     public void eventDeselected() {
         System.out.println("DESELECT");
 //        visible = false;

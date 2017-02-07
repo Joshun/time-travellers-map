@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
+import org.geotools.map.Layer;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.PointComponent;
 import org.timetravellersmap.timeline.Event;
@@ -20,10 +21,14 @@ public class AnnotationTableModel implements TableModel {
     }
 
     public void loadEventLayerComponents(Event event) {
-        layerComponents = event.getLayer().getEventLayerComponents(event);
+        ArrayList<LayerComponent> newEventLayerComponents = event.getLayer().getEventLayerComponents(event);
+        if (newEventLayerComponents != null) {
+            layerComponents = event.getLayer().getEventLayerComponents(event);
+        }
     }
 
     public void clearEventLayerComponents() {
+        System.out.println("CLEAR");
         layerComponents.clear();
     }
 

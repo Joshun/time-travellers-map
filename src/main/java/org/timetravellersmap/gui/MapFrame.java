@@ -305,7 +305,12 @@ public class MapFrame extends JFrame {
     }
 
     public void toggleAnnotatePane() {
-        if (annotatePane.toggleVisibleState()) {
+       setAnnotatePaneVisible(!annotatePane.isVisible());
+    }
+
+    public void setAnnotatePaneVisible(boolean visible) {
+        annotatePane.setVisibilityState(visible);
+        if (visible) {
             eventAnnotateSplitPane.setDividerLocation(300);
         }
         else {
