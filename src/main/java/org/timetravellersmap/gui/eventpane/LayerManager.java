@@ -29,6 +29,7 @@ public class LayerManager extends JFrame {
     private ArrayList<LayerChangeListener> changeListeners = new ArrayList<>();
 
     public LayerManager(LayerList layerList) {
+        setTitle("Manage Layers");
         this.layerList = layerList;
         layerTableModel = new LayerTableModel(this.layerList);
         setLayout(new GridBagLayout());
