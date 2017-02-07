@@ -22,6 +22,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
     private JButton removeAnnotationButton = new JButton("Remove");
     private JComboBox<Layer> layerSelectCombo = new JComboBox<>();
     private JTable annotationTable = new JTable();
+    private AnnotationTableModel annotationTableModel = new AnnotationTableModel();
     private JScrollPane annotationTableContainer = new JScrollPane(annotationTable);
     private String[] annotationTableHeadings = {"Type", "Name"};
 
@@ -47,6 +48,11 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
                 int y = btn.getY() + btn.getHeight();
                 annotateMenu.show(this, x, y);
             }
+        });
+
+        removeAnnotationButton.addActionListener(actionEvent -> {
+            selectedEvent.getLayer().removeComponent(getSelectedAnnotation(), selectedEvent);
+            annotationsChanged();
         });
 
         gc.anchor = GridBagConstraints.PAGE_START;
@@ -103,6 +109,9 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         gc.weighty = 0.9;
         gc.ipady = 0;
         this.add(annotationTableContainer, gc);
+
+        annotationTable.setModel(annotationTableModel);
+
         annotationTable.setFillsViewportHeight(true);
         annotationTableContainer.setMinimumSize(new Dimension(300, 100));
 
@@ -124,6 +133,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
 //        setVisible(false);
         if (visible) {
             mapFrame.toggleAnnotatePane();
+            annotationTableModel.clearEventLayerComponents();
         }
     }
 
@@ -134,11 +144,27 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
             System.out.println(event.getLayer());
             layerSelectCombo.setSelectedItem(event.getLayer());
             selectedEvent = event;
+            annotationTableModel.loadEventLayerComponents(event);
         }
     }
 
     public Event getSelectedEvent() {
         return selectedEvent;
+    }
+
+    private LayerComponent getSelectedAnnotation() {
+        int layerComponentReference = annotationTable.getSelectedRow();
+        if (layerComponentReference != -1) {
+            return selectedEvent.getLayer().getEventLayerComponents(selectedEvent).get(layerComponentReference);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public void annotationsChanged() {
+        annotationTableModel.loadEventLayerComponents(selectedEvent);
+        annotationTable.updateUI();
     }
 
 //    public void annotateEvent(Event event, LayerComponent layerComponent) {

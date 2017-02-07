@@ -73,6 +73,10 @@ public class Layer extends org.geotools.map.DirectLayer {
 //        }
     }
 
+    public ArrayList<LayerComponent> getEventLayerComponents(Event event) {
+        return eventLayerComponents.get(event);
+    }
+
     private void fireChanged() {
         fireMapLayerListenerLayerChanged(MapLayerEvent.DATA_CHANGED);
     }

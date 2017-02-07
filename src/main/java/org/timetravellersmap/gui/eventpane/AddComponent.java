@@ -51,6 +51,7 @@ public abstract class AddComponent extends JFrame {
 
         addButton.addActionListener(actionEvent -> {
             addLayerComponent();
+            annotatePane.annotationsChanged();
             dispose();
         });
 
