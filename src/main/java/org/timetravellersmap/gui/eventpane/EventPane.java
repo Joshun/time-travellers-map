@@ -205,30 +205,13 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         });
 
         toggleAnnotationButton.addActionListener(actionEvent -> {
-//            mapFrame.getAnnotatePane().toggleVisibleState();
-            mapFrame.toggleAnnotatePane();
-//            if (!mapFrame.getAnnotatePane().isVisible()) {
-//                eventSelected = false;
-//            }
+            mapFrame.getAnnotatePane().toggleVisibleState();
         });
 
         showLayerManagerButton.addActionListener(actionEvent -> {
             new LayerManager(mapFrame.getLayerList()).setVisible(true);
         });
 
-//        annotateEventButton.addActionListener(actionEvent ->  {
-//            System.out.println("Annotate");
-//            Event event = getSelectedEvent();
-//            if (event != null) {
-//                JButton btn = (JButton) actionEvent.getSource();
-//                // Spawn popup annotate menu underneath button
-//                int x = btn.getX();
-//                int y = btn.getY() + btn.getHeight();
-//                annotateMenu.show(parentEventPane, x, y);
-//            }
-//        });
-
-//        gc.insets = new Insets(5, 0, 5, 0);
         gc.anchor = GridBagConstraints.PAGE_START;
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.gridwidth = 1;
@@ -251,11 +234,6 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         gc.weightx = 0.5;
         gc.weighty = 0.1;
         this.add(editEventButton, gc);
-
-//        gc.gridx = 3;
-//        gc.gridy = 0;
-//        gc.weightx = 0.5;
-//        this.add(annotateEventButton, gc);
 
         gc.gridx = 3;
         gc.gridy = 0;
@@ -326,7 +304,6 @@ public class EventPane extends JPanel implements TimelineChangeListener {
     }
 
     private void setContextDependentButtonsEnabled(boolean enabled) {
-        System.out.println("toggle");
         editEventButton.setEnabled(enabled);
         removeEventButton.setEnabled(enabled);
         toggleAnnotationButton.setEnabled(enabled);
@@ -356,14 +333,13 @@ public class EventPane extends JPanel implements TimelineChangeListener {
     }
 
     public void timelineChanged(int year) {
+        // Deselect event selection
         if (eventSelected) {
             fireSelectChangeListenersDeselect();
             eventTable.clearSelection();
             eventSelected = false;
         }
         setContextDependentButtonsEnabled(false);
-        mapFrame.setAnnotatePaneVisible(false);
-        System.out.println("Changing to year " + year + "...");
         replaceCurrentEvents(year);
         mapFrame.getLayerList().setEventsToDraw(currentEvents);
     }

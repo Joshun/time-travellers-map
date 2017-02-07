@@ -39,9 +39,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         GridBagConstraints gc = new GridBagConstraints();
 
         addAnnotationButton.addActionListener(actionEvent ->  {
-            System.out.println("Annotate");
-            org.timetravellersmap.timeline.Event event = mapFrame.getEventPane().getSelectedEvent();
-            if (event != null) {
+            if (selectedEvent != null) {
                 JButton btn = (JButton) actionEvent.getSource();
                 // Spawn popup annotate menu underneath button
                 int x = btn.getX();
@@ -72,13 +70,6 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         gc.weighty = 0.1;
         this.add(removeAnnotationButton, gc);
 
-//        gc.gridx = 2;
-//        gc.gridy = 0;
-//        gc.weightx = 0.5;
-//        gc.weighty = 0.1;
-//        this.add(manageLayersButton, gc);
-
-
         gc.gridx = 2;
         gc.gridy = 0;
         gc.weightx = 0.5;
@@ -91,16 +82,6 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         gc.weighty = 0.1;
         add(layerSelectCombo, gc);
         layerSelectCombo.setModel(new LayerComboBoxModel(mapFrame.getLayerList()));
-
-//        gc.gridx = 1;
-//        gc.gridy = 1;
-//        gc.gridwidth = 2;
-//        add(layerSelectCombo, gc);
-//        layerSelectCombo.setModel(new LayerComboBoxModel(mapFrame.getLayerList()));
-//        if (mapFrame.getEventPane().getSelectedEvent() != null) {
-//            layerSelectCombo.setSelectedItem(mapFrame.getEventPane().getSelectedEvent().getLayer());
-//        }
-//        loadEvent();
 
         gc.gridx = 0;
         gc.gridy = 2;
@@ -115,41 +96,32 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         annotationTable.setFillsViewportHeight(true);
         annotationTableContainer.setMinimumSize(new Dimension(300, 100));
 
-//        annotationTable.setModel(new LayerTableModel(mapFrame.getLayerList()));
-        System.out.println(mapFrame.getLayerList().getCount());
     }
 
     public boolean toggleVisibleState() {
-        visible = !visible;
-        System.out.println("AnnotatePane.visible="+visible);
-//        loadEvent();
-        setVisible(visible);
+        setVisibilityState(!visible);
         return visible;
     }
 
    public void setVisibilityState(boolean visible) {
-        this.visible = visible;
-        setVisible(visible);
+       System.out.println("AnnotatePane.visible="+visible);
+       this.visible = visible;
+       setVisible(visible);
+       mapFrame.changeAnnotateDividerState(visible);
    }
 
     public void eventDeselected() {
-        System.out.println("DESELECT");
-//        visible = false;
-//        setVisible(false);
-        if (visible) {
-            mapFrame.toggleAnnotatePane();
-            annotationTableModel.clearEventLayerComponents();
-        }
+        selectedEvent = null;
+        annotationTable.clearSelection();
+        setVisibilityState(false);
     }
 
     public void eventSelected(Event event) {
-//        Event event = mapFrame.getEventPane().getSelectedEvent();
         if (event != null) {
-            System.out.println("OK");
             System.out.println(event.getLayer());
             layerSelectCombo.setSelectedItem(event.getLayer());
             selectedEvent = event;
-            annotationTableModel.loadEventLayerComponents(event);
+            annotationsChanged();
         }
     }
 
@@ -168,24 +140,11 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
     }
 
     public void annotationsChanged() {
+        annotationTable.clearSelection();
         annotationTableModel.loadEventLayerComponents(selectedEvent);
         annotationTable.updateUI();
     }
 
-//    public void annotateEvent(Event event, LayerComponent layerComponent) {
-//        System.out.println(event);
-//        Layer eventLayer = event.getLayer();
-//        eventLayer.addComponent(layerComponent, event);
-//    }
-
-//    public void loadEvent() {
-//        Event event = mapFrame.getEventPane().getSelectedEvent();
-//        if (event != null) {
-//            System.out.println("OK");
-//            System.out.println(event.getLayer());
-//            layerSelectCombo.setSelectedItem(event.getLayer());
-//        }
-//    }
 
     public boolean isVisible() {
         return visible;

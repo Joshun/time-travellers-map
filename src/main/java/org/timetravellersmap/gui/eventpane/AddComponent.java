@@ -23,7 +23,9 @@ public abstract class AddComponent extends JFrame {
     protected abstract LayerComponent createLayerComponent();
 
     private void addLayerComponent() {
+        System.out.println("ADDD");
         event.getLayer().addComponent(createLayerComponent(), event);
+        System.out.println(event.getLayer().getEventLayerComponents(event));
     }
 
 

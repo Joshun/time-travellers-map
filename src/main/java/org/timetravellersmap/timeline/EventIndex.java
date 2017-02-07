@@ -117,7 +117,6 @@ public class EventIndex {
 
         // If the endYear map is empty, clean up the startYear index entry
         if (endYearMap.size() == 0) {
-            System.out.println("map " + endYearMap);
             startYearIndex.remove(startYear);
         }
         reduceYearCounts(startYear, endYear);

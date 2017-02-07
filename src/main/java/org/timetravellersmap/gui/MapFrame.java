@@ -248,12 +248,7 @@ public class MapFrame extends JFrame {
                 eventPane,
                 annotatePane);
         annotatePane.setVisible(false);
-//        eventAnnotateSplitPane.setDividerLocation(300);
 
-//        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-//                false,
-//                mapPane,
-//                eventPane);
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 false,
                 mapPane,
@@ -292,25 +287,12 @@ public class MapFrame extends JFrame {
     }
 
 
-    public void redrawTimeline() {
-        timelineWidget.redraw();
-    }
-
-    public void addEventToIndex(Event e) {
-        eventIndex.addEvent(e);
-    }
-
     public void removeEventFromIndex(Event e) {
         eventIndex.removeEvent(e);
     }
 
-    public void toggleAnnotatePane() {
-       setAnnotatePaneVisible(!annotatePane.isVisible());
-    }
-
-    public void setAnnotatePaneVisible(boolean visible) {
-        annotatePane.setVisibilityState(visible);
-        if (visible) {
+    public void changeAnnotateDividerState(boolean shown) {
+        if (shown) {
             eventAnnotateSplitPane.setDividerLocation(300);
         }
         else {
