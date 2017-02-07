@@ -39,12 +39,19 @@ public class Layer extends org.geotools.map.DirectLayer {
         System.out.println(eventLayerComponents);
     }
 
+    public void addEventLayerComponents(ArrayList<LayerComponent> layerComponents, Event associatedEvent) {
+        if (!eventLayerComponents.containsKey(associatedEvent)) {
+            eventLayerComponents.put(associatedEvent, new ArrayList<LayerComponent>());
+        }
+        eventLayerComponents.get(associatedEvent).addAll(layerComponents);
+    }
+
     public void removeComponent(LayerComponent component, Event associatedEvent) {
         ArrayList<LayerComponent> componentArrayList = eventLayerComponents.get(associatedEvent);
         componentArrayList.remove(component);
         fireChanged();
     }
-    
+
     public void setEventsToDraw(ArrayList<Event> eventsToDraw) {
         this.eventsToDraw = eventsToDraw;
         fireChanged();
@@ -73,6 +80,10 @@ public class Layer extends org.geotools.map.DirectLayer {
 
     public ArrayList<LayerComponent> getEventLayerComponents(Event event) {
         return eventLayerComponents.get(event);
+    }
+
+    public void removeEventComponents(Event event) {
+        eventLayerComponents.remove(event);
     }
 
     private void fireChanged() {

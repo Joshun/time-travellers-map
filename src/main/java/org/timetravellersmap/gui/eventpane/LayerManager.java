@@ -2,11 +2,13 @@ package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerList;
+import org.timetravellersmap.timeline.LayerChangeListener;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by joshua on 02/02/17.
@@ -23,6 +25,8 @@ public class LayerManager extends JFrame {
     private String[] layerTableColumns = {"Index", "Name"};
 
     private LayerList layerList;
+
+    private ArrayList<LayerChangeListener> changeListeners = new ArrayList<>();
 
     public LayerManager(LayerList layerList) {
         this.layerList = layerList;
@@ -147,6 +151,20 @@ public class LayerManager extends JFrame {
         }
         else {
             return null;
+        }
+    }
+
+    public void addLayerChangeListener(LayerChangeListener layerChangeListener) {
+        changeListeners.add(layerChangeListener);
+    }
+
+    public void removeLayerChangeListener(LayerChangeListener layerChangeListener) {
+        changeListeners.remove(layerChangeListener);
+    }
+
+    public void fireChangeListeners() {
+        for (LayerChangeListener changeListener: changeListeners) {
+            changeListener.layerChanged();
         }
     }
 }

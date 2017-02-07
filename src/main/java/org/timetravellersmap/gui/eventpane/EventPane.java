@@ -205,7 +205,9 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         });
 
         showLayerManagerButton.addActionListener(actionEvent -> {
-            new LayerManager(mapFrame.getLayerList()).setVisible(true);
+            LayerManager layerManager =  new LayerManager(mapFrame.getLayerList());
+            layerManager.addLayerChangeListener(mapFrame.getAnnotatePane());
+            layerManager.setVisible(true);
         });
 
         gc.anchor = GridBagConstraints.PAGE_START;

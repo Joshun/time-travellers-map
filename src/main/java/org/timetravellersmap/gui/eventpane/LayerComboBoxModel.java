@@ -18,6 +18,11 @@ public class LayerComboBoxModel implements ComboBoxModel {
         this.layerList = layerList;
     }
 
+    public void setLayerList(LayerList layerList) {
+        this.layerList = layerList;
+        selectedLayer = null;
+    }
+
     @Override
     public void setSelectedItem(Object o) {
         selectedLayer = (Layer)o;

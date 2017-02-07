@@ -102,4 +102,11 @@ public class LayerList {
         }
     }
 
+    public void moveEventToLayer(Event event, Layer newLayer) {
+        Layer currentLayer = event.getLayer();
+        ArrayList<LayerComponent> layerComponents = currentLayer.getEventLayerComponents(event);
+        newLayer.addEventLayerComponents(layerComponents, event);
+        currentLayer.removeEventComponents(event);
+    }
+
 }

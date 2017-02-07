@@ -13,7 +13,7 @@ import java.awt.*;
 /**
  * Created by joshua on 01/02/17.
  */
-public class AnnotatePane extends JPanel implements EventSelectChangeListener {
+public class AnnotatePane extends JPanel implements EventSelectChangeListener, LayerChangeListener {
     private AnnotateMenu annotateMenu;
     private JButton addAnnotationButton = new JButton("Add...");
     private JButton removeAnnotationButton = new JButton("Remove");
@@ -22,6 +22,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
     private AnnotationTableModel annotationTableModel = new AnnotationTableModel();
     private JScrollPane annotationTableContainer = new JScrollPane(annotationTable);
     private String[] annotationTableHeadings = {"Type", "Name"};
+
+    private LayerComboBoxModel layerComboBoxModel;
 
     private MapFrame mapFrame;
 
@@ -48,6 +50,13 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         removeAnnotationButton.addActionListener(actionEvent -> {
             selectedEvent.getLayer().removeComponent(getSelectedAnnotation(), selectedEvent);
             annotationsChanged();
+        });
+
+        layerSelectCombo.addItemListener(itemEvent -> {
+            Layer selectedLayer = (Layer)itemEvent.getItem();
+            if (selectedEvent != null) {
+                mapFrame.getLayerList().moveEventToLayer(selectedEvent, selectedLayer);
+            }
         });
 
         gc.anchor = GridBagConstraints.PAGE_START;
@@ -78,7 +87,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
         gc.weightx = 0.5;
         gc.weighty = 0.1;
         add(layerSelectCombo, gc);
-        layerSelectCombo.setModel(new LayerComboBoxModel(mapFrame.getLayerList()));
+        layerComboBoxModel = new LayerComboBoxModel(mapFrame.getLayerList());
+        layerSelectCombo.setModel(layerComboBoxModel);
 
         gc.gridx = 0;
         gc.gridy = 2;
@@ -139,11 +149,15 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener {
     public void annotationsChanged() {
         annotationTable.clearSelection();
         annotationTableModel.loadEventLayerComponents(selectedEvent);
-        annotationTable.updateUI();
+//        annotationTable.updateUI();
     }
 
 
     public boolean isVisible() {
         return visible;
+    }
+
+    public void layerChanged() {
+        layerSelectCombo.updateUI();
     }
 }
