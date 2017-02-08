@@ -42,7 +42,7 @@ public class MapFrame extends JFrame {
     private boolean uiSet;
 
     private EventIndex eventIndex = new EventIndex();
-    private LayerList layerList = new LayerList();
+    private LayerList layerList;
     private EventPane eventPane;
     private AnnotatePane annotatePane;
     private JSplitPane eventAnnotateSplitPane;
@@ -54,6 +54,8 @@ public class MapFrame extends JFrame {
         // Constructor code adapted from org.geotools.swing.JMapFrame example
         super(content == null ? "" : content.getTitle());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        layerList = new LayerList(content);
 
 //        showStatusBar = false;
 //        showToolBar = false;

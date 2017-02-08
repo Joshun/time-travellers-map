@@ -8,6 +8,10 @@ import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.core.event.Event;
 
 import javax.swing.*;
+import javax.swing.event.ListDataListener;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 import java.awt.*;
 
 /**
@@ -56,6 +60,15 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
             Layer selectedLayer = (Layer)itemEvent.getItem();
             if (selectedEvent != null) {
                 mapFrame.getLayerList().moveEventToLayer(selectedEvent, selectedLayer);
+            }
+        });
+
+        layerSelectCombo.setRenderer(new ListCellRenderer<Layer>() {
+            @Override
+            public Component getListCellRendererComponent(JList<? extends Layer> jList, Layer layer, int i, boolean b, boolean b1) {
+                DefaultListCellRenderer defaultListCellRenderer = new DefaultListCellRenderer();
+                JLabel renderer = (JLabel) defaultListCellRenderer.getListCellRendererComponent(jList, layer.getName(), i, b, b1);
+                return renderer;
             }
         });
 

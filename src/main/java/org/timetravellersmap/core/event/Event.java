@@ -79,6 +79,10 @@ public class Event {
         return layer;
     }
 
+    public void setLayer(Layer layer) {
+        this.layer = layer;
+    }
+
     public String toString() {
         return "event start="+getStartDateAsYear()+" end="+getEndDateAsYear()+" annotation="+eventAnnotation;
     }

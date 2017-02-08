@@ -14,19 +14,21 @@ import java.util.*;
 public class LayerList {
 //    private TreeMap<Layer,Integer> layers = new TreeMap<>();
     private ArrayList<Layer> layers = new ArrayList<Layer>();
-//    private MapContent mapContent;
+    private MapContent mapContent;
 
     private MapFrame mapFrame;
     // This is the default layer, for usability and stability this cannot be removed
     public final static Layer DEFAULT_LAYER = new Layer("Default");
 
-    public LayerList() {
+    public LayerList(MapContent mapContent) {
+        this.mapContent = mapContent;
         // By default there is one layer
         layers.add(DEFAULT_LAYER);
     }
 
     public void addLayer(Layer layer) {
         layers.add(layer);
+        updateMapContent(mapContent);
     }
 
 //    public void removeLayer(int orderIndex) {
@@ -41,10 +43,12 @@ public class LayerList {
         else {
             System.out.println("Refusing request to remove default layer.");
         }
+        updateMapContent(mapContent);
     }
 
     public void swapLayers(Layer layer1, Layer layer2) {
         Collections.swap(layers, layers.indexOf(layer1), layers.indexOf(layer2));
+        updateMapContent(mapContent);
     }
 
     public void moveLayerDown(Layer layer) {
@@ -107,6 +111,7 @@ public class LayerList {
         ArrayList<LayerComponent> layerComponents = currentLayer.getEventLayerComponents(event);
         newLayer.addEventLayerComponents(layerComponents, event);
         currentLayer.removeEventComponents(event);
+        event.setLayer(newLayer);
     }
 
 }

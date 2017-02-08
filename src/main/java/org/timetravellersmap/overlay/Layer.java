@@ -40,10 +40,15 @@ public class Layer extends org.geotools.map.DirectLayer {
     }
 
     public void addEventLayerComponents(ArrayList<LayerComponent> layerComponents, Event associatedEvent) {
-        if (!eventLayerComponents.containsKey(associatedEvent)) {
-            eventLayerComponents.put(associatedEvent, new ArrayList<LayerComponent>());
+        if (layerComponents == null) {
+            return;
         }
-        eventLayerComponents.get(associatedEvent).addAll(layerComponents);
+        eventLayerComponents.put(associatedEvent, layerComponents);
+
+//        if (!eventLayerComponents.containsKey(associatedEvent)) {
+//            eventLayerComponents.put(associatedEvent, new ArrayList<LayerComponent>());
+//        }
+//        eventLayerComponents.get(associatedEvent).addAll(layerComponents);
     }
 
     public void removeComponent(LayerComponent component, Event associatedEvent) {
