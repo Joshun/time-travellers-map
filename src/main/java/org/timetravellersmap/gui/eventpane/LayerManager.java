@@ -2,7 +2,7 @@ package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerList;
-import org.timetravellersmap.timeline.LayerChangeListener;
+import org.timetravellersmap.overlay.LayerChangeListener;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;

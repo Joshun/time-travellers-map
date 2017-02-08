@@ -5,6 +5,7 @@ import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.eventpane.LayerComboBoxModel;
 import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerComponent;
+import org.timetravellersmap.overlay.LayerChangeListener;
 import org.timetravellersmap.core.event.Event;
 
 import javax.swing.*;
