@@ -1,18 +1,14 @@
 package org.timetravellersmap.gui.eventpane;
 
-import org.timetravellersmap.Annotation;
+import org.timetravellersmap.core.Annotation;
 import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.timeline.Event;
-import org.timetravellersmap.timeline.EventChangeListener;
-import org.timetravellersmap.timeline.EventIndex;
+import org.timetravellersmap.core.event.Event;
+import org.timetravellersmap.core.event.EventChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**

@@ -1,6 +1,6 @@
-package org.timetravellersmap.timeline;
+package org.timetravellersmap.core.event;
 
-import org.timetravellersmap.Annotation;
+import org.timetravellersmap.core.Annotation;
 
 import java.util.*;
 

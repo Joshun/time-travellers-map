@@ -1,10 +1,9 @@
 package org.timetravellersmap.gui.eventpane;
 
-import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.overlay.Layer;
+import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.PointComponent;
-import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.core.event.Event;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,9 +1,8 @@
 package org.timetravellersmap.gui.eventpane;
 
-import net.miginfocom.layout.Grid;
-import org.timetravellersmap.overlay.Layer;
+import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.overlay.LayerComponent;
-import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.core.event.Event;
 
 import javax.swing.*;
 import java.awt.*;

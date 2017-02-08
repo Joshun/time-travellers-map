@@ -5,11 +5,11 @@ import org.geotools.map.MapContent;
 import org.geotools.swing.JMapPane;
 import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
-import org.timetravellersmap.gui.eventpane.AnnotatePane;
+import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.overlay.LayerList;
-import org.timetravellersmap.timeline.EventIndex;
-import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.core.event.EventIndex;
+import org.timetravellersmap.core.event.Event;
 
 
 import javax.swing.*;
@@ -18,7 +18,7 @@ import java.awt.event.*;
 
 /**
  * MapFrame: the GUI component in which the main GUI components reside
- * Based off Geotools' JMapFrame but customising to include timeline and other components
+ * Based off Geotools' JMapFrame but customising to include core and other components
  */
 public class MapFrame extends JFrame {
     /** Name assigned to toolbar button for feature info queries. */
@@ -192,7 +192,7 @@ public class MapFrame extends JFrame {
 
         eventPane = new EventPane(this);
 
-        // Here the timeline widget will be configured
+        // Here the core widget will be configured
         timelineWidget = new TimelineWidget(1900, 2000, 600, 50, this);
 //        eventPane.setTimelineWidget(timelineWidget);
 

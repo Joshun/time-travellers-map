@@ -4,9 +4,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
 import org.geotools.map.event.MapLayerEvent;
-import org.timetravellersmap.Annotation;
-import org.timetravellersmap.gui.eventpane.AnnotatePane;
-import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.core.event.Event;
 
 import java.awt.*;
 import java.util.ArrayList;

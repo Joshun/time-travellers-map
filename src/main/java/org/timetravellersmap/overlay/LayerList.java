@@ -3,7 +3,7 @@ package org.timetravellersmap.overlay;
 
 import org.geotools.map.MapContent;
 import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.core.event.Event;
 
 import java.util.*;
 

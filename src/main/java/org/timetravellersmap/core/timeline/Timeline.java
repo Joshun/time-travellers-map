@@ -1,13 +1,13 @@
-package org.timetravellersmap.timeline;
+package org.timetravellersmap.core.timeline;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Timeline: an iterable object for generating timeline rulers
+ * Timeline: an iterable object for generating core rulers
  * The minor intervals are the small lines, e.g. 1 year, and the major intervals large lines,
  * e.g. 10 years
- * Used by TimelineWidget to draw the timeline ruler
+ * Used by TimelineWidget to draw the core ruler
  */
 public class Timeline implements Iterable<TimelineCursor> {
     private double start;

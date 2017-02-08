@@ -1,4 +1,4 @@
-package org.timetravellersmap;
+package org.timetravellersmap.core;
 
 /**
  * Annotation: representation of name and description for various objects

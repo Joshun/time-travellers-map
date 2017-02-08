@@ -10,18 +10,15 @@ import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.styling.SLD;
 import org.geotools.styling.Style;
-import org.geotools.swing.JMapFrame;
 import org.geotools.swing.data.JFileDataStoreChooser;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.timetravellersmap.Annotation;
+import org.timetravellersmap.core.Annotation;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.overlay.PointComponent;
-import org.timetravellersmap.overlay.RectangleComponent;
-import org.timetravellersmap.timeline.Event;
-import org.timetravellersmap.gui.MapFrame;
+import org.timetravellersmap.core.event.Event;
 
 import java.io.File;
 import java.util.ArrayList;

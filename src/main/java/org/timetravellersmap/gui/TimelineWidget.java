@@ -1,20 +1,22 @@
 package org.timetravellersmap.gui;
 
-import org.timetravellersmap.gui.eventpane.EventPane;
-import org.timetravellersmap.timeline.*;
+import org.timetravellersmap.core.event.EventChangeListener;
+import org.timetravellersmap.core.event.EventIndex;
+import org.timetravellersmap.core.timeline.Timeline;
+import org.timetravellersmap.core.timeline.TimelineChangeListener;
+import org.timetravellersmap.core.timeline.TimelineCursor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
-import java.util.EventListener;
 
 /**
  * TimelineWidget: a widget for selecting the current year / date
  * Allows selecting within a century and skipping 100 and 1000 year periods
  */
-public class TimelineWidget extends JPanel implements EventChangeListener{
+public class TimelineWidget extends JPanel implements EventChangeListener {
     private JPanel paintArea;
     private JButton prevHundredYearsButton;
     private JButton nextHundredYearsButton;
@@ -46,7 +48,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener{
         this.mapFrame = parentMapFrame;
         setTimeline(start, end, minorInterval, majorInterval);
 
-        // Setup the paint area, i.e. where the timeline itself is drawn
+        // Setup the paint area, i.e. where the core itself is drawn
         this.paintArea = new JPanel(new GridLayout(0, 1)) {
             @Override
             public void paintComponent(Graphics g) {
@@ -76,7 +78,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener{
         prevThousandYearsButton.addActionListener(makeSeekButtonListener(-1000));
 
 
-        // Register mouse click events on timeline and change pointer accordingly
+        // Register mouse click events on core and change pointer accordingly
         paintArea.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
@@ -100,7 +102,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener{
             }
         });
 
-        // Register mouse drag events on timeline and change pointer accordingly
+        // Register mouse drag events on core and change pointer accordingly
         paintArea.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent mouseEvent) {
@@ -210,12 +212,12 @@ public class TimelineWidget extends JPanel implements EventChangeListener{
     }
 
     private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {
-        // Using linear interpolation, compute the year in the timeline nearest to the mouse click
+        // Using linear interpolation, compute the year in the core nearest to the mouse click
 
         // Difference between end and start years
         double yearWidth = end - start;
 
-        // Fraction of timeline bar's screen area that was clicked
+        // Fraction of core bar's screen area that was clicked
         double proportionOfBar = (xMousePosition-xDrawOffset)/barWidth;
 
         // start year + (proportion of bar area * bar width)

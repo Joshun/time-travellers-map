@@ -1,9 +1,8 @@
-package org.timetravellersmap.gui.eventpane;
+package org.timetravellersmap.gui.annotatepane;
 
-import org.geotools.map.Layer;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.PointComponent;
-import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.core.event.Event;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;

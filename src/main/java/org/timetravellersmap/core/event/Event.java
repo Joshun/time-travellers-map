@@ -1,7 +1,6 @@
-package org.timetravellersmap.timeline;
+package org.timetravellersmap.core.event;
 
-import org.geotools.map.MapContent;
-import org.timetravellersmap.Annotation;
+import org.timetravellersmap.core.Annotation;
 import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerList;
 

@@ -1,12 +1,11 @@
 package org.timetravellersmap.gui.eventpane;
 
-import org.timetravellersmap.Annotation;
+import org.timetravellersmap.core.Annotation;
+import org.timetravellersmap.core.event.EventChangeListener;
+import org.timetravellersmap.core.event.EventSelectChangeListener;
+import org.timetravellersmap.core.timeline.TimelineChangeListener;
 import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.gui.TimelineWidget;
-import org.timetravellersmap.overlay.Layer;
-import org.timetravellersmap.overlay.LayerComponent;
-import org.timetravellersmap.timeline.*;
-import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.core.event.Event;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -14,9 +13,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;

@@ -1,11 +1,8 @@
-package org.timetravellersmap.gui.eventpane;
+package org.timetravellersmap.gui.annotatepane;
 
-import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.timeline.Event;
+import org.timetravellersmap.gui.eventpane.AddPoint;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by joshua on 31/01/17.
