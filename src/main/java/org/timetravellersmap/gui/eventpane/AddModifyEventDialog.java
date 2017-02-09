@@ -4,6 +4,7 @@ import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.core.event.Event;
 import org.timetravellersmap.core.event.EventChangeListener;
+import org.timetravellersmap.overlay.Layer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,7 @@ public class AddModifyEventDialog extends JFrame {
     private JSpinner endDateField;
     private JButton cancelButton;
     private JButton confirmButton;
+    private JComboBox<Layer> eventLayerComboBox;
 
     private int textBoxWidth = 25;
     private int descriptionRows = 3;
@@ -112,6 +114,17 @@ public class AddModifyEventDialog extends JFrame {
         panel.add(endDateField, gc);
 
         gc.gridx = 0;
+        gc.gridy = 4;
+        JLabel eventLayerLabel = new JLabel("Layer:");
+        panel.add(eventLayerLabel, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 4;
+        eventLayerComboBox = new JComboBox<>();
+        eventLayerComboBox.setModel(new DefaultComboBoxModel<>(mapFrame.getLayerList().getLayers()));
+        panel.add(eventLayerComboBox, gc);
+
+        gc.gridx = 0;
         gc.gridy = 5;
         if (existingEvent == null) {
             confirmButton = new JButton("Add event");
@@ -188,11 +201,13 @@ public class AddModifyEventDialog extends JFrame {
         String eventDescription = eventDescriptionField.getText();
         int startDate = (int)startDateField.getValue();
         int endDate = (int)endDateField.getValue();
+        Layer layer = (Layer)eventLayerComboBox.getSelectedItem();
 
         Event newEvent = new Event(
                 yearToCalendar(startDate),
                 yearToCalendar(endDate),
-                new Descriptor(eventName, eventDescription)
+                new Descriptor(eventName, eventDescription),
+                layer
         );
         if (datesAreOk(startDate, endDate)) {
             if (existingEvent != null) {

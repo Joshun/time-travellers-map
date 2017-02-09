@@ -30,6 +30,11 @@ public class Event {
 //        this.layerList = new LayerList();
     }
 
+    public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, Layer layer) {
+        this(startDate, endDate, eventDescriptor);
+        this.layer = layer;
+    }
+
     public Descriptor getEventDescriptor() {
         return eventDescriptor;
     }
