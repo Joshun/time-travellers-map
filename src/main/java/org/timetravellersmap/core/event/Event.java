@@ -1,6 +1,6 @@
 package org.timetravellersmap.core.event;
 
-import org.timetravellersmap.core.Annotation;
+import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerList;
 
@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
  */
 public class Event {
 //    private LayerList layerList;
-    private Annotation eventAnnotation;
+    private Descriptor eventDescriptor;
 
     private Calendar startDate;
     private Calendar endDate;
@@ -23,15 +23,15 @@ public class Event {
 
     private Layer layer = LayerList.DEFAULT_LAYER;
 
-    public Event(Calendar startDate, Calendar endDate, Annotation eventAnnotation) {
+    public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.eventAnnotation = eventAnnotation;
+        this.eventDescriptor = eventDescriptor;
 //        this.layerList = new LayerList();
     }
 
-    public Annotation getEventAnnotation() {
-        return eventAnnotation;
+    public Descriptor getEventDescriptor() {
+        return eventDescriptor;
     }
 
     public int getStartDateAsYear() {
@@ -71,8 +71,8 @@ public class Event {
         this.endDate = endDate;
     }
 
-    public void setEventAnnotation(Annotation annotation) {
-        this.eventAnnotation = annotation;
+    public void setEventDescriptor(Descriptor descriptor) {
+        this.eventDescriptor = descriptor;
     }
 
     public Layer getLayer() {
@@ -80,7 +80,7 @@ public class Event {
     }
 
     public String toString() {
-        return "event start="+getStartDateAsYear()+" end="+getEndDateAsYear()+" annotation="+eventAnnotation;
+        return "event start="+getStartDateAsYear()+" end="+getEndDateAsYear()+" annotation="+ eventDescriptor;
     }
 
     public static void main(String[] args) {
@@ -88,7 +88,7 @@ public class Event {
         Event event = new Event(
                 new GregorianCalendar(1990, 1, 1),
                 new GregorianCalendar(1910, 1, 1),
-                new Annotation("Test event", "this is a description")
+                new Descriptor("Test event", "this is a description")
         );
         System.out.println("Event toString: " + event.toString());
         System.out.println("getStartDate " + event.getStartDate());

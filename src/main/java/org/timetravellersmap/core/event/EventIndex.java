@@ -1,6 +1,6 @@
 package org.timetravellersmap.core.event;
 
-import org.timetravellersmap.core.Annotation;
+import org.timetravellersmap.core.Descriptor;
 
 import java.util.*;
 
@@ -199,7 +199,7 @@ public class EventIndex {
 
         int count = 0;
         for (Event event: events) {
-            eventString += event.getEventAnnotation().getName() + "<br>";
+            eventString += event.getEventDescriptor().getName() + "<br>";
             count++;
             if (count > 9) {
                 eventString += "...";
@@ -217,13 +217,13 @@ public class EventIndex {
         Event georgeWBushPresidency = new Event(
                 new GregorianCalendar(2001, 0, 20),
                 new GregorianCalendar(2009, 0, 20),
-                new Annotation("George W Bush Presidency", "43rd US President")
+                new Descriptor("George W Bush Presidency", "43rd US President")
         );
 
         Event barackObamaPresidency = new Event(
                 new GregorianCalendar(2009, 0, 20),
                 new GregorianCalendar(2017, 0, 20),
-                new Annotation("Barack Obama Presidency", "44th US President")
+                new Descriptor("Barack Obama Presidency", "44th US President")
         );
         eventIndex.addEvent(georgeWBushPresidency);
         eventIndex.addEvent(barackObamaPresidency);
@@ -235,7 +235,7 @@ public class EventIndex {
         eventIndex.updateEvent(barackObamaPresidency, new Event(
                 new GregorianCalendar(1861, 3, 4),
                 new GregorianCalendar(1865, 4, 15),
-                new Annotation("Abraham Lincoln Presidency", "16th US President")
+                new Descriptor("Abraham Lincoln Presidency", "16th US President")
         ));
         eventIndex.treeWalk(2010);
         eventIndex.treeWalk(1864);
