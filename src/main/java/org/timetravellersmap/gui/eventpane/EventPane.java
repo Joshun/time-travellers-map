@@ -1,6 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
-import org.timetravellersmap.core.Annotation;
+import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.core.event.EventChangeListener;
 import org.timetravellersmap.core.event.EventSelectChangeListener;
 import org.timetravellersmap.core.timeline.TimelineChangeListener;
@@ -58,7 +58,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         currentEvents.add(new Event(
                 new GregorianCalendar(1900, 0, 1),
                 new GregorianCalendar(1910, 0, 1),
-                new Annotation("Test event", "This is a description")
+                new Descriptor("Test event", "This is a description")
         ));
 
         eventTable = new JTable(new TableModel() {
@@ -98,7 +98,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
                 if (i < currentEvents.size() && i1 < eventTableColumns.length) {
                     Event event = currentEvents.get(i);
                     if (i1 == 0) {
-                        return event.getEventAnnotation().getName();
+                        return event.getEventDescriptor().getName();
                     } else if (i1 == 1) {
                         return String.valueOf(event.getStartDateAsYear());
                     } else if (i1 == 2) {
@@ -116,13 +116,13 @@ public class EventPane extends JPanel implements TimelineChangeListener {
             public void setValueAt(Object o, int i, int i1) {
                 if (i < currentEvents.size()) {
                     Event event = currentEvents.get(i);
-                    Annotation oldAnnotation = event.getEventAnnotation();
+                    Descriptor oldDescriptor = event.getEventDescriptor();
 
                     if (i1 == 0) {
-                        String name = oldAnnotation.getName();
-                        String description = oldAnnotation.getDescription();
-                        Annotation newAnnotation = new Annotation(name, description);
-                        event.setEventAnnotation(newAnnotation);
+                        String name = oldDescriptor.getName();
+                        String description = oldDescriptor.getDescription();
+                        Descriptor newDescriptor = new Descriptor(name, description);
+                        event.setEventDescriptor(newDescriptor);
                     }
                     else if (i1 == 1) {
                         Calendar calendar = new GregorianCalendar((int)o, 0, 1);

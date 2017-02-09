@@ -1,6 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
-import org.timetravellersmap.core.Annotation;
+import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.core.event.Event;
 import org.timetravellersmap.core.event.EventChangeListener;
@@ -160,8 +160,8 @@ public class AddModifyEventDialog extends JFrame {
             return;
         }
 
-        eventNameField.setText(existingEvent.getEventAnnotation().getName());
-        eventDescriptionField.setText(existingEvent.getEventAnnotation().getDescription());
+        eventNameField.setText(existingEvent.getEventDescriptor().getName());
+        eventDescriptionField.setText(existingEvent.getEventDescriptor().getDescription());
         startDateField.setValue(existingEvent.getStartDateAsYear());
         endDateField.setValue(existingEvent.getEndDateAsYear());
     }
@@ -192,7 +192,7 @@ public class AddModifyEventDialog extends JFrame {
         Event newEvent = new Event(
                 yearToCalendar(startDate),
                 yearToCalendar(endDate),
-                new Annotation(eventName, eventDescription)
+                new Descriptor(eventName, eventDescription)
         );
         if (datesAreOk(startDate, endDate)) {
             if (existingEvent != null) {
@@ -244,7 +244,7 @@ public class AddModifyEventDialog extends JFrame {
 //        Event hastings = new Event(
 //                new GregorianCalendar(1066, 6, 14),
 //                new GregorianCalendar(1066, 6, 15),
-//                new Annotation("Battle of Hastings", "William Duke of Normandy vs Harold Godwinson")
+//                new Descriptor("Battle of Hastings", "William Duke of Normandy vs Harold Godwinson")
 //            );
 //        new AddModifyEventDialog(hastings, new EventPane(), new EventIndex(), null);
     }

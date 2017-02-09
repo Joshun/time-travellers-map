@@ -13,7 +13,7 @@ import org.geotools.styling.Style;
 import org.geotools.swing.data.JFileDataStoreChooser;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.timetravellersmap.core.Annotation;
+import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
@@ -83,7 +83,7 @@ public class Toplevel {
         Event wwii = new Event(
                 new GregorianCalendar(1939, 0, 1),
                 new GregorianCalendar(1945, 0, 1),
-                new Annotation("WWII")
+                new Descriptor("WWII")
         );
         LayerComponent layerComponent1 = new PointComponent(20, 20, 5);
         LayerComponent layerComponent2 = new PointComponent(151, -33, 5);
