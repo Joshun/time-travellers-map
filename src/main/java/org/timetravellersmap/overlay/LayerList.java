@@ -38,6 +38,10 @@ public class LayerList {
 
     public void removeLayer(Layer layer) {
         if (layer != DEFAULT_LAYER) {
+            // Set all of its events to the default layer
+            for (Event event: layer.getAllEvents()) {
+                event.setLayer(DEFAULT_LAYER);
+            }
             layers.remove(layer);
         }
         else {
@@ -79,6 +83,12 @@ public class LayerList {
         return layers.get(position);
     }
 
+    public Layer[] getLayers() {
+        Layer[] layerArr = new Layer[layers.size()];
+        layerArr = layers.toArray(layerArr);
+        return layerArr;
+    }
+
     public int getCount() {
         return layers.size();
     }
@@ -107,11 +117,12 @@ public class LayerList {
     }
 
     public void moveEventToLayer(Event event, Layer newLayer) {
+        System.out.println("move " + event + " to " + newLayer);
         Layer currentLayer = event.getLayer();
+        event.setLayer(newLayer);
         ArrayList<LayerComponent> layerComponents = currentLayer.getEventLayerComponents(event);
         newLayer.addEventLayerComponents(layerComponents, event);
         currentLayer.removeEventComponents(event);
-        event.setLayer(newLayer);
     }
 
 }

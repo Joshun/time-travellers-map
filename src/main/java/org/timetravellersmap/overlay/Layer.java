@@ -9,6 +9,7 @@ import org.timetravellersmap.core.event.Event;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Layer: representation of a screen annotation drawing layer
@@ -71,6 +72,9 @@ public class Layer extends org.geotools.map.DirectLayer {
         if (eventsToDraw != null) {
             for (Event event : eventsToDraw) {
                 ArrayList<LayerComponent> layerComponentsToDraw = eventLayerComponents.get(event);
+                if (layerComponentsToDraw == null) {
+                    continue;
+                }
                 for (LayerComponent layerComponent : layerComponentsToDraw) {
                     layerComponent.draw(graphics2D, mapContent, mapViewport);
                 }
@@ -81,6 +85,10 @@ public class Layer extends org.geotools.map.DirectLayer {
 //            System.out.println("Trying to draw " + layerComponent.toString());
 //            layerComponent.draw(graphics2D, mapContent, mapViewport);
 //        }
+    }
+
+    public Set<Event> getAllEvents() {
+        return eventLayerComponents.keySet();
     }
 
     public ArrayList<LayerComponent> getEventLayerComponents(Event event) {

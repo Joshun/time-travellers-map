@@ -10,28 +10,29 @@ import javax.swing.event.ListDataListener;
 /**
  * Created by joshua on 03/02/17.
  */
-public class LayerComboBoxModel implements ComboBoxModel {
+public class LayerComboBoxModel extends DefaultComboBoxModel {
     private LayerList layerList;
     private Layer selectedLayer = null;
 
     public LayerComboBoxModel(LayerList layerList) {
+        super();
         this.layerList = layerList;
     }
 
-    public void setLayerList(LayerList layerList) {
-        this.layerList = layerList;
-        selectedLayer = null;
-    }
+//    public void setLayerList(LayerList layerList) {
+//        this.layerList = layerList;
+//        selectedLayer = null;
+//    }
+//
+//    @Override
+//    public void setSelectedItem(Object o) {
+//        selectedLayer = (Layer)o;
+//    }
 
-    @Override
-    public void setSelectedItem(Object o) {
-        selectedLayer = (Layer)o;
-    }
-
-    @Override
-    public Object getSelectedItem() {
-        return selectedLayer;
-    }
+//    @Override
+//    public Layer getSelectedItem() {
+//        return selectedLayer;
+//    }
 
     @Override
     public int getSize() {

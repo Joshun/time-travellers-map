@@ -15,8 +15,10 @@ public class AnnotationTableModel implements TableModel {
     private String[] layerComponentTableColumns = {"Index", "Type"};
     private ArrayList<LayerComponent> layerComponents = new ArrayList<>();
 
-    public AnnotationTableModel() {
-
+    public AnnotationTableModel(Event event) {
+        if (event != null) {
+            loadEventLayerComponents(event);
+        }
     }
 
     public void loadEventLayerComponents(Event event) {
@@ -26,10 +28,10 @@ public class AnnotationTableModel implements TableModel {
         }
     }
 
-    public void clearEventLayerComponents() {
-        System.out.println("CLEAR");
-        layerComponents.clear();
-    }
+//    public void clearEventLayerComponents() {
+//        System.out.println("CLEAR");
+//        layerComponents.clear();
+//    }
 
     @Override
     public int getRowCount() {

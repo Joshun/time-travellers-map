@@ -39,6 +39,7 @@ public class LayerManager extends JFrame {
             String layerName = JOptionPane.showInputDialog(this, "Layer name", "New layer", JOptionPane.PLAIN_MESSAGE);
             layerList.addLayer(new Layer(layerName));
             layerTable.updateUI();
+            fireChangeListeners();
         });
 
         removeLayerButton.addActionListener(actionEvent -> {
@@ -47,6 +48,7 @@ public class LayerManager extends JFrame {
                 layerList.removeLayer(getSelectedLayer());
                 layerTable.updateUI();
                 layerTable.clearSelection();
+                fireChangeListeners();
             }
         });
 

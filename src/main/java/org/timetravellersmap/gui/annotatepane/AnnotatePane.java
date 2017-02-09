@@ -12,8 +12,10 @@ import javax.swing.*;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 
 /**
  * Created by joshua on 01/02/17.
@@ -24,11 +26,10 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
     private JButton removeAnnotationButton = new JButton("Remove");
     private JComboBox<Layer> layerSelectCombo = new JComboBox<>();
     private JTable annotationTable = new JTable();
-    private AnnotationTableModel annotationTableModel = new AnnotationTableModel();
     private JScrollPane annotationTableContainer = new JScrollPane(annotationTable);
     private String[] annotationTableHeadings = {"Type", "Name"};
 
-    private LayerComboBoxModel layerComboBoxModel;
+    private DefaultComboBoxModel<Layer> layerComboBoxModel;
 
     private MapFrame mapFrame;
 
@@ -58,8 +59,13 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         });
 
         layerSelectCombo.addItemListener(itemEvent -> {
+            if (itemEvent.getStateChange() == ItemEvent.DESELECTED) {
+                return;
+            }
             Layer selectedLayer = (Layer)itemEvent.getItem();
+            System.out.println(" layer" + selectedLayer + " event " + selectedEvent);
             if (selectedEvent != null) {
+                System.out.println("CHANGE LAYER");
                 mapFrame.getLayerList().moveEventToLayer(selectedEvent, selectedLayer);
             }
         });
@@ -101,7 +107,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         gc.weightx = 0.5;
         gc.weighty = 0.1;
         add(layerSelectCombo, gc);
-        layerComboBoxModel = new LayerComboBoxModel(mapFrame.getLayerList());
+//        layerComboBoxModel = new LayerComboBoxModel(mapFrame.getLayerList());
+        layerComboBoxModel = new DefaultComboBoxModel<Layer>(mapFrame.getLayerList().getLayers());
         layerSelectCombo.setModel(layerComboBoxModel);
 
         gc.gridx = 0;
@@ -112,7 +119,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         gc.ipady = 0;
         this.add(annotationTableContainer, gc);
 
-        annotationTable.setModel(annotationTableModel);
+        annotationTable.setModel(new AnnotationTableModel(selectedEvent));
 
         annotationTable.setFillsViewportHeight(true);
         annotationTableContainer.setMinimumSize(new Dimension(300, 100));
@@ -139,9 +146,13 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 
     public void eventSelected(Event event) {
         if (event != null) {
+            System.out.println("SELECT " + event);
+            System.out.println("layer " + event.getLayer());
             System.out.println(event.getLayer());
-            layerSelectCombo.setSelectedItem(event.getLayer());
             selectedEvent = event;
+            System.out.println("set "  + event + "to " + event.getLayer());
+            System.out.println(mapFrame.getLayerList().getLayerPosition(event.getLayer()));
+            layerSelectCombo.setSelectedIndex(mapFrame.getLayerList().getLayerPosition(event.getLayer()));
             annotationsChanged();
         }
     }
@@ -162,7 +173,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 
     public void annotationsChanged() {
         annotationTable.clearSelection();
-        annotationTableModel.loadEventLayerComponents(selectedEvent);
+        annotationTable.setModel(new AnnotationTableModel(selectedEvent));
+//        annotationTableModel.loadEventLayerComponents(selectedEvent);
 //        annotationTable.updateUI();
     }
 
@@ -172,6 +184,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
     }
 
     public void layerChanged() {
-        layerSelectCombo.updateUI();
+        System.out.println("layer changed!!!");
+        layerSelectCombo.setModel(new DefaultComboBoxModel<Layer>(mapFrame.getLayerList().getLayers()));
     }
 }
