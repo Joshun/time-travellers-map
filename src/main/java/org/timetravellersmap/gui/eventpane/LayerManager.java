@@ -38,7 +38,7 @@ public class LayerManager extends JFrame {
         addLayerButton.addActionListener(actionEvent -> {
             String layerName = JOptionPane.showInputDialog(this, "Layer name", "New layer", JOptionPane.PLAIN_MESSAGE);
             layerList.addLayer(new Layer(layerName));
-            layerTable.updateUI();
+            layerTable.repaint();
             fireChangeListeners();
         });
 
@@ -46,7 +46,7 @@ public class LayerManager extends JFrame {
             Layer layer = getSelectedLayer();
             if (layer != null) {
                 layerList.removeLayer(getSelectedLayer());
-                layerTable.updateUI();
+                layerTable.repaint();
                 layerTable.clearSelection();
                 fireChangeListeners();
             }
@@ -56,7 +56,7 @@ public class LayerManager extends JFrame {
             Layer layer = getSelectedLayer();
             if (layer != null) {
                 layerList.moveLayerUp(getSelectedLayer());
-                layerTable.updateUI();
+                layerTable.repaint();
                 layerTable.clearSelection();
             }
         });
@@ -65,7 +65,7 @@ public class LayerManager extends JFrame {
             Layer layer = getSelectedLayer();
             if (layer != null) {
                 layerList.moveLayerDown(getSelectedLayer());
-                layerTable.updateUI();
+                layerTable.repaint();
                 layerTable.clearSelection();
             }
         });

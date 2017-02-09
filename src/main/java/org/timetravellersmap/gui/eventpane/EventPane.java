@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
@@ -180,7 +181,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
             if (event != null) {
                 currentEvents.remove(event);
                 mapFrame.removeEventFromIndex(event);
-                eventTable.updateUI();
+                eventTable.repaint();
                 setContextDependentButtonsEnabled(false);
                 fireSelectChangeListenersDeselect();
                 eventTable.clearSelection();
@@ -321,12 +322,12 @@ public class EventPane extends JPanel implements TimelineChangeListener {
     public void updateExistingEvent(Event oldEvent, Event newEvent) {
         this.currentEvents.remove(oldEvent);
         this.currentEvents.add(newEvent);
-        eventTable.updateUI();
+        eventTable.repaint();
     }
 
     public void addNewEvent(Event event) {
         this.currentEvents.add(event);
-        eventTable.updateUI();
+        eventTable.repaint();
 
     }
 
@@ -345,7 +346,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
     private void replaceCurrentEvents(int pointerYear) {
         this.currentEvents = mapFrame.getEventIndex().getPointerEvents(pointerYear);
         timelinePointerYear = pointerYear;
-        eventTable.updateUI();
+        eventTable.repaint();
     }
 
 

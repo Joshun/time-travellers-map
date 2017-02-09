@@ -174,6 +174,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
     public void annotationsChanged() {
         annotationTable.clearSelection();
         annotationTable.setModel(new AnnotationTableModel(selectedEvent));
+//        annotationTable.repaint();
 //        annotationTableModel.loadEventLayerComponents(selectedEvent);
 //        annotationTable.updateUI();
     }
