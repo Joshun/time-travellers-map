@@ -119,6 +119,9 @@ public class LayerList {
     public void moveEventToLayer(Event event, Layer newLayer) {
         System.out.println("move " + event + " to " + newLayer);
         Layer currentLayer = event.getLayer();
+        if (newLayer == currentLayer) {
+            return;
+        }
         event.setLayer(newLayer);
         ArrayList<LayerComponent> layerComponents = currentLayer.getEventLayerComponents(event);
         newLayer.addEventLayerComponents(layerComponents, event);
