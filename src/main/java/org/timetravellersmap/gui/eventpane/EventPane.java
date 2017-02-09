@@ -197,7 +197,6 @@ public class EventPane extends JPanel implements TimelineChangeListener {
             Event event = getSelectedEvent();
             if (event != null) {
                 new AddModifyEventDialog(event, mapFrame, parentEventPane, timelinePointerYear);
-//                addModifyEventDialog.addChangeListener(mapFrame.getTimelineWidget());
             }
         });
 
@@ -206,7 +205,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         });
 
         showLayerManagerButton.addActionListener(actionEvent -> {
-            LayerManager layerManager =  new LayerManager(mapFrame.getLayerList());
+            LayerManager layerManager =  new LayerManager(mapFrame.getLayerList(), mapFrame);
             layerManager.addLayerChangeListener(mapFrame.getAnnotatePane());
             layerManager.setVisible(true);
         });

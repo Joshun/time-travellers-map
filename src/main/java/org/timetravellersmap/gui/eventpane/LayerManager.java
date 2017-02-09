@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
+import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.overlay.LayerChangeListener;
@@ -8,6 +9,8 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 /**
@@ -28,8 +31,54 @@ public class LayerManager extends JFrame {
 
     private ArrayList<LayerChangeListener> changeListeners = new ArrayList<>();
 
-    public LayerManager(LayerList layerList) {
+    private MapFrame mapFrame;
+
+    public LayerManager(LayerList layerList, MapFrame ancestorMapFrame) {
+        this.mapFrame = ancestorMapFrame;
         setTitle("Manage Layers");
+        mapFrame.setEnabled(false);
+
+        // We want to lock the ancestor MapFrame when the LayerManager is open to prevent issues with comboboxes etc.
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                // When LayerManager receives close event, re-enable MapFrame and dispose
+                mapFrame.setEnabled(true);
+                dispose();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent windowEvent) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent windowEvent) {
+
+            }
+        });
+
         this.layerList = layerList;
         layerTableModel = new LayerTableModel(this.layerList);
         setLayout(new GridBagLayout());
