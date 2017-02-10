@@ -28,7 +28,8 @@ public class LayerList {
 
     public void addLayer(Layer layer) {
         layers.add(layer);
-        updateMapContent(mapContent);
+        mapContent.addLayer(layer);
+        updateMapContent();
     }
 
 //    public void removeLayer(int orderIndex) {
@@ -47,12 +48,26 @@ public class LayerList {
         else {
             System.out.println("Refusing request to remove default layer.");
         }
-        updateMapContent(mapContent);
+        updateMapContent();
+//        mapContent.removeLayer(layer);
     }
 
     public void swapLayers(Layer layer1, Layer layer2) {
+        System.out.println("layers " + mapContent.layers());
+        System.out.println("size " + layers.size());
         Collections.swap(layers, layers.indexOf(layer1), layers.indexOf(layer2));
-        updateMapContent(mapContent);
+//
+//        // Swap using geotools mapcontent
+//        List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
+//        int layer1Index = mapContentLayers.indexOf(layer1);
+//        int layer2Index = mapContentLayers.indexOf(layer2);
+//        int tempLayer1Index = mapContentLayers.size();
+////        mapContent.moveLayer(layer1Index, tempLayer1Index);
+////        mapContent.moveLayer(layer2Index, layer1Index);
+////        mapContent.moveLayer(tempLayer1Index, layer2Index);
+//        mapContent.moveLayer(layer1Index, layer2Index);
+
+        updateMapContent();
     }
 
     public void moveLayerDown(Layer layer) {
@@ -103,11 +118,20 @@ public class LayerList {
 //        }
     }
 
-    public void updateMapContent(MapContent mapContent) {
-        for (Layer layer: layers) {
-            mapContent.removeLayer(layer);
+//    public void updateMapContent(MapContent mapContent) {
+//        for (Layer layer: layers) {
+//            mapContent.removeLayer(layer);
+//        }
+//        mapContent.addLayers(layers);
+//    }
+
+    // Copies user layers to the mapcontent layers
+    // We start at mapcontent layer index 1 as 0 is the feature (map) layer
+    public void updateMapContent() {
+        List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
+        for (int i=0; i<layers.size(); i++) {
+            mapContentLayers.set(i+1, layers.get(i));
         }
-        mapContent.addLayers(layers);
     }
 
     public void setEventsToDraw(ArrayList<Event> events) {

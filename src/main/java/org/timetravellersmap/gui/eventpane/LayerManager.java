@@ -23,7 +23,7 @@ public class LayerManager extends JFrame {
     private JButton moveDownButton = new JButton("Move down");
 
     private JTable layerTable = new JTable();
-    private TableModel layerTableModel;
+    private LayerTableModel layerTableModel;
     private JScrollPane layerTableContainer = new JScrollPane(layerTable);
     private String[] layerTableColumns = {"Index", "Name"};
 
@@ -87,7 +87,8 @@ public class LayerManager extends JFrame {
         addLayerButton.addActionListener(actionEvent -> {
             String layerName = JOptionPane.showInputDialog(this, "Layer name", "New layer", JOptionPane.PLAIN_MESSAGE);
             layerList.addLayer(new Layer(layerName));
-            layerTable.repaint();
+//            layerTable.repaint();
+            layerTable.setModel(new LayerTableModel(layerList));
             fireChangeListeners();
         });
 
@@ -95,7 +96,8 @@ public class LayerManager extends JFrame {
             Layer layer = getSelectedLayer();
             if (layer != null) {
                 layerList.removeLayer(getSelectedLayer());
-                layerTable.repaint();
+//                layerTable.repaint();
+                layerTable.setModel(new LayerTableModel(layerList));
                 layerTable.clearSelection();
                 fireChangeListeners();
             }
@@ -143,57 +145,6 @@ public class LayerManager extends JFrame {
 
         layerTable.setModel(new LayerTableModel(layerList));
 
-//        layerTable.setModel(new TableModel() {
-//            @Override
-//            public int getRowCount() {
-//                return layerList.getCount();
-//            }
-//
-//            @Override
-//            public int getColumnCount() {
-//                return layerTableColumns.length;
-//            }
-//
-//            @Override
-//            public String getColumnName(int i) {
-//                return layerTableColumns[i];
-//            }
-//
-//            @Override
-//            public Class<?> getColumnClass(int i) {
-//                return String.class;
-//            }
-//
-//            @Override
-//            public boolean isCellEditable(int i, int i1) {
-//                return false;
-//            }
-//
-//            @Override
-//            public Object getValueAt(int i, int i1) {
-//                if (i1 == 0) {
-//                    return i1;
-//                }
-//                else {
-//                    return layerList.getLayerAtPosition(i).getName();
-//                }
-//            }
-//
-//            @Override
-//            public void setValueAt(Object o, int i, int i1) {
-//
-//            }
-//
-//            @Override
-//            public void addTableModelListener(TableModelListener tableModelListener) {
-//
-//            }
-//
-//            @Override
-//            public void removeTableModelListener(TableModelListener tableModelListener) {
-//
-//            }
-//        });
         pack();
     }
     private Layer getSelectedLayer() {

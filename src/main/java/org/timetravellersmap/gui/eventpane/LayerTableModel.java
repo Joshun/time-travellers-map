@@ -3,6 +3,7 @@ package org.timetravellersmap.gui.eventpane;
 import org.timetravellersmap.overlay.LayerList;
 
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -13,12 +14,13 @@ public class LayerTableModel implements TableModel {
     private LayerList layerList;
 
     public LayerTableModel(LayerList layerList) {
+        super();
         this.layerList = layerList;
     }
 
     @Override
     public int getRowCount() {
-        return layerList.getCount();
+        return this.layerList.getCount();
     }
 
     @Override
