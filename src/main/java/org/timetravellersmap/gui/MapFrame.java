@@ -1,10 +1,12 @@
 package org.timetravellersmap.gui;
 
 import net.miginfocom.swing.MigLayout;
+import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.swing.JMapPane;
 import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
+import org.timetravellersmap.TimeTravellersMapException;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.overlay.LayerList;
@@ -48,14 +50,18 @@ public class MapFrame extends JFrame {
     private JSplitPane eventAnnotateSplitPane;
     private TimelineWidget timelineWidget;
 
+    private static Layer baseLayer = null;
 
-    public MapFrame(MapContent content) {
+    public MapFrame(MapContent content) throws TimeTravellersMapException {
+        super(content == null ? "" : content.getTitle());
+        if (baseLayer == null) {
+            throw new TimeTravellersMapException("Must set a baselayer with MapFrame.setBaseLayer");
+        }
 
         // Constructor code adapted from org.geotools.swing.JMapFrame example
-        super(content == null ? "" : content.getTitle());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        layerList = new LayerList(content);
+        layerList = new LayerList(content, baseLayer);
 
 //        showStatusBar = false;
 //        showToolBar = false;
@@ -95,7 +101,7 @@ public class MapFrame extends JFrame {
         });
     }
 
-    public static void showMap(final MapContent content) {
+    public static void showMap(final MapContent content)  {
         if (SwingUtilities.isEventDispatchThread()) {
             doShowMap(content);
         } else {
@@ -110,11 +116,16 @@ public class MapFrame extends JFrame {
     }
 
     private static void doShowMap(MapContent content) {
-        System.out.println("doshowmapcontent.");
-        final MapFrame frame = new MapFrame(content);
-        frame.initComponents();
-        frame.setSize(1024, 800);
-        frame.setVisible(true);
+        try {
+            System.out.println("doshowmapcontent.");
+            final MapFrame frame = new MapFrame(content);
+            frame.initComponents();
+            frame.setSize(1024, 800);
+            frame.setVisible(true);
+        }
+        catch (TimeTravellersMapException e) {
+            System.out.println("Failed " + e);
+        }
     }
 
     public void initComponents() {
@@ -300,6 +311,10 @@ public class MapFrame extends JFrame {
         else {
             eventAnnotateSplitPane.setDividerLocation(600);
         }
+    }
+
+    public static void setBaseLayer(org.geotools.map.Layer baseLayer) {
+        MapFrame.baseLayer = baseLayer;
     }
 
 }

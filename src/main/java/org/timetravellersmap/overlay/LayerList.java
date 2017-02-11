@@ -20,8 +20,11 @@ public class LayerList {
     // This is the default layer, for usability and stability this cannot be removed
     public final static Layer DEFAULT_LAYER = new Layer("Default");
     public final static int BASE_LAYER_INDEX = 0;
+    private org.geotools.map.Layer baseLayer = null;
 
-    public LayerList(MapContent mapContent) {
+    public LayerList(MapContent mapContent, org.geotools.map.Layer baseLayer) {
+        this.baseLayer = baseLayer;
+        mapContent.addLayer(baseLayer);
         this.mapContent = mapContent;
         // By default there is one layer
         layers.add(DEFAULT_LAYER);
