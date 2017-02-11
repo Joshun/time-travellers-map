@@ -7,6 +7,7 @@ import org.timetravellersmap.overlay.LayerChangeListener;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -80,7 +81,8 @@ public class LayerManager extends JFrame {
         });
 
         this.layerList = layerList;
-        layerTableModel = new LayerTableModel(this.layerList);
+//        layerTableModel = new LayerTableModel(this.layerList);
+
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
@@ -88,7 +90,8 @@ public class LayerManager extends JFrame {
             String layerName = JOptionPane.showInputDialog(this, "Layer name", "New layer", JOptionPane.PLAIN_MESSAGE);
             layerList.addLayer(new Layer(layerName));
 //            layerTable.repaint();
-            layerTable.setModel(new LayerTableModel(layerList));
+//            layerTable.setModel(new LayerTableModel(layerList));
+            updateTable();
             fireChangeListeners();
         });
 
@@ -97,8 +100,8 @@ public class LayerManager extends JFrame {
             if (layer != null) {
                 layerList.removeLayer(getSelectedLayer());
 //                layerTable.repaint();
-                layerTable.setModel(new LayerTableModel(layerList));
                 layerTable.clearSelection();
+                updateTable();
                 fireChangeListeners();
             }
         });
@@ -107,8 +110,8 @@ public class LayerManager extends JFrame {
             Layer layer = getSelectedLayer();
             if (layer != null) {
                 layerList.moveLayerUp(getSelectedLayer());
-                layerTable.repaint();
                 layerTable.clearSelection();
+                updateTable();
             }
         });
 
@@ -116,8 +119,8 @@ public class LayerManager extends JFrame {
             Layer layer = getSelectedLayer();
             if (layer != null) {
                 layerList.moveLayerDown(getSelectedLayer());
-                layerTable.repaint();
                 layerTable.clearSelection();
+                updateTable();
             }
         });
 
@@ -143,7 +146,8 @@ public class LayerManager extends JFrame {
         add(layerTableContainer, gc);
         layerTable.setFillsViewportHeight(true);
 
-        layerTable.setModel(new LayerTableModel(layerList));
+        layerTable.setModel(new DefaultTableModel(buildModelList(layerList), layerTableColumns));
+        updateTable();
 
         pack();
     }
@@ -165,9 +169,40 @@ public class LayerManager extends JFrame {
         changeListeners.remove(layerChangeListener);
     }
 
+    public void updateTable() {
+//        layerTable.setModel(new LayerTableModel(layerList));
+//        repaint();
+//        layerTable.repaint();
+//        layerTableContainer.repaint();
+        String[] cols = {"Index", "Layer"};
+//        layerTable.setModel(new DefaultTableModel(buildModelList(layerList), cols));
+        layerTable.setModel(new DefaultTableModel(buildModelList(layerList), layerTableColumns));
+//        setModelValues(buildModelList(layerList), layerTable.getModel());
+
+    }
+
     public void fireChangeListeners() {
         for (LayerChangeListener changeListener: changeListeners) {
             changeListener.layerChanged();
         }
     }
+
+    public void setModelValues(String[][] values, TableModel tableModel) {
+        for (int i=0; i<values.length; i++) {
+            tableModel.setValueAt(values[i][0], i, 0);
+            tableModel.setValueAt(values[i][1], i, 1);
+        }
+    }
+
+    public String[][] buildModelList(LayerList layerList) {
+        String[][] modelList = new String[layerList.getCount()][2];
+        Layer[] layers = layerList.getLayers();
+        for (int i=0; i<layerList.getCount(); i++) {
+            modelList[i][0] = String.valueOf(i);
+            modelList[i][1] = layers[i].getName();
+        }
+        return modelList;
+    }
+
+
 }

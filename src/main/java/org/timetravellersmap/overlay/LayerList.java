@@ -130,7 +130,12 @@ public class LayerList {
     public void updateMapContent() {
         List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
         for (int i=0; i<layers.size(); i++) {
-            mapContentLayers.set(i+1, layers.get(i));
+            if (i+1>=layers.size()) {
+                mapContentLayers.add(layers.get(i));
+            }
+            else {
+                mapContentLayers.set(i+1, layers.get(i));
+            }
         }
     }
 

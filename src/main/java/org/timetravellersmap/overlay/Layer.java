@@ -87,6 +87,10 @@ public class Layer extends org.geotools.map.DirectLayer {
 //        }
     }
 
+    public boolean equals(Layer other) {
+        return other.getName().equals(this.name);
+    }
+
     public Set<Event> getAllEvents() {
         return eventLayerComponents.keySet();
     }
