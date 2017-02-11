@@ -28,6 +28,7 @@ public class LayerList {
         this.mapContent = mapContent;
         // By default there is one layer
         layers.add(DEFAULT_LAYER);
+        updateMapContent();
     }
 
     public void addLayer(Layer layer) {
