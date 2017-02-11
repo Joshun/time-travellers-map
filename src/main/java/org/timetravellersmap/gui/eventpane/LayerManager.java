@@ -24,7 +24,6 @@ public class LayerManager extends JFrame {
     private JButton moveDownButton = new JButton("Move down");
 
     private JTable layerTable = new JTable();
-    private LayerTableModel layerTableModel;
     private JScrollPane layerTableContainer = new JScrollPane(layerTable);
     private String[] layerTableColumns = {"Index", "Name"};
 
@@ -170,14 +169,7 @@ public class LayerManager extends JFrame {
     }
 
     public void updateTable() {
-//        layerTable.setModel(new LayerTableModel(layerList));
-//        repaint();
-//        layerTable.repaint();
-//        layerTableContainer.repaint();
-        String[] cols = {"Index", "Layer"};
-//        layerTable.setModel(new DefaultTableModel(buildModelList(layerList), cols));
         layerTable.setModel(new DefaultTableModel(buildModelList(layerList), layerTableColumns));
-//        setModelValues(buildModelList(layerList), layerTable.getModel());
 
     }
 
