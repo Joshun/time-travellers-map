@@ -135,7 +135,8 @@ public class LayerList {
     public void updateMapContent() {
         List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
         for (int i=0; i<layers.size(); i++) {
-            if (i+BASE_LAYER_INDEX+1>=layers.size()) {
+            System.out.println("size="+layers.size()+" i="+i);
+            if (i+BASE_LAYER_INDEX+1>=mapContentLayers.size()) {
                 mapContentLayers.add(layers.get(i));
             }
             else {
