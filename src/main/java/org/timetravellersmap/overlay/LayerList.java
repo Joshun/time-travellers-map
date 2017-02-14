@@ -132,8 +132,26 @@ public class LayerList {
 
     // Copies user layers to the mapcontent layers
     // We start at mapcontent layer index 1 as 0 is the feature (map) layer
+
+    private void purgeMapContent() {
+        List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
+//        org.geotools.map.Layer baseLayer = mapContent.layers().get(0);
+//        mapContentLayers.clear();
+//        mapContentLayers.add(baseLayer);
+        int size = mapContentLayers.size();
+        for (int n=size-1; n>0; n--) {
+            mapContentLayers.remove(n);
+        }
+    }
+
     public void updateMapContent() {
         List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
+
+        // If the "managed" list of layers has shrunk to smaller than the mapContentLayers, "purge" mapContent layers
+        if (layers.size() < mapContentLayers.size()) {
+            purgeMapContent();
+        }
+
         for (int i=0; i<layers.size(); i++) {
             System.out.println("size="+layers.size()+" i="+i);
             if (i+BASE_LAYER_INDEX+1>=mapContentLayers.size()) {
