@@ -91,6 +91,16 @@ public class Layer extends org.geotools.map.DirectLayer {
         return other.getName().equals(this.name);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Layer) {
+            return ((Layer) other).getName().equals(this.name);
+        }
+        else {
+            return other.equals(this);
+        }
+    }
+
     public Set<Event> getAllEvents() {
         return eventLayerComponents.keySet();
     }
