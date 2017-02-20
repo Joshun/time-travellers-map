@@ -290,7 +290,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         }
     }
     
-    private void drawEventCountText(Graphics2D graphics2D, int screenXCursor, int screenYCursor, int countValue) {
+    private static void drawEventCountText(Graphics2D graphics2D, int screenXCursor, int screenYCursor, int countValue) {
         if (countValue > 0) {
             graphics2D.setPaint(new Color(0, 0, 0));
             String countString;
