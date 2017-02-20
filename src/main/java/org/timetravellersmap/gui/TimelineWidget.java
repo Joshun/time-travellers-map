@@ -82,6 +82,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         paintArea.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
+                // Update the selected year pointer when the user clicks ruler
                 updatePointer(mouseEvent.getX());
             }
 
@@ -106,6 +107,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         paintArea.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent mouseEvent) {
+                // Update the current year pointer when the user drags slider
                 updatePointer(mouseEvent.getX());
             }
 
@@ -160,14 +162,17 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
 
     }
 
+    // Add a listener for TimelineChange events
     public void addChangeListener(TimelineChangeListener changeListener) {
         changeListeners.add(changeListener);
     }
 
+    // Remove a listener for TimelineChange events
     public void removeChangeListener(TimelineChangeListener changeListener) {
         changeListeners.remove(changeListener);
     }
 
+    // Notify TimelineChange listeners that the timeline has changed (i.e. user click / seek)
     private void fireChangeListeners(int year) {
         for (TimelineChangeListener changeListener: changeListeners) {
             changeListener.timelineChanged(year);
@@ -208,7 +213,6 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
     public void setPointer(double timePosition) {
         this.pointerPosition = timePosition;
         System.out.println("position " + timePosition);
-//        mapFrame.getEventPane().replaceCurrentEvents((int)timePosition);
     }
 
     private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {
@@ -245,15 +249,13 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
 
         EventIndex eventIndex = mapFrame.getEventIndex();
 
-//        graphics2D.setStroke(new BasicStroke(100));
-
         System.out.println("paint");
 
         for (TimelineCursor timelineCursor: timeline) {
             double timePosition = timelineCursor.getPosition();
-//            System.out.println("draw " + timePosition);
             boolean isMajorInterval = timelineCursor.isMajorInterval();
-
+            
+            // Drawing of the timeline ruler lines
             if (isMajorInterval) {
                 graphics2D.setPaint(new Color(0, 0, 0));
                 graphics2D.drawString(String.valueOf((int)timePosition), screenXCursor, textYOffset);
@@ -275,35 +277,34 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
                     graphics2D.draw(new Line2D.Double(screenXCursor, lineYOffset, screenXCursor, lineYOffset + 5));
                 }
             }
+           
+            
+            // Drawing of the counts for event start and end
             int eventStartCount = eventIndex.countStartEventsForYear((int)timePosition);
-            if (eventStartCount > 0) {
-                graphics2D.setPaint(new Color(0, 0, 0));
-                String eventStartCountString;
-                if (eventStartCount > 9) {
-                    eventStartCountString = "+";
-                }
-                else {
-                    eventStartCountString = String.valueOf(eventStartCount);
-                }
-                graphics2D.drawString(eventStartCountString, screenXCursor, lineYOffset + 20);
-            }
-
             int eventEndCount = eventIndex.countEndEventsForYear((int)timePosition);
-            if (eventEndCount > 0) {
-                System.out.println("eventendcount="+eventEndCount);
-                graphics2D.setPaint(new Color(0, 0, 0));
-                String eventEndCountString;
-                if (eventEndCount > 9) {
-                    eventEndCountString = "+";
-                }
-                else {
-                    eventEndCountString = String.valueOf(eventEndCount);
-                }
-                graphics2D.drawString(eventEndCountString, screenXCursor, lineYOffset + 28);
-            }
+            drawEventCountText(graphics2D, screenXCursor, lineYOffset+20, eventStartCount);
+            drawEventCountText(graphics2D, screenXCursor, lineYOffset+28, eventEndCount);
+            
+            // Increment the x cursor position by increment value
             screenXCursor += increment;
         }
     }
+    
+    private void drawEventCountText(Graphics2D graphics2D, int screenXCursor, int screenYCursor, int countValue) {
+        if (eventEndCount > 0) {
+            System.out.println("eventendcount="+eventEndCount);
+            graphics2D.setPaint(new Color(0, 0, 0));
+            String eventEndCountString;
+            if (eventEndCount > 9) {
+                eventEndCountString = "+";
+            }
+            else {
+                eventEndCountString = String.valueOf(eventEndCount);
+            }
+            graphics2D.drawString(eventEndCountString, screenXCursor, lineYOffset + 28);
+        }
+    }
+    
     public int getPointerYear() {
         return (int)pointerPosition;
     }
