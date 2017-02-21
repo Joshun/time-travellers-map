@@ -207,43 +207,8 @@ public class MapFrame extends JFrame {
 
         // Here the core widget will be configured
         timelineWidget = new TimelineWidget(1900, 2000, 600, 50, this);
-//        eventPane.setTimelineWidget(timelineWidget);
-
 
         panel.add(toolBar, "grow");
-
-//        }
-
-//        if (showLayerTable) {
-//            mapLayerTable = new MapLayerTable(mapPane);
-//
-//            /*
-//             * We put the map layer panel and the map pane into a JSplitPane
-//             * so that the user can adjust their relative sizes as needed
-//             * during a session. The call to setPreferredSize for the layer
-//             * panel has the effect of setting the initial position of the
-//             * JSplitPane divider
-//             */
-//            mapLayerTable.setPreferredSize(new Dimension(200, -1));
-//            JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-//                    false,
-//                    mapLayerTable,
-//                    mapPane);
-//            panel.add(splitPane, "grow");
-//        }
-
-//        } else {
-            /*
-         * No layer table, just the map pane
-         */
-
-            /*
-             * We put the map layer panel and the map pane into a JSplitPane
-             * so that the user can adjust their relative sizes as needed
-             * during a session. The call to setPreferredSize for the layer
-             * panel has the effect of setting the initial position of the
-             * JSplitPane divider
-             */
 
         eventPane.setPreferredSize(new Dimension(100, 300));
 
