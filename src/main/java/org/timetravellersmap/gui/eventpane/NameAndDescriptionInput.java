@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by joshua on 02/02/17.
+ * NameAndDescriptionInput: reusable GUI pane for inputting Descriptor information
  */
 public class NameAndDescriptionInput extends JPanel{
     private JTextField nameField = new JTextField();

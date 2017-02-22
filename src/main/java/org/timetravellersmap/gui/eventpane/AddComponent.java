@@ -31,7 +31,18 @@ public abstract class AddComponent extends JFrame {
     public AddComponent(AnnotatePane annotatePane, Event event) {
         this.annotatePane = annotatePane;
         this.event = event;
-//        setUpPanel();
+
+        // Begin adding listeners
+        addButton.addActionListener(actionEvent -> {
+            addLayerComponent();
+            annotatePane.annotationsChanged();
+            dispose();
+        });
+
+        cancelButton.addActionListener(actionEvent -> dispose());
+        // End adding listeners
+
+        // Begin layout of GUI components
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
@@ -49,13 +60,7 @@ public abstract class AddComponent extends JFrame {
         gc.gridy = 1;
         gc.gridwidth = 1;
         add(cancelButton, gc);
+        // End layout of GUI components
 
-        addButton.addActionListener(actionEvent -> {
-            addLayerComponent();
-            annotatePane.annotationsChanged();
-            dispose();
-        });
-
-        cancelButton.addActionListener(actionEvent -> dispose());
     }
 }

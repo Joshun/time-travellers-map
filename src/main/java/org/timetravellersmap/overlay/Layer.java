@@ -16,11 +16,9 @@ import java.util.Set;
  * Keeps track of LayerComponents and their corresponding Events
  */
 public class Layer extends org.geotools.map.DirectLayer {
-//    private ArrayList<LayerComponent> eventLayerComponents = new ArrayList<>();
     private HashMap<Event, ArrayList<LayerComponent>>  eventLayerComponents = new HashMap<>();
     private String name;
     private ArrayList<Event> eventsToDraw = null;
-//    private MapContent mapContent;
 
     public Layer(String layerName) {
         this.name = layerName;
@@ -45,11 +43,6 @@ public class Layer extends org.geotools.map.DirectLayer {
             return;
         }
         eventLayerComponents.put(associatedEvent, layerComponents);
-
-//        if (!eventLayerComponents.containsKey(associatedEvent)) {
-//            eventLayerComponents.put(associatedEvent, new ArrayList<LayerComponent>());
-//        }
-//        eventLayerComponents.get(associatedEvent).addAll(layerComponents);
     }
 
     public void removeComponent(LayerComponent component, Event associatedEvent) {
@@ -80,15 +73,6 @@ public class Layer extends org.geotools.map.DirectLayer {
                 }
             }
         }
-//        System.out.println(this.toString() + " draw called");
-//        for (LayerComponent layerComponent: eventLayerComponents) {
-//            System.out.println("Trying to draw " + layerComponent.toString());
-//            layerComponent.draw(graphics2D, mapContent, mapViewport);
-//        }
-    }
-
-    public boolean equals(Layer other) {
-        return other.getName().equals(this.name);
     }
 
     @Override

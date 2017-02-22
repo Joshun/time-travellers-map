@@ -55,13 +55,25 @@ public class AddModifyEventDialog extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         int startYearInitialValue = pointerYear;
-//        if (pointerYear == null) {
-//            startYearInitialValue = 1900;
-//        }
-//        else {
-//        startYearInitialValue = pointerYear;
-//        }
 
+        // Begin adding listeners
+        confirmButton.addActionListener(actionEvent ->  {
+            if (existingEvent != null) {
+                updateOrAddEvent(existingEvent);
+            }
+            else {
+                updateOrAddEvent(null);
+            }
+        });
+
+        JFrame parentFrame = this;
+        cancelButton.addActionListener(actionEvent ->  {
+                    parentFrame.dispose();
+                }
+        );
+        // End adding listeners
+
+        // Begin layout of GUI components
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
@@ -139,28 +151,15 @@ public class AddModifyEventDialog extends JFrame {
         cancelButton = new JButton("Cancel");
         panel.add(cancelButton, gc);
 
+        this.add(panel);
+        this.pack();
+        // End layout of GUI components
+
+
         if (existingEvent != null) {
             loadExistingEvent(existingEvent);
         }
 
-        confirmButton.addActionListener(actionEvent ->  {
-            if (existingEvent != null) {
-                updateOrAddEvent(existingEvent);
-            }
-            else {
-//                    System.out.println("TODO: adding events");
-                updateOrAddEvent(null);
-            }
-        });
-
-        JFrame parentFrame = this;
-        cancelButton.addActionListener(actionEvent ->  {
-                parentFrame.dispose();
-            }
-        );
-
-        this.add(panel);
-        this.pack();
         this.setVisible(true);
     }
 

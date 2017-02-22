@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- * Created by joshua on 03/02/17.
+ * LayerTableModel: TableModel to display list of layers, i.e. for the LayerManager
  */
 public class LayerTableModel implements TableModel {
     private String[] layerTableColumns = {"Index", "Name"};

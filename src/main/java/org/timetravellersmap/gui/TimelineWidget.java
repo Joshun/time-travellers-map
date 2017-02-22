@@ -126,6 +126,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
             }
         });
 
+        // Begin layout of GUI components
         prevHundredYearsButton.setMaximumSize(new Dimension(75, height/2));
         nextHundredYearsButton.setMaximumSize(new Dimension(75, height/2));
         prevThousandYearsButton.setMaximumSize(new Dimension(75, height/2));
@@ -158,6 +159,8 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.ipadx = 0;
         this.add(nextYearsContainer, gridBagConstraints);
+        // End layout of GUI components
+
         paintArea.repaint();
 
     }

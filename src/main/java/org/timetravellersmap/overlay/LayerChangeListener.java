@@ -1,7 +1,7 @@
 package org.timetravellersmap.overlay;
 
 /**
- * Created by joshua on 08/02/17.
+ * LayerChangeListener: used by objects that listen to Layer changes when LayerComponents are added or removed
  */
 public interface LayerChangeListener {
     void layerChanged();

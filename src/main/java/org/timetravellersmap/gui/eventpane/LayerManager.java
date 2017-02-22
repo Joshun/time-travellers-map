@@ -15,7 +15,7 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 /**
- * Created by joshua on 02/02/17.
+ * LayerManager: a GUI for adding, removing and changing order of layers
  */
 public class LayerManager extends JFrame {
     private JButton addLayerButton = new JButton("Add");
@@ -80,7 +80,6 @@ public class LayerManager extends JFrame {
         });
 
         this.layerList = layerList;
-//        layerTableModel = new LayerTableModel(this.layerList);
 
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
@@ -88,8 +87,7 @@ public class LayerManager extends JFrame {
         addLayerButton.addActionListener(actionEvent -> {
             String layerName = JOptionPane.showInputDialog(this, "Layer name", "New layer", JOptionPane.PLAIN_MESSAGE);
             layerList.addLayer(new Layer(layerName));
-//            layerTable.repaint();
-//            layerTable.setModel(new LayerTableModel(layerList));
+//
             updateTable();
             fireChangeListeners();
         });
@@ -98,7 +96,6 @@ public class LayerManager extends JFrame {
             Layer layer = getSelectedLayer();
             if (layer != null) {
                 layerList.removeLayer(getSelectedLayer());
-//                layerTable.repaint();
                 layerTable.clearSelection();
                 updateTable();
                 fireChangeListeners();

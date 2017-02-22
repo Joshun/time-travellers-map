@@ -86,12 +86,6 @@ public class EventIndex {
 
 
     public void updateEvent(Event oldEvent, Event newEvent) {
-//        int startYear = oldEvent.getStartDateAsYear();
-//        int endYear = oldEvent.getEndDateAsYear();
-//        TreeMap<Integer, ArrayList<Event>> endYearMap = startYearIndex.get(startYear);
-////        ArrayList<Event> eventList = endYearMap.get(endYear);
-//        eventList.remove(oldEvent);
-
         // Here we are using removeEvent since this carrys out all the relevant cleanup operations
         removeEvent(oldEvent);
         reduceYearCounts(oldEvent.getStartDateAsYear(), oldEvent.getEndDateAsYear());

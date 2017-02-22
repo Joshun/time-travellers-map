@@ -8,7 +8,7 @@ import javax.swing.event.ListDataListener;
 
 
 /**
- * Created by joshua on 03/02/17.
+ * LayerComboBoxModel: used to create dropdown for changing the Layer an Event belongs to
  */
 public class LayerComboBoxModel extends DefaultComboBoxModel {
     private LayerList layerList;
@@ -18,21 +18,6 @@ public class LayerComboBoxModel extends DefaultComboBoxModel {
         super();
         this.layerList = layerList;
     }
-
-//    public void setLayerList(LayerList layerList) {
-//        this.layerList = layerList;
-//        selectedLayer = null;
-//    }
-//
-//    @Override
-//    public void setSelectedItem(Object o) {
-//        selectedLayer = (Layer)o;
-//    }
-
-//    @Override
-//    public Layer getSelectedItem() {
-//        return selectedLayer;
-//    }
 
     @Override
     public int getSize() {

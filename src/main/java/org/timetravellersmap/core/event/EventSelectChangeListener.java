@@ -1,7 +1,7 @@
 package org.timetravellersmap.core.event;
 
 /**
- * Created by joshua on 06/02/17.
+ * EventSelectChangeListener: used by TimelineWidget, AnnotatePane to know when the selected event changes
  */
 public interface EventSelectChangeListener {
     void eventSelected(Event event);

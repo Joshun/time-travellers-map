@@ -75,7 +75,6 @@ public class EventPane extends JPanel implements TimelineChangeListener {
 
             @Override
             public String getColumnName(int i) {
-                System.out.println("callback");
                 if (i < eventTableColumns.length) {
                     return eventTableColumns[i];
                 }
@@ -165,7 +164,6 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         editEventButton = new JButton("Edit...");
         toggleAnnotationButton = new JButton("Annotations...");
         showLayerManagerButton = new JButton("Layers...");
-//        annotateEventButton = new JButton("Annotate...");
 
         EventPane parentEventPane = this;
 
@@ -186,14 +184,11 @@ public class EventPane extends JPanel implements TimelineChangeListener {
                 fireSelectChangeListenersDeselect();
                 eventTable.clearSelection();
                 eventSelected = false;
-//                mapFrame.redrawTimeline();
                 fireChangeListeners();
             }
-            // TODO: implement remove event
         });
 
         editEventButton.addActionListener(actionEvent ->  {
-            System.out.println("Edit event...");
             Event event = getSelectedEvent();
             if (event != null) {
                 new AddModifyEventDialog(event, mapFrame, parentEventPane, timelinePointerYear);
@@ -210,6 +205,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
             layerManager.setVisible(true);
         });
 
+        // Begin layout of GUI components
         gc.anchor = GridBagConstraints.PAGE_START;
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.gridwidth = 1;
@@ -255,6 +251,8 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         this.add(eventTableContainer, gc);
 
         eventTableContainer.setMinimumSize(new Dimension(300, 300));
+        // End layout of GUI components
+
         setContextDependentButtonsEnabled(false);
 
     }

@@ -9,11 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by joshua on 31/01/17.
+ * AddPoint: a GUI for the user to add a PointComponent to an Event
  */
 public class AddPoint extends AddComponent {
-//    private JPanel panel = new JPanel();
-
     private JTextField longitudeEntry = new JTextField(10);
     private JTextField latitudeEntry = new JTextField(10);
     private JSpinner radiusEntry = new JSpinner(new SpinnerNumberModel(4, 1, 10, 1));
@@ -37,6 +35,7 @@ public class AddPoint extends AddComponent {
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
+        // Begin layout of GUI componentsr
         gc.gridx = 0;
         gc.gridy = 0;
         gc.weighty = 0.2;
@@ -67,38 +66,12 @@ public class AddPoint extends AddComponent {
         gc.weighty = 0.2;
         panel.add(radiusEntry, gc);
 
-//        gc.gridx = 0;
-//        gc.gridy = 3;
-//        gc.weighty = 0.2;
-//        panel.add(addPointButton, gc);
-//
-//        gc.gridx = 1;
-//        gc.gridy = 3;
-//        gc.weighty = 0.2;
-//        panel.add(cancelButton, gc);
-//
-//        gc.gridx = 0;
-//        gc.gridy = 4;
-//        gc.gridwidth = 2;
-//        gc.weighty = 0.2;
-//        panel.add(nameAndDescriptionInput, gc);
-
-
         setTitle("Add new point");
-//        this.add(panel);
         pack();
+        // End layout of GUI components
 
         longitudeEntry.setText(String.valueOf(0));
         latitudeEntry.setText(String.valueOf(0));
-
-//        addPointButton.addActionListener(actionEvent -> {
-//            System.out.println("TODO: add point");
-//            annotatePane.annotateEvent(event, createPointComponent());
-//        });
-//
-//        cancelButton.addActionListener(actionEvent -> {
-//            this.dispose();
-//        });
 //
     }
 
