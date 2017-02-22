@@ -109,6 +109,10 @@ public class LayerList {
         return layerArr;
     }
 
+    public ArrayList<Layer> getLayersArrayList() {
+        return layers;
+    }
+
     public int getCount() {
         return layers.size();
     }

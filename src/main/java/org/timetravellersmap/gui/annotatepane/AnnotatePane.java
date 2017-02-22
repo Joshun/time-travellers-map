@@ -16,18 +16,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.util.logging.Logger;
 
 /**
  * AnnotatePane: pane to display annotations for selected event and allow adding, removal and editing of annotations
  */
 public class AnnotatePane extends JPanel implements EventSelectChangeListener, LayerChangeListener {
+    private final static Logger LOGGER = Logger.getLogger(AnnotatePane.class.getName());
     private AnnotateMenu annotateMenu;
     private JButton addAnnotationButton = new JButton("Add...");
     private JButton removeAnnotationButton = new JButton("Remove");
     private JComboBox<Layer> layerSelectCombo = new JComboBox<>();
     private JTable annotationTable = new JTable();
     private JScrollPane annotationTableContainer = new JScrollPane(annotationTable);
-    private String[] annotationTableHeadings = {"Type", "Name"};
 
     private DefaultComboBoxModel<Layer> layerComboBoxModel;
 
@@ -46,6 +47,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         // Handle spawning of AnnotateMenu when "Add" button clicked
         addAnnotationButton.addActionListener(actionEvent ->  {
             if (selectedEvent != null) {
+                LOGGER.info("Add clicked, Spawn AnnotateMenu (selectedEvent="+selectedEvent+")");
                 JButton btn = (JButton) actionEvent.getSource();
                 // Spawn popup annotate menu underneath button
                 int x = btn.getX();
@@ -56,6 +58,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 
         // Handle removal of an annotation when "Remove" button clicked
         removeAnnotationButton.addActionListener(actionEvent -> {
+            LOGGER.info("Remove clicked, removing annotation (selectedEvent="+selectedEvent+")");
             selectedEvent.getLayer().removeComponent(getSelectedAnnotation(), selectedEvent);
             annotationsChanged();
         });
@@ -67,9 +70,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
                 return;
             }
             Layer selectedLayer = (Layer)itemEvent.getItem();
-            System.out.println(" layer" + selectedLayer + " event " + selectedEvent);
             if (selectedEvent != null) {
-                System.out.println("CHANGE LAYER");
+                LOGGER.info("Changing event " + selectedEvent + " to layer " + selectedLayer);
                 mapFrame.getLayerList().moveEventToLayer(selectedEvent, selectedLayer);
             }
         });
@@ -141,7 +143,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 
     // Change the visibility state of AnnotatePane and adjust parent MapFrame accordingly
    public void setVisibilityState(boolean visible) {
-       System.out.println("AnnotatePane.visible="+visible);
+       LOGGER.info("AnnotatePane.visible="+visible);
        this.visible = visible;
        setVisible(visible);
        mapFrame.changeAnnotateDividerState(visible);
