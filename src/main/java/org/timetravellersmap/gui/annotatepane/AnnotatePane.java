@@ -18,7 +18,7 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 
 /**
- * Created by joshua on 01/02/17.
+ * AnnotatePane: pane to display annotations for selected event and allow adding, removal and editing of annotations
  */
 public class AnnotatePane extends JPanel implements EventSelectChangeListener, LayerChangeListener {
     private AnnotateMenu annotateMenu;
@@ -43,6 +43,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
+        // Handle spawning of AnnotateMenu when "Add" button clicked
         addAnnotationButton.addActionListener(actionEvent ->  {
             if (selectedEvent != null) {
                 JButton btn = (JButton) actionEvent.getSource();
@@ -53,12 +54,15 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
             }
         });
 
+        // Handle removal of an annotation when "Remove" button clicked
         removeAnnotationButton.addActionListener(actionEvent -> {
             selectedEvent.getLayer().removeComponent(getSelectedAnnotation(), selectedEvent);
             annotationsChanged();
         });
 
+        // Handle changes to layerSelectCombo, updating the event's layer accordingly
         layerSelectCombo.addItemListener(itemEvent -> {
+            // We only care about selection events, not deselection events (prevent double firing)
             if (itemEvent.getStateChange() == ItemEvent.DESELECTED) {
                 return;
             }
@@ -70,6 +74,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
             }
         });
 
+        // Render the name of the layer in the dropdown by invoking layer.getName()
         layerSelectCombo.setRenderer(new ListCellRenderer<Layer>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends Layer> jList, Layer layer, int i, boolean b, boolean b1) {
@@ -79,6 +84,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
             }
         });
 
+        // Begin layout of GUI components
         gc.anchor = GridBagConstraints.PAGE_START;
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.gridwidth = 1;
@@ -123,14 +129,17 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 
         annotationTable.setFillsViewportHeight(true);
         annotationTableContainer.setMinimumSize(new Dimension(300, 100));
+        // End layout of GUI components
 
     }
 
+    // Helper to toggle visibility state, returning the new isVisible state
     public boolean toggleVisibleState() {
         setVisibilityState(!visible);
         return visible;
     }
 
+    // Change the visibility state of AnnotatePane and adjust parent MapFrame accordingly
    public void setVisibilityState(boolean visible) {
        System.out.println("AnnotatePane.visible="+visible);
        this.visible = visible;
@@ -138,20 +147,17 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
        mapFrame.changeAnnotateDividerState(visible);
    }
 
+   // Handle event deselection events, i.e. in EventPane
     public void eventDeselected() {
         selectedEvent = null;
         annotationTable.clearSelection();
         setVisibilityState(false);
     }
 
+    // Handle event selection events, i.e. in EventPane
     public void eventSelected(Event event) {
         if (event != null) {
-            System.out.println("SELECT " + event);
-            System.out.println("layer " + event.getLayer());
-            System.out.println(event.getLayer());
             selectedEvent = event;
-            System.out.println("set "  + event + "to " + event.getLayer());
-            System.out.println(mapFrame.getLayerList().getLayerPosition(event.getLayer()));
             layerSelectCombo.setSelectedIndex(mapFrame.getLayerList().getLayerPosition(event.getLayer()));
             annotationsChanged();
         }
@@ -171,12 +177,10 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         }
     }
 
+    // Method to be called when annotations are changed externally, i.e. they are added by AddComponent
     public void annotationsChanged() {
         annotationTable.clearSelection();
         annotationTable.setModel(new AnnotationTableModel(selectedEvent));
-//        annotationTable.repaint();
-//        annotationTableModel.loadEventLayerComponents(selectedEvent);
-//        annotationTable.updateUI();
     }
 
 
@@ -184,8 +188,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         return visible;
     }
 
+    // Handle layer change events, i.e. from LayerManager
     public void layerChanged() {
-        System.out.println("layer changed!!!");
         layerSelectCombo.setModel(new DefaultComboBoxModel<Layer>(mapFrame.getLayerList().getLayers()));
     }
 }
