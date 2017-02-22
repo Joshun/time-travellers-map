@@ -18,16 +18,12 @@ public class Event {
     private Calendar startDate;
     private Calendar endDate;
 
-    private Event parentEvent = null;
-    private ArrayList<Event> childEvents = null;
-
     private Layer layer = LayerList.DEFAULT_LAYER;
 
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventDescriptor = eventDescriptor;
-//        this.layerList = new LayerList();
     }
 
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, Layer layer) {
@@ -110,7 +106,4 @@ public class Event {
         System.out.println(elist.get(0));
     }
 
-//    public LayerList getLayerList() {
-//        return layerList;
-//    }
 }
