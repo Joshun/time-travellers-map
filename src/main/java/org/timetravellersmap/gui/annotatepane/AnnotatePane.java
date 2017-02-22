@@ -179,6 +179,11 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 //        annotationTable.updateUI();
     }
 
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(50, 300);
+    }
+
 
     public boolean isVisible() {
         return visible;

@@ -348,6 +348,11 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         eventTable.repaint();
     }
 
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(50, 300);
+    }
+
 
     public static void main(String[] args) {
         // Test harness for EventPane

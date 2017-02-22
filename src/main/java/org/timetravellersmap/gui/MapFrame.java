@@ -120,7 +120,7 @@ public class MapFrame extends JFrame {
             System.out.println("doshowmapcontent.");
             final MapFrame frame = new MapFrame(content);
             frame.initComponents();
-            frame.setSize(1024, 800);
+//            frame.setSize(1024, 800);
             frame.setVisible(true);
         }
         catch (TimeTravellersMapException e) {
@@ -135,23 +135,11 @@ public class MapFrame extends JFrame {
             return;
         }
 
-        /*
-         * We use the MigLayout manager to make it easy to manually code
-         * our UI design
-         */
-        StringBuilder sb = new StringBuilder();
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.weightx = 0.5;
+        gc.weighty = 0.5;
 
-        sb.append("[]");
-
-        sb.append("[grow]"); // map pane and optionally layer table fill space
-        sb.append("[min!]"); // status bar height
-
-        JPanel panel = new JPanel(new MigLayout(
-                "wrap 1, insets 0", // layout constrains: 1 component per row, no insets
-
-                "[grow]", // column constraints: col grows when frame is resized
-
-                sb.toString() ));
 
         /*
          * A toolbar with buttons for zooming in, zooming out,
@@ -208,37 +196,60 @@ public class MapFrame extends JFrame {
         // Here the core widget will be configured
         timelineWidget = new TimelineWidget(1900, 2000, 600, 50, this);
 
-        panel.add(toolBar, "grow");
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.gridwidth = 1;
+        panel.add(toolBar, gc);
 
-        eventPane.setPreferredSize(new Dimension(100, 300));
+//        eventPane.setPreferredSize(new Dimension(100, 300));
 
         timelineWidget.addChangeListener(eventPane);
         eventPane.addChangeListener(timelineWidget);
 
-        mapPane.setPreferredSize(new Dimension(600, -1));
+//        mapPane.setPreferredSize(new Dimension(600, -1));
+        mapPane.setMinimumSize(new Dimension(1000, 1000));
 
         annotatePane = new AnnotatePane(this);
         eventPane.addSelectChangeListener(annotatePane);
 
-        annotatePane.setPreferredSize(new Dimension(100, 300));
+//        annotatePane.setPreferredSize(new Dimension(100, 300));
         eventAnnotateSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                 false,
                 eventPane,
                 annotatePane);
         annotatePane.setVisible(false);
 
+        gc.gridx = 0;
+        gc.gridy = 2;
+        gc.gridwidth = 1;
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 false,
                 mapPane,
                 eventAnnotateSplitPane);
-        splitPane.setDividerLocation(0.7);
-        panel.add(splitPane, "grow");
+//        panel.add(splitPane, "grow");
+        panel.add(splitPane, gc);
 
-        panel.add(JMapStatusBar.createDefaultStatusBar(mapPane), "grow");
+        gc.gridx = 0;
+        gc.gridy = 3;
+        gc.gridwidth = 1;
+//        panel.add(JMapStatusBar.createDefaultStatusBar(mapPane), "grow");
+        panel.add(JMapStatusBar.createDefaultStatusBar(mapPane), gc);
 
-        panel.add(timelineWidget, "grow");
+
+        gc.gridx = 0;
+        gc.gridy = 4;
+        gc.gridwidth = 1;
+        panel.add(timelineWidget, gc);
 
         this.getContentPane().add(panel);
+
+        mapPane.setSize(new Dimension(1000, 1000));
+        mapPane.revalidate();
+        splitPane.setDividerLocation(0.7);
+
+
+        pack();
+
         uiSet = true;
 
         timelineWidget.setPointer(1950);

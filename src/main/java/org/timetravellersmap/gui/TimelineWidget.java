@@ -57,7 +57,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
             }
         };
         paintArea.setMinimumSize(new Dimension(width, height));
-        paintArea.setPreferredSize(new Dimension(width, height));
+//        paintArea.setPreferredSize(new Dimension(width, height));
         setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         System.out.println("width " + getWidth());
@@ -306,5 +306,10 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
     
     public int getPointerYear() {
         return (int)pointerPosition;
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(width, height);
     }
 }
