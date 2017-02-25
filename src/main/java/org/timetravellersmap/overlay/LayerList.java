@@ -43,7 +43,7 @@ public class LayerList {
     public void removeLayer(Layer layer) {
         if (layer != DEFAULT_LAYER) {
             // Set all of its events to the default layer
-            for (Event event: layer.getAllEvents()) {
+            for (Event event: layer.getRegisteredEvents()) {
                 event.setLayer(DEFAULT_LAYER);
             }
             layers.remove(layer);
@@ -137,8 +137,17 @@ public class LayerList {
 
     public void setEventsToDraw(ArrayList<Event> events) {
         for (Layer layer: layers) {
-            layer.setEventsToDraw(events);
+            layer.clearDrawRequests();
         }
+
+        for (Event event: events) {
+            Layer layer = event.getLayer();
+            layer.makeDrawRequest(event.getLayerComponents(), event);
+        }
+        updateMapContent();
+//        for (Layer layer: layers) {
+//            layer.setEventsToDraw(events);
+//        }
     }
 
     public void moveEventToLayer(Event event, Layer newLayer) {
@@ -148,9 +157,10 @@ public class LayerList {
             return;
         }
         event.setLayer(newLayer);
-        ArrayList<LayerComponent> layerComponents = currentLayer.getEventLayerComponents(event);
-        newLayer.addEventLayerComponents(layerComponents, event);
-        currentLayer.removeEventComponents(event);
+//        ArrayList<LayerComponent> layerComponents = currentLayer.getEventLayerComponents(event);
+//        ArrayList<LayerComponent> layerComponents = event.
+//        newLayer.addEventLayerComponents(layerComponents, event);
+//        currentLayer.removeEventComponents(event);
     }
 
 }

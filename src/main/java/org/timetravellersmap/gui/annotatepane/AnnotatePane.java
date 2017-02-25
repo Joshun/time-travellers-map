@@ -59,7 +59,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         // Handle removal of an annotation when "Remove" button clicked
         removeAnnotationButton.addActionListener(actionEvent -> {
             LOGGER.info("Remove clicked, removing annotation (selectedEvent="+selectedEvent+")");
-            selectedEvent.getLayer().removeComponent(getSelectedAnnotation(), selectedEvent);
+//            selectedEvent.getLayer().removeComponent(getSelectedAnnotation(), selectedEvent);
+            selectedEvent.removeLayerComponent(getSelectedAnnotation());
             annotationsChanged();
         });
 
@@ -172,7 +173,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
     private LayerComponent getSelectedAnnotation() {
         int layerComponentReference = annotationTable.getSelectedRow();
         if (layerComponentReference != -1) {
-            return selectedEvent.getLayer().getEventLayerComponents(selectedEvent).get(layerComponentReference);
+//            return selectedEvent.getLayer().getEventLayerComponents(selectedEvent).get(layerComponentReference);
+            return selectedEvent.getLayerComponents().get(layerComponentReference);
         }
         else {
             return null;

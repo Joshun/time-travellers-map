@@ -22,9 +22,11 @@ public class AnnotationTableModel implements TableModel {
     }
 
     public void loadEventLayerComponents(Event event) {
-        ArrayList<LayerComponent> newEventLayerComponents = event.getLayer().getEventLayerComponents(event);
+//        ArrayList<LayerComponent> newEventLayerComponents = event.getLayer().getEventLayerComponents(event);
+        ArrayList<LayerComponent> newEventLayerComponents = event.getLayerComponents();
         if (newEventLayerComponents != null) {
-            layerComponents = event.getLayer().getEventLayerComponents(event);
+//            layerComponents = event.getLayer().getEventLayerComponents(event);
+            layerComponents = event.getLayerComponents();
         }
     }
 

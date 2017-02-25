@@ -2,6 +2,7 @@ package org.timetravellersmap.core.event;
 
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.overlay.Layer;
+import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Event {
     private Calendar endDate;
 
     private Layer layer = LayerList.DEFAULT_LAYER;
+    private ArrayList<LayerComponent> layerComponents = new ArrayList<>();
 
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor) {
         this.startDate = startDate;
@@ -29,6 +31,14 @@ public class Event {
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, Layer layer) {
         this(startDate, endDate, eventDescriptor);
         this.layer = layer;
+    }
+
+    public void addLayerComponent(LayerComponent layerComponent) {
+        layerComponents.add(layerComponent);
+    }
+
+    public void removeLayerComponent(LayerComponent layerComponent) {
+        layerComponents.remove(layerComponent);
     }
 
     public Descriptor getEventDescriptor() {
@@ -82,6 +92,10 @@ public class Event {
 
     public void setLayer(Layer layer) {
         this.layer = layer;
+    }
+
+    public ArrayList<LayerComponent> getLayerComponents() {
+        return layerComponents;
     }
 
     public String toString() {

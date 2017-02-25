@@ -8,6 +8,7 @@ import org.timetravellersmap.core.event.Event;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -16,7 +17,9 @@ import java.util.Set;
  * Keeps track of LayerComponents and their corresponding Events
  */
 public class Layer extends org.geotools.map.DirectLayer {
-    private HashMap<Event, ArrayList<LayerComponent>>  eventLayerComponents = new HashMap<>();
+//    private HashMap<Event, ArrayList<LayerComponent>>  eventLayerComponents = new HashMap<>();
+    private ArrayList<LayerComponent> layerComponentsToDraw = new ArrayList<>();
+    private ArrayList<Event> registeredEvents = new ArrayList<>();
     private String name;
     private ArrayList<Event> eventsToDraw = null;
 
@@ -24,77 +27,111 @@ public class Layer extends org.geotools.map.DirectLayer {
         this.name = layerName;
     }
 
-    public void addComponent(LayerComponent component, Event associatedEvent) {
-        ArrayList<LayerComponent> componentArrayList = eventLayerComponents.get(associatedEvent);
-        if (componentArrayList == null) {
-            componentArrayList = new ArrayList<>();
-            componentArrayList.add(component);
-            eventLayerComponents.put(associatedEvent, componentArrayList);
+//    public void addComponent(LayerComponent component, Event associatedEvent) {
+//        ArrayList<LayerComponent> componentArrayList = eventLayerComponents.get(associatedEvent);
+//        if (componentArrayList == null) {
+//            componentArrayList = new ArrayList<>();
+//            componentArrayList.add(component);
+//            eventLayerComponents.put(associatedEvent, componentArrayList);
+//        }
+//        else {
+//            componentArrayList.add(component);
+//        }
+//        fireChanged();
+//        System.out.println(eventLayerComponents);
+//    }
+//
+//    public void addEventLayerComponents(ArrayList<LayerComponent> layerComponents, Event associatedEvent) {
+//        if (layerComponents == null) {
+//            return;
+//        }
+//        eventLayerComponents.put(associatedEvent, layerComponents);
+//    }
+//
+//    public void removeComponent(LayerComponent component, Event associatedEvent) {
+//        ArrayList<LayerComponent> componentArrayList = eventLayerComponents.get(associatedEvent);
+//        componentArrayList.remove(component);
+//        fireChanged();
+//    }
+
+    public void registerEvent(Event event) {
+        if (! registeredEvents.contains(event)) {
+            registeredEvents.add(event);
         }
-        else {
-            componentArrayList.add(component);
-        }
-        fireChanged();
-        System.out.println(eventLayerComponents);
     }
 
-    public void addEventLayerComponents(ArrayList<LayerComponent> layerComponents, Event associatedEvent) {
-        if (layerComponents == null) {
-            return;
-        }
-        eventLayerComponents.put(associatedEvent, layerComponents);
+    public void deregisterEvent(Event event) {
+        registeredEvents.remove(event);
     }
 
-    public void removeComponent(LayerComponent component, Event associatedEvent) {
-        ArrayList<LayerComponent> componentArrayList = eventLayerComponents.get(associatedEvent);
-        componentArrayList.remove(component);
-        fireChanged();
+    public void makeDrawRequest(LayerComponent layerComponent, Event event) {
+        registerEvent(event);
+        layerComponentsToDraw.add(layerComponent);
     }
 
-    public void setEventsToDraw(ArrayList<Event> eventsToDraw) {
-        this.eventsToDraw = eventsToDraw;
-        fireChanged();
+    public void makeDrawRequest(List<LayerComponent> layerComponentList, Event event) {
+        registerEvent(event);
+        layerComponentsToDraw.addAll(layerComponentList);
     }
+
+    public void clearDrawRequests() {
+        layerComponentsToDraw.clear();
+        registeredEvents.clear();
+    }
+
+//    public void setEventsToDraw(ArrayList<Event> eventsToDraw) {
+//        this.eventsToDraw = eventsToDraw;
+//        fireChanged();
+//    }
     
-    public void clearEventsToDraw() {
-        this.eventsToDraw = null;
-        fireChanged();
-    }
+//    public void clearEventsToDraw() {
+//        this.eventsToDraw = null;
+//        fireChanged();
+//    }
 
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
-        if (eventsToDraw != null) {
-            for (Event event : eventsToDraw) {
-                ArrayList<LayerComponent> layerComponentsToDraw = eventLayerComponents.get(event);
-                if (layerComponentsToDraw == null) {
-                    continue;
-                }
-                for (LayerComponent layerComponent : layerComponentsToDraw) {
-                    layerComponent.draw(graphics2D, mapContent, mapViewport);
-                }
+        if (layerComponentsToDraw != null) {
+            for (LayerComponent layerComponent: layerComponentsToDraw) {
+                layerComponent.draw(graphics2D, mapContent, mapViewport);
             }
         }
+//        if (eventsToDraw != null) {
+//            for (Event event : eventsToDraw) {
+//                ArrayList<LayerComponent> layerComponentsToDraw = eventLayerComponents.get(event);
+//                if (layerComponentsToDraw == null) {
+//                    continue;
+//                }
+//                for (LayerComponent layerComponent : layerComponentsToDraw) {
+//                    layerComponent.draw(graphics2D, mapContent, mapViewport);
+//                }
+//            }
+//        }
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof Layer) {
-            return ((Layer) other).getName().equals(this.name);
-        }
-        else {
-            return other.equals(this);
-        }
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other instanceof Layer) {
+//            return ((Layer) other).getName().equals(this.name);
+//        }
+//        else {
+//            return other.equals(this);
+//        }
+//    }
 
-    public Set<Event> getAllEvents() {
-        return eventLayerComponents.keySet();
-    }
+//    public Set<Event> getAllEvents() {
+//        return eventLayerComponents.keySet();
+//    }
 
-    public ArrayList<LayerComponent> getEventLayerComponents(Event event) {
-        return eventLayerComponents.get(event);
-    }
+//    public ArrayList<LayerComponent> getEventLayerComponents(Event event) {
+//        return eventLayerComponents.get(event);
+//    }
 
-    public void removeEventComponents(Event event) {
-        eventLayerComponents.remove(event);
+//    public void removeEventComponents(Event event) {
+//        eventLayerComponents.remove(event);
+//    }
+
+    public ArrayList<Event> getRegisteredEvents() {
+        return registeredEvents;
     }
 
     private void fireChanged() {
