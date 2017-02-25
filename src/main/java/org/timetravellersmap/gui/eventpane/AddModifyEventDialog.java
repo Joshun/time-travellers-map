@@ -56,23 +56,6 @@ public class AddModifyEventDialog extends JFrame {
 
         int startYearInitialValue = pointerYear;
 
-        // Begin adding listeners
-        confirmButton.addActionListener(actionEvent ->  {
-            if (existingEvent != null) {
-                updateOrAddEvent(existingEvent);
-            }
-            else {
-                updateOrAddEvent(null);
-            }
-        });
-
-        JFrame parentFrame = this;
-        cancelButton.addActionListener(actionEvent ->  {
-                    parentFrame.dispose();
-                }
-        );
-        // End adding listeners
-
         // Begin layout of GUI components
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -155,6 +138,22 @@ public class AddModifyEventDialog extends JFrame {
         this.pack();
         // End layout of GUI components
 
+        // Begin adding listeners
+        confirmButton.addActionListener(actionEvent ->  {
+            if (existingEvent != null) {
+                updateOrAddEvent(existingEvent);
+            }
+            else {
+                updateOrAddEvent(null);
+            }
+        });
+
+        JFrame parentFrame = this;
+        cancelButton.addActionListener(actionEvent ->  {
+                    parentFrame.dispose();
+                }
+        );
+        // End adding listeners
 
         if (existingEvent != null) {
             loadExistingEvent(existingEvent);
