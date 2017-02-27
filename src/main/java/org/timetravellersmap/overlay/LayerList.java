@@ -1,7 +1,9 @@
 package org.timetravellersmap.overlay;
 
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.MapContent;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.timetravellersmap.core.event.EventChangeListener;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.core.event.Event;
@@ -13,7 +15,7 @@ import java.util.logging.Logger;
  * LayerList: represents a list of layers drawn on the map and their order
  * Has utility functions for adding, removing and changing layer order, and moving an event to a different layer
  */
-public class LayerList implements LayerComponentChangeListener {
+public class LayerList {
     private final static Logger LOGGER = Logger.getLogger(LayerList.class.getName());
     private ArrayList<Layer> layers = new ArrayList<>();
     private MapContent mapContent;
@@ -36,7 +38,8 @@ public class LayerList implements LayerComponentChangeListener {
 
     public void addLayer(Layer layer) {
         layers.add(layer);
-        mapContent.addLayer(layer);
+//        mapContent.addLayer(layer);
+        updateMapContent();
     }
 
     public void removeLayer(Layer layer) {
@@ -46,7 +49,8 @@ public class LayerList implements LayerComponentChangeListener {
                 event.setLayer(DEFAULT_LAYER);
             }
             layers.remove(layer);
-            mapContent.removeLayer(layer);
+//            mapContent.removeLayer(layer);
+            updateMapContent();
         }
         else {
             LOGGER.warning("Refusing request to remove default layer.");
@@ -57,7 +61,8 @@ public class LayerList implements LayerComponentChangeListener {
         List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
         LOGGER.info("swapping layers \"" + layer1 + "\" and \"" + layer2 + "\"");
         Collections.swap(layers, layers.indexOf(layer1), layers.indexOf(layer2));
-        Collections.swap(mapContentLayers, mapContentLayers.indexOf(layer1), mapContentLayers.indexOf(layer2));
+//        Collections.swap(mapContentLayers, mapContentLayers.indexOf(layer1), mapContentLayers.indexOf(layer2));
+        updateMapContent();
     }
 
     public void moveLayerDown(Layer layer) {
@@ -130,9 +135,19 @@ public class LayerList implements LayerComponentChangeListener {
                 mapContentLayers.add(layers.get(i));
             }
             else {
+                // preDispose() is needed to notify Geotools that the layer is being removed / changed
+                mapContentLayers.get(i+BASE_LAYER_INDEX+1).preDispose();
                 mapContentLayers.set(i+BASE_LAYER_INDEX+1, layers.get(i));
             }
         }
+
+        mapContent.getViewport().setBounds(new ReferencedEnvelope(
+                -180.0,
+                180.0,
+                -90.0,
+                90.0,
+                DefaultGeographicCRS.WGS84
+        ));
     }
 
     public void setEventsToDraw(ArrayList<Event> events) {
@@ -156,9 +171,13 @@ public class LayerList implements LayerComponentChangeListener {
         event.setLayer(newLayer);
     }
 
-   public void layerComponentChanged() {
-        LOGGER.info("layerComponentChanged()");
-        updateMapContent();
-   }
+//   public void layerComponentChanged() {
+//        LOGGER.info("layerComponentChanged()");
+//        updateMapContent();
+//   }
+
+//    public void eventChanged() {
+//        LOGGER.info("event changed");
+//    }
 
 }

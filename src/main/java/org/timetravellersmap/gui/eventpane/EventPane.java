@@ -6,6 +6,7 @@ import org.timetravellersmap.core.event.EventSelectChangeListener;
 import org.timetravellersmap.core.timeline.TimelineChangeListener;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.core.event.Event;
+import org.timetravellersmap.overlay.LayerComponentChangeListener;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -22,7 +23,7 @@ import java.util.GregorianCalendar;
  * EventPane: displays a list of events for the current time period
  * This will display events that start, finish or are taking place during the selected year
  */
-public class EventPane extends JPanel implements TimelineChangeListener {
+public class EventPane extends JPanel implements TimelineChangeListener, LayerComponentChangeListener {
     private JScrollPane eventTableContainer;
     private JTable eventTable;
     private JButton addEventButton;
@@ -328,7 +329,7 @@ public class EventPane extends JPanel implements TimelineChangeListener {
 
     }
 
-    public void timelineChanged(int year) {
+    public void timelineChanged(int year, boolean redraw) {
         // Deselect event selection
         if (eventSelected) {
             fireSelectChangeListenersDeselect();
@@ -337,13 +338,22 @@ public class EventPane extends JPanel implements TimelineChangeListener {
         }
         setContextDependentButtonsEnabled(false);
         replaceCurrentEvents(year);
-        mapFrame.getLayerList().setEventsToDraw(currentEvents);
+        if (redraw) {
+            mapFrame.getLayerList().setEventsToDraw(currentEvents);
+        }
     }
 
     private void replaceCurrentEvents(int pointerYear) {
         this.currentEvents = mapFrame.getEventIndex().getPointerEvents(pointerYear);
         timelinePointerYear = pointerYear;
         eventTable.repaint();
+    }
+
+    public void layerComponentChanged() {
+        System.out.println("layerComponentChanged()!!!!");
+        replaceCurrentEvents(mapFrame.getTimelineWidget().getPointerYear());
+        mapFrame.getLayerList().setEventsToDraw(currentEvents);
+        System.out.println(currentEvents.get(0).getLayerComponents());
     }
 
 

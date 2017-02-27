@@ -43,7 +43,8 @@ public class Toplevel {
     private CoordinateReferenceSystem coordinateReferenceSystem = DefaultGeographicCRS.WGS84;
 
     public Toplevel() throws ShapefileException {
-        shapeFile = JFileDataStoreChooser.showOpenFile("shp", null);
+//        shapeFile = JFileDataStoreChooser.showOpenFile("shp", null);
+        shapeFile = new File("/home/joshua/Documents/Computer Science/Dissertation Project/sample data/ne_50m_admin_0_sovereignty.shp");
         if (shapeFile == null) {
             throw new ShapefileException("Failed to parse shapefile");
         }

@@ -84,6 +84,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
             public void mouseClicked(MouseEvent mouseEvent) {
                 // Update the selected year pointer when the user clicks ruler
                 updatePointer(mouseEvent.getX());
+                fireChangeListeners(getPointerYear(), true);
             }
 
             @Override
@@ -92,6 +93,8 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
 
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {
+                updatePointer(mouseEvent.getX());
+                fireChangeListeners(getPointerYear(), true);
             }
 
             @Override
@@ -109,6 +112,9 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
             public void mouseDragged(MouseEvent mouseEvent) {
                 // Update the current year pointer when the user drags slider
                 updatePointer(mouseEvent.getX());
+                // fire event change listeners when dragged
+                // if UPDATE_MAP_ON_DRAG is True, redraw the map while dragging, else only when released
+                fireChangeListeners(getPointerYear(), MapFrame.UPDATE_MAP_ON_DRAG);
             }
 
             @Override
@@ -176,9 +182,9 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
     }
 
     // Notify TimelineChange listeners that the timeline has changed (i.e. user click / seek)
-    private void fireChangeListeners(int year) {
+    private void fireChangeListeners(int year, boolean redraw) {
         for (TimelineChangeListener changeListener: changeListeners) {
-            changeListener.timelineChanged(year);
+            changeListener.timelineChanged(year, redraw);
         }
     }
 
@@ -194,7 +200,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
             int year = computeYearClicked(xPos, 0, width, start, end);
             System.out.println("year " + year);
             setPointer(year);
-            fireChangeListeners(year);
+//            fireChangeListeners(year);
             paintArea.repaint();
         }
     }

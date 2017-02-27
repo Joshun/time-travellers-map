@@ -36,7 +36,7 @@ public abstract class AddComponent extends JFrame {
 
 
     public AddComponent(AnnotatePane annotatePane, Event event) {
-        this.layerComponentChangeListeners.addAll(annotatePane.getLayerComponentChangeListeners());
+//        this.layerComponentChangeListeners.addAll(annotatePane.getLayerComponentChangeListeners());
         this.layerComponentChangeListeners.add(annotatePane);
         this.annotatePane = annotatePane;
         this.event = event;

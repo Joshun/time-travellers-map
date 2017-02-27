@@ -1,9 +1,12 @@
 package org.timetravellersmap.gui;
 
 import net.miginfocom.swing.MigLayout;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.swing.JMapPane;
+import org.geotools.swing.MapPane;
 import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
 import org.timetravellersmap.TimeTravellersMapException;
@@ -38,6 +41,8 @@ public class MapFrame extends JFrame {
 
     public static final int INITIAL_START_YEAR = 1900;
     public static final int INITIAL_END_YEAR = 2000;
+
+    public static final boolean UPDATE_MAP_ON_DRAG = false;
 
     private JMapPane mapPane;
     private JToolBar toolBar;
@@ -280,6 +285,20 @@ public class MapFrame extends JFrame {
 
     public static void setBaseLayer(org.geotools.map.Layer baseLayer) {
         MapFrame.baseLayer = baseLayer;
+    }
+
+    public void repaintMapContent() {
+        mapPane.getMapContent().getViewport().setBounds(new ReferencedEnvelope(
+                -180.0,
+                180.0,
+                -90.0,
+                90.0,
+                DefaultGeographicCRS.WGS84
+        ));
+    }
+
+    public MapPane getMapPane() {
+        return mapPane;
     }
 
 }
