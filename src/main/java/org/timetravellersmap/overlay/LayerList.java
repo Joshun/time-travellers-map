@@ -38,7 +38,6 @@ public class LayerList {
 
     public void addLayer(Layer layer) {
         layers.add(layer);
-//        mapContent.addLayer(layer);
         updateMapContent();
     }
 
@@ -49,7 +48,6 @@ public class LayerList {
                 event.setLayer(DEFAULT_LAYER);
             }
             layers.remove(layer);
-//            mapContent.removeLayer(layer);
             updateMapContent();
         }
         else {
@@ -61,7 +59,6 @@ public class LayerList {
         List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
         LOGGER.info("swapping layers \"" + layer1 + "\" and \"" + layer2 + "\"");
         Collections.swap(layers, layers.indexOf(layer1), layers.indexOf(layer2));
-//        Collections.swap(mapContentLayers, mapContentLayers.indexOf(layer1), mapContentLayers.indexOf(layer2));
         updateMapContent();
     }
 
@@ -140,14 +137,6 @@ public class LayerList {
                 mapContentLayers.set(i+BASE_LAYER_INDEX+1, layers.get(i));
             }
         }
-
-        mapContent.getViewport().setBounds(new ReferencedEnvelope(
-                -180.0,
-                180.0,
-                -90.0,
-                90.0,
-                DefaultGeographicCRS.WGS84
-        ));
     }
 
     public void setEventsToDraw(ArrayList<Event> events) {
@@ -171,13 +160,13 @@ public class LayerList {
         event.setLayer(newLayer);
     }
 
-//   public void layerComponentChanged() {
-//        LOGGER.info("layerComponentChanged()");
-//        updateMapContent();
-//   }
-
-//    public void eventChanged() {
-//        LOGGER.info("event changed");
-//    }
-
+    public void forceRepaint() {
+        mapContent.getViewport().setBounds(new ReferencedEnvelope(
+                -180.0,
+                180.0,
+                -90.0,
+                90.0,
+                DefaultGeographicCRS.WGS84
+        ));
+    }
 }
