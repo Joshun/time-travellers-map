@@ -1,7 +1,7 @@
 package org.timetravellersmap.overlay;
 
 /**
- * Created by joshua on 27/02/17.
+ * LayerComponentChangeListener: listen to add/removal of LayerComponents
  */
 public interface LayerComponentChangeListener {
     void layerComponentChanged();

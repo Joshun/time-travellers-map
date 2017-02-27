@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Created by joshua on 06/02/17.
+ * AddComponent: base GUI for adding LayerComponent annotations
  */
 public abstract class AddComponent extends JFrame {
     protected AnnotatePane annotatePane;
