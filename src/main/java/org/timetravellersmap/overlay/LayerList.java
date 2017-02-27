@@ -36,7 +36,6 @@ public class LayerList {
     public void addLayer(Layer layer) {
         layers.add(layer);
         mapContent.addLayer(layer);
-//        updateMapContent();
     }
 
     public void removeLayer(Layer layer) {
