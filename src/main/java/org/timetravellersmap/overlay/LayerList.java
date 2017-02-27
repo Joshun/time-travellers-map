@@ -2,6 +2,7 @@ package org.timetravellersmap.overlay;
 
 
 import org.geotools.map.MapContent;
+import org.timetravellersmap.core.event.EventChangeListener;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.core.event.Event;
 
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
  * LayerList: represents a list of layers drawn on the map and their order
  * Has utility functions for adding, removing and changing layer order, and moving an event to a different layer
  */
-public class LayerList {
+public class LayerList implements LayerComponentChangeListener {
     private final static Logger LOGGER = Logger.getLogger(LayerList.class.getName());
     private ArrayList<Layer> layers = new ArrayList<>();
     private MapContent mapContent;
@@ -154,5 +155,10 @@ public class LayerList {
         }
         event.setLayer(newLayer);
     }
+
+   public void layerComponentChanged() {
+        LOGGER.info("layerComponentChanged()");
+        updateMapContent();
+   }
 
 }

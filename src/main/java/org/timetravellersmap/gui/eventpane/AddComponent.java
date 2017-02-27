@@ -3,9 +3,11 @@ package org.timetravellersmap.gui.eventpane;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.core.event.Event;
+import org.timetravellersmap.overlay.LayerComponentChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by joshua on 06/02/17.
@@ -21,16 +23,21 @@ public abstract class AddComponent extends JFrame {
 //    protected abstract void setUpPanel();
     protected abstract LayerComponent createLayerComponent();
 
+    private ArrayList<LayerComponentChangeListener> layerComponentChangeListeners = new ArrayList<>();
+
     private void addLayerComponent() {
         System.out.println("ADDD");
 //        event.getLayer().addComponent(createLayerComponent(), event);
         event.addLayerComponent(createLayerComponent());
+        fireLayerComponentChangeListenersChanged();
 //        System.out.println(event.getLayer().getEventLayerComponents(event));
 
     }
 
 
     public AddComponent(AnnotatePane annotatePane, Event event) {
+        this.layerComponentChangeListeners.addAll(annotatePane.getLayerComponentChangeListeners());
+        this.layerComponentChangeListeners.add(annotatePane);
         this.annotatePane = annotatePane;
         this.event = event;
 
@@ -64,5 +71,11 @@ public abstract class AddComponent extends JFrame {
         add(cancelButton, gc);
         // End layout of GUI components
 
+    }
+
+    private void fireLayerComponentChangeListenersChanged() {
+        for (LayerComponentChangeListener changeListener: layerComponentChangeListeners) {
+            changeListener.layerComponentChanged();
+        }
     }
 }

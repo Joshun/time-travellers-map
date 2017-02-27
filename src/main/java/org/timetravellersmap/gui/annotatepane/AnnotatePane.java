@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.annotatepane;
 
+import org.timetravellersmap.core.event.EventChangeListener;
 import org.timetravellersmap.core.event.EventSelectChangeListener;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.eventpane.LayerComboBoxModel;
@@ -7,6 +8,7 @@ import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerChangeListener;
 import org.timetravellersmap.core.event.Event;
+import org.timetravellersmap.overlay.LayerComponentChangeListener;
 
 import javax.swing.*;
 import javax.swing.event.ListDataListener;
@@ -16,12 +18,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
  * AnnotatePane: pane to display annotations for selected event and allow adding, removal and editing of annotations
  */
-public class AnnotatePane extends JPanel implements EventSelectChangeListener, LayerChangeListener {
+public class AnnotatePane extends JPanel implements EventSelectChangeListener, LayerChangeListener, LayerComponentChangeListener {
     private final static Logger LOGGER = Logger.getLogger(AnnotatePane.class.getName());
     private AnnotateMenu annotateMenu;
     private JButton addAnnotationButton = new JButton("Add...");
@@ -38,7 +41,10 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 
     private Event selectedEvent = null;
 
+    private ArrayList<LayerComponentChangeListener> layerComponentChangeListeners = new ArrayList<>();
+
     public AnnotatePane(MapFrame parentMapFrame) {
+        addLayerComponentChangeListener(parentMapFrame.getLayerList());
         this.annotateMenu = new AnnotateMenu(this);
         this.mapFrame = parentMapFrame;
         setLayout(new GridBagLayout());
@@ -195,5 +201,27 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
     // Handle layer change events, i.e. from LayerManager
     public void layerChanged() {
         layerSelectCombo.setModel(new DefaultComboBoxModel<Layer>(mapFrame.getLayerList().getLayers()));
+    }
+
+    public void addLayerComponentChangeListener(LayerComponentChangeListener changeListener) {
+        layerComponentChangeListeners.add(changeListener);
+    }
+
+    public void removeLayerComponentChangeListener(LayerComponentChangeListener changeListener) {
+        layerComponentChangeListeners.remove(changeListener);
+    }
+
+    public ArrayList<LayerComponentChangeListener> getLayerComponentChangeListeners() {
+        return layerComponentChangeListeners;
+    }
+
+    private void fireLayerComponentChangeListenerChanged() {
+        for (LayerComponentChangeListener changeListener: layerComponentChangeListeners) {
+            changeListener.layerComponentChanged();
+        }
+    }
+
+    public void layerComponentChanged() {
+        annotationsChanged();
     }
 }
