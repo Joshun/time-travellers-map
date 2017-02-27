@@ -121,7 +121,7 @@ public class LayerList implements LayerComponentChangeListener {
         List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
 
         // If the "managed" list of layers has shrunk to smaller than the mapContentLayers, "purge" mapContent layers
-        if (layers.size() < mapContentLayers.size()) {
+        if (layers.size()+1 < mapContentLayers.size()) {
             purgeMapContent();
         }
 
