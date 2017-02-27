@@ -112,6 +112,7 @@ public class LayerList {
         List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
         int size = mapContentLayers.size();
         for (int n=size-1; n>0; n--) {
+            mapContentLayers.get(n).preDispose();
             mapContentLayers.remove(n);
         }
     }
@@ -133,8 +134,9 @@ public class LayerList {
             }
             else {
                 // preDispose() is needed to notify Geotools that the layer is being removed / changed
-                mapContentLayers.get(i+BASE_LAYER_INDEX+1).preDispose();
-                mapContentLayers.set(i+BASE_LAYER_INDEX+1, layers.get(i));
+                mapContentLayers.get(i + BASE_LAYER_INDEX + 1).preDispose();
+                mapContentLayers.get(i + BASE_LAYER_INDEX + 1).dispose();
+                mapContentLayers.set(i + BASE_LAYER_INDEX + 1, layers.get(i));
             }
         }
     }
