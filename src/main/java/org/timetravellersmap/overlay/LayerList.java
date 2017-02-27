@@ -14,8 +14,7 @@ import java.util.logging.Logger;
  */
 public class LayerList {
     private final static Logger LOGGER = Logger.getLogger(LayerList.class.getName());
-//    private TreeMap<Layer,Integer> layers = new TreeMap<>();
-    private ArrayList<Layer> layers = new ArrayList<Layer>();
+    private ArrayList<Layer> layers = new ArrayList<>();
     private MapContent mapContent;
 
     // This is the default layer, for usability and stability this cannot be removed
@@ -37,7 +36,7 @@ public class LayerList {
     public void addLayer(Layer layer) {
         layers.add(layer);
         mapContent.addLayer(layer);
-        updateMapContent();
+//        updateMapContent();
     }
 
     public void removeLayer(Layer layer) {
@@ -47,17 +46,18 @@ public class LayerList {
                 event.setLayer(DEFAULT_LAYER);
             }
             layers.remove(layer);
+            mapContent.removeLayer(layer);
         }
         else {
             LOGGER.warning("Refusing request to remove default layer.");
         }
-        updateMapContent();
     }
 
     public void swapLayers(Layer layer1, Layer layer2) {
+        List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
         LOGGER.info("swapping layers \"" + layer1 + "\" and \"" + layer2 + "\"");
         Collections.swap(layers, layers.indexOf(layer1), layers.indexOf(layer2));
-        updateMapContent();
+        Collections.swap(mapContentLayers, mapContentLayers.indexOf(layer1), mapContentLayers.indexOf(layer2));
     }
 
     public void moveLayerDown(Layer layer) {
@@ -145,9 +145,6 @@ public class LayerList {
             layer.makeDrawRequest(event.getLayerComponents(), event);
         }
         updateMapContent();
-//        for (Layer layer: layers) {
-//            layer.setEventsToDraw(events);
-//        }
     }
 
     public void moveEventToLayer(Event event, Layer newLayer) {
@@ -157,10 +154,6 @@ public class LayerList {
             return;
         }
         event.setLayer(newLayer);
-//        ArrayList<LayerComponent> layerComponents = currentLayer.getEventLayerComponents(event);
-//        ArrayList<LayerComponent> layerComponents = event.
-//        newLayer.addEventLayerComponents(layerComponents, event);
-//        currentLayer.removeEventComponents(event);
     }
 
 }
