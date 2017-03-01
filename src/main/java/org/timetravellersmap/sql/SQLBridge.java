@@ -18,6 +18,7 @@ import org.timetravellersmap.overlay.Layer;
  * SQLBridge: load and save Event, LayerComponent, Layer and Descriptor data to database using an ORM
  */
 public class SQLBridge {
+    private final static String DB_PATH = "ttm.db";
     private ConnectionSource connectionSource;
 
     private Dao<Descriptor, String> descriptorDao;
@@ -27,7 +28,7 @@ public class SQLBridge {
 
     public SQLBridge() throws QueryException {
         try {
-            connectionSource = new JdbcConnectionSource("jdbc:sqlite:ttm.db");
+            connectionSource = new JdbcConnectionSource("jdbc:sqlite:" + DB_PATH);
 
             TableUtils.createTableIfNotExists(connectionSource, Descriptor.class);
             TableUtils.createTableIfNotExists(connectionSource, Layer.class);
