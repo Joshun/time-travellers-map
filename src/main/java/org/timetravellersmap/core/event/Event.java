@@ -1,5 +1,6 @@
 package org.timetravellersmap.core.event;
 
+import com.j256.ormlite.table.DatabaseTable;
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerComponent;
@@ -12,6 +13,7 @@ import java.util.GregorianCalendar;
 /**
  * Event: a class to represent an event with start, end and annotation
  */
+@DatabaseTable(tableName = "events")
 public class Event {
 //    private LayerList layerList;
     private Descriptor eventDescriptor;

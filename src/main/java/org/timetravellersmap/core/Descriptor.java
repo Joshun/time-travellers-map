@@ -1,8 +1,11 @@
 package org.timetravellersmap.core;
 
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * Descriptor: representation of name and description for various objects
  */
+@DatabaseTable(tableName = "descriptors")
 public class Descriptor {
     private final String name;
     private final String description;

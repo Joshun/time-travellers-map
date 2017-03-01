@@ -1,5 +1,6 @@
 package org.timetravellersmap.overlay;
 
+import com.j256.ormlite.table.DatabaseTable;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
@@ -14,6 +15,7 @@ import java.util.List;
  * Layer: representation of a screen annotation drawing layer
  * Keeps track of LayerComponents and their corresponding Events
  */
+@DatabaseTable(tableName = "layers")
 public class Layer extends org.geotools.map.DirectLayer {
     private ArrayList<LayerComponent> layerComponentsToDraw = new ArrayList<>();
     private ArrayList<Event> registeredEvents = new ArrayList<>();
