@@ -1,7 +1,10 @@
 package org.timetravellersmap.overlay;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
+import org.timetravellersmap.sql.DBLayerComponent;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -10,11 +13,15 @@ import java.awt.geom.Point2D;
 /**
  * PointComponent: represents a point to draw with optional radius parameter
  */
+@DatabaseTable(tableName = "pointComponents")
 public class PointComponent extends LayerComponent{
+    @DatabaseField
     private double x;
+    @DatabaseField
     private double y;
     private final static int DEFAULT_RADIUS = 1;
     private final static boolean USE_SCALING = false;
+    @DatabaseField
     private double radius;
 
     public PointComponent(double x, double y, double radius) {

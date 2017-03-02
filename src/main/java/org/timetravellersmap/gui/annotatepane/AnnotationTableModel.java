@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.annotatepane;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.PointComponent;
 import org.timetravellersmap.core.event.Event;
@@ -23,10 +24,11 @@ public class AnnotationTableModel implements TableModel {
 
     public void loadEventLayerComponents(Event event) {
 //        ArrayList<LayerComponent> newEventLayerComponents = event.getLayer().getEventLayerComponents(event);
-        ArrayList<LayerComponent> newEventLayerComponents = event.getLayerComponents();
+//        ForeignCollection<LayerComponent> newEventLayerComponents = event.getLayerComponents();
+        ArrayList<LayerComponent> newEventLayerComponents = event.getLayerComponentsArrayList();
         if (newEventLayerComponents != null) {
 //            layerComponents = event.getLayer().getEventLayerComponents(event);
-            layerComponents = event.getLayerComponents();
+            layerComponents = event.getLayerComponentsArrayList();
         }
     }
 

@@ -1,5 +1,6 @@
 package org.timetravellersmap.core;
 
+import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
@@ -7,12 +8,21 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "descriptors")
 public class Descriptor {
+    @DatabaseField
     private final String name;
+    @DatabaseField
     private final String description;
+
+    @DatabaseField(generatedId = true)
+    private int id;
 
     public Descriptor(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Descriptor() {
+        this(null, null);
     }
 
     public Descriptor(String name) {

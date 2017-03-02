@@ -15,6 +15,8 @@ import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.core.event.EventIndex;
 import org.timetravellersmap.core.event.Event;
+import org.timetravellersmap.sql.QueryException;
+import org.timetravellersmap.sql.SQLBridge;
 
 
 import javax.swing.*;
@@ -54,6 +56,8 @@ public class MapFrame extends JFrame {
     private AnnotatePane annotatePane;
     private JSplitPane eventAnnotateSplitPane;
     private TimelineWidget timelineWidget;
+
+    private SQLBridge sqlBridge;
 
     private static Layer baseLayer = null;
 
@@ -247,6 +251,16 @@ public class MapFrame extends JFrame {
         uiSet = true;
 
         timelineWidget.setPointer(1950);
+
+        try {
+            sqlBridge = new SQLBridge();
+        }
+        catch (QueryException e) {
+            e.printStackTrace();
+            System.out.println("Could not establish connection to database");
+            System.exit(1);
+        }
+
     }
 
     public EventIndex getEventIndex() {

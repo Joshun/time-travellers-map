@@ -353,7 +353,7 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
         System.out.println("layerComponentChanged()!!!!");
         replaceCurrentEvents(mapFrame.getTimelineWidget().getPointerYear());
         mapFrame.getLayerList().setEventsToDraw(currentEvents);
-        System.out.println(currentEvents.get(0).getLayerComponents());
+//        System.out.println(currentEvents.get(0).getLayerComponents());
     }
 
 

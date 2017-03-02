@@ -1,5 +1,6 @@
 package org.timetravellersmap.overlay;
 
+import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.MapContent;
@@ -19,8 +20,16 @@ import java.util.List;
 public class Layer extends org.geotools.map.DirectLayer {
     private ArrayList<LayerComponent> layerComponentsToDraw = new ArrayList<>();
     private ArrayList<Event> registeredEvents = new ArrayList<>();
+    @DatabaseField
     private String name;
     private ArrayList<Event> eventsToDraw = null;
+
+    @DatabaseField(generatedId = true)
+    private int id;
+
+    public Layer() {
+        this(null);
+    }
 
     public Layer(String layerName) {
         this.name = layerName;

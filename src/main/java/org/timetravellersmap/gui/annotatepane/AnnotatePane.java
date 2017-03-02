@@ -180,7 +180,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         int layerComponentReference = annotationTable.getSelectedRow();
         if (layerComponentReference != -1) {
 //            return selectedEvent.getLayer().getEventLayerComponents(selectedEvent).get(layerComponentReference);
-            return selectedEvent.getLayerComponents().get(layerComponentReference);
+            return selectedEvent.getLayerComponentsArrayList().get(layerComponentReference);
         }
         else {
             return null;
