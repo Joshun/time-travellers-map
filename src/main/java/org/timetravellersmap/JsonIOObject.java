@@ -2,6 +2,7 @@ package org.timetravellersmap;
 
 import com.google.gson.annotations.Expose;
 import org.timetravellersmap.core.event.EventIndex;
+import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
 
 import java.time.LocalDate;
@@ -27,5 +28,11 @@ public class JsonIOObject {
         this.defaultLayerName = layerList.DEFAULT_LAYER.getName();
         this.eventIndex = eventIndex;
         this.writeTime = LocalDateTime.now().toString();
+    }
+
+    @Override
+    public String toString() {
+        LayerComponent test = eventIndex.getStartEventsForYear(2017).get(0).getLayerComponents().get(0);
+        return "JSONIOObject " + test;
     }
 }

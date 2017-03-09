@@ -2,6 +2,7 @@ package org.timetravellersmap;
 
 import com.google.gson.*;
 import com.google.gson.annotations.Expose;
+import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
@@ -15,6 +16,7 @@ import org.timetravellersmap.overlay.RectangleComponent;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -79,5 +81,28 @@ public class JsonIO {
 
         JsonIO jsonIO = new JsonIO(layerList, eventIndex);
         jsonIO.saveJson("test.json");
+
+
+        LayerList readingLayerList = new LayerList(mapContent, baseLayer);
+        JsonIOObject readingObject = new JsonIOObject(layerList, eventIndex);
+
+        RuntimeTypeAdapterFactory<LayerComponent> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
+                .of(LayerComponent.class)
+                .registerSubtype(PointComponent.class)
+                .registerSubtype(RectangleComponent.class);
+
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
+
+        try {
+            FileReader fileReader = new FileReader("test.json");
+            JsonReader jsonReader = new JsonReader(fileReader);
+//            JsonIOObject readIn = new JsonIOObject(layerList, eventIndex);
+            JsonIOObject readIn = gson.fromJson(jsonReader, JsonIOObject.class);
+            System.out.println(readIn);
+        }
+        catch (java.io.FileNotFoundException e) {
+            LOGGER.warning("File not found ");
+            e.printStackTrace();
+        }
     }
 }
