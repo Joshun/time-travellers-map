@@ -24,6 +24,7 @@ public class Event {
     private Calendar endDate;
 
     private Layer layer = LayerList.DEFAULT_LAYER;
+    @Expose
     private ArrayList<LayerComponent> layerComponents = new ArrayList<>();
 
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor) {

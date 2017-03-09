@@ -1,5 +1,6 @@
 package org.timetravellersmap.overlay;
 
+import com.google.gson.annotations.Expose;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
 
@@ -11,10 +12,13 @@ import java.awt.geom.Point2D;
  * PointComponent: represents a point to draw with optional radius parameter
  */
 public class PointComponent extends LayerComponent{
+    @Expose
     private double x;
+    @Expose
     private double y;
     private final static int DEFAULT_RADIUS = 1;
     private final static boolean USE_SCALING = false;
+    @Expose
     private double radius;
 
     public PointComponent(double x, double y, double radius) {

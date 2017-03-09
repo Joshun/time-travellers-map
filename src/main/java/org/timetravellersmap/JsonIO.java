@@ -8,7 +8,9 @@ import org.geotools.map.MapContent;
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.core.event.Event;
 import org.timetravellersmap.core.event.EventIndex;
+import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
+import org.timetravellersmap.overlay.PointComponent;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -63,7 +65,10 @@ public class JsonIO {
         MapContent mapContent = new MapContent();
         LayerList layerList = new LayerList(mapContent, baseLayer);
         EventIndex eventIndex = new EventIndex();
-        eventIndex.addEvent(new Event(new GregorianCalendar(), new GregorianCalendar(), new Descriptor("event name", "event description")));
+        Event event = new Event(new GregorianCalendar(), new GregorianCalendar(), new Descriptor("event name", "event description"));
+        PointComponent pointComponent = new PointComponent(1, 1, 4);
+        event.addLayerComponent(pointComponent);
+        eventIndex.addEvent(event);
 
         JsonIO jsonIO = new JsonIO(layerList, eventIndex);
         jsonIO.saveJson("test.json");
