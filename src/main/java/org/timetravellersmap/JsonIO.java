@@ -11,6 +11,7 @@ import org.timetravellersmap.core.event.EventIndex;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.overlay.PointComponent;
+import org.timetravellersmap.overlay.RectangleComponent;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -27,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class JsonIO {
     private final static Logger LOGGER = Logger.getLogger(JsonIO.class.getName());
-    private Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+    private Gson gson;
 
     private LayerList layerList;
     private EventIndex eventIndex;
@@ -45,6 +46,12 @@ public class JsonIO {
     }
 
     public void saveJson(File jsonFile) {
+        RuntimeTypeAdapterFactory<LayerComponent> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
+                .of(LayerComponent.class)
+                .registerSubtype(PointComponent.class)
+                .registerSubtype(RectangleComponent.class);
+
+        gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
         try {
             FileWriter fileWriter = new FileWriter(jsonFile);
             JsonWriter jsonWriter = new JsonWriter(fileWriter);
