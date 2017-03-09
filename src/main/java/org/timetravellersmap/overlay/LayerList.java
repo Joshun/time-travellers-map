@@ -1,6 +1,7 @@
 package org.timetravellersmap.overlay;
 
 
+import com.google.gson.annotations.Expose;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.MapContent;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
  */
 public class LayerList {
     private final static Logger LOGGER = Logger.getLogger(LayerList.class.getName());
+    @Expose
     private ArrayList<Layer> layers = new ArrayList<>();
     private MapContent mapContent;
 

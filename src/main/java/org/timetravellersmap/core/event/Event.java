@@ -1,5 +1,6 @@
 package org.timetravellersmap.core.event;
 
+import com.google.gson.annotations.Expose;
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.overlay.Layer;
 import org.timetravellersmap.overlay.LayerComponent;
@@ -14,9 +15,12 @@ import java.util.GregorianCalendar;
  */
 public class Event {
 //    private LayerList layerList;
+    @Expose
     private Descriptor eventDescriptor;
 
+    @Expose
     private Calendar startDate;
+    @Expose
     private Calendar endDate;
 
     private Layer layer = LayerList.DEFAULT_LAYER;

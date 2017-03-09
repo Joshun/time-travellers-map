@@ -1,5 +1,6 @@
 package org.timetravellersmap.core.event;
 
+import com.google.gson.annotations.Expose;
 import org.timetravellersmap.core.Descriptor;
 
 import java.util.*;
@@ -8,9 +9,13 @@ import java.util.*;
  * EventIndex: data structure for storing events indexed by their start and end years
  */
 public class EventIndex {
+    @Expose
     private TreeMap<Integer,TreeMap<Integer, ArrayList<Event>>> startYearIndex = new TreeMap<>();
 
+    @Expose
     private TreeMap<Integer, Integer> startYearCounts = new TreeMap<>();
+
+    @Expose
     private TreeMap<Integer, Integer> endYearCounts = new TreeMap<>();
 
     public EventIndex() {

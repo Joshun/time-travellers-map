@@ -1,10 +1,14 @@
 package org.timetravellersmap.core;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Descriptor: representation of name and description for various objects
  */
 public class Descriptor {
+    @Expose
     private final String name;
+    @Expose
     private final String description;
 
     public Descriptor(String name, String description) {

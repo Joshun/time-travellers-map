@@ -1,5 +1,6 @@
 package org.timetravellersmap.overlay;
 
+import com.google.gson.annotations.Expose;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
@@ -17,6 +18,7 @@ import java.util.List;
 public class Layer extends org.geotools.map.DirectLayer {
     private ArrayList<LayerComponent> layerComponentsToDraw = new ArrayList<>();
     private ArrayList<Event> registeredEvents = new ArrayList<>();
+    @Expose
     private String name;
     private ArrayList<Event> eventsToDraw = null;
 
