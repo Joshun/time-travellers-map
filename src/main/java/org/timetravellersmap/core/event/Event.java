@@ -22,15 +22,20 @@ public class Event {
     private Calendar startDate;
     @Expose
     private Calendar endDate;
-
+    @Expose
     private Layer layer = LayerList.DEFAULT_LAYER;
     @Expose
-    private ArrayList<LayerComponent> layerComponents = new ArrayList<>();
+    private ArrayList<LayerComponent> layerComponents;
+
+    public Event() {
+        this(null, null, null);
+    }
 
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventDescriptor = eventDescriptor;
+        layerComponents = new ArrayList<>();
     }
 
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, Layer layer) {

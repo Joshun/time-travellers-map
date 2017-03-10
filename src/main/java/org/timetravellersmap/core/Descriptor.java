@@ -11,6 +11,10 @@ public class Descriptor {
     @Expose
     private final String description;
 
+    public Descriptor() {
+        this(null, null);
+    }
+
     public Descriptor(String name, String description) {
         this.name = name;
         this.description = description;

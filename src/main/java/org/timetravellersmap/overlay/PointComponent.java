@@ -21,6 +21,10 @@ public class PointComponent extends LayerComponent{
     @Expose
     private double radius;
 
+    public PointComponent() {
+        this(0, 0, 0);
+    }
+
     public PointComponent(double x, double y, double radius) {
         this.x = x;
         this.y = y;

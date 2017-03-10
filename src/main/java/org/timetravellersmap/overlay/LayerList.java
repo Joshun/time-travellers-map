@@ -150,6 +150,7 @@ public class LayerList {
 
         for (Event event: events) {
             Layer layer = event.getLayer();
+            System.out.println("Layer " + layer);
             layer.makeDrawRequest(event.getLayerComponents(), event);
         }
         updateMapContent();

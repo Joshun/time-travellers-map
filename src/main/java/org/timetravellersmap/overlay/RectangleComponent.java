@@ -16,6 +16,10 @@ public class RectangleComponent extends LayerComponent {
     private double x1, y1;
     private double x2, y2;
 
+    public RectangleComponent() {
+        this(0, 0, 0, 0);
+    }
+
     public RectangleComponent(double x1, double y1, double x2, double y2) {
         this.x1 = x1;
         this.y1 = y1;
