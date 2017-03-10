@@ -208,6 +208,10 @@ public class MapFrame extends JFrame {
         btn.setName(TOOLBAR_RESET_BUTTON_NAME);
         toolBar.add(btn);
 
+        btn = new JButton(new SaveAction(mapPane));
+        btn.setName("Save");
+        toolBar.add(btn);
+
         eventPane = new EventPane(this);
 
         // Here the core widget will be configured
