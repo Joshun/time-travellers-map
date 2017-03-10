@@ -47,7 +47,7 @@ public class LayerList {
         if (layer != DEFAULT_LAYER) {
             // Set all of its events to the default layer
             for (Event event: layer.getRegisteredEvents()) {
-                event.setLayer(DEFAULT_LAYER);
+                event.setLayerName(DEFAULT_LAYER.getName());
             }
             layers.remove(layer);
             updateMapContent();
@@ -96,6 +96,10 @@ public class LayerList {
         Layer[] layerArr = new Layer[layers.size()];
         layerArr = layers.toArray(layerArr);
         return layerArr;
+    }
+
+    public Layer getLayer(Layer layer) {
+        return layers.get(layers.indexOf(layer));
     }
 
     public ArrayList<Layer> getLayersArrayList() {
@@ -149,7 +153,8 @@ public class LayerList {
         }
 
         for (Event event: events) {
-            Layer layer = event.getLayer();
+//            Layer layer = event.getLayer();
+            Layer layer = getLayer(new Layer(event.getLayerName()));
             System.out.println("Layer " + layer);
             layer.makeDrawRequest(event.getLayerComponents(), event);
         }
@@ -158,11 +163,11 @@ public class LayerList {
 
     public void moveEventToLayer(Event event, Layer newLayer) {
         LOGGER.info("move event \"" + event + "\" to " + newLayer);
-        Layer currentLayer = event.getLayer();
+        Layer currentLayer = getLayer(new Layer(event.getLayerName()));
         if (newLayer == currentLayer) {
             return;
         }
-        event.setLayer(newLayer);
+        event.setLayerName(newLayer.getName());
     }
 
     public void forceRepaint() {

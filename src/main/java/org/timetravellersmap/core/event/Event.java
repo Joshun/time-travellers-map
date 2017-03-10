@@ -22,8 +22,10 @@ public class Event {
     private Calendar startDate;
     @Expose
     private Calendar endDate;
+//    @Expose
+//    private Layer layer = LayerList.DEFAULT_LAYER;
     @Expose
-    private Layer layer = LayerList.DEFAULT_LAYER;
+    private String layerName;
     @Expose
     private ArrayList<LayerComponent> layerComponents;
 
@@ -35,12 +37,13 @@ public class Event {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventDescriptor = eventDescriptor;
+        this.layerName = LayerList.DEFAULT_LAYER.getName();
         layerComponents = new ArrayList<>();
     }
 
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, Layer layer) {
         this(startDate, endDate, eventDescriptor);
-        this.layer = layer;
+//        this.layer = layer;
     }
 
     public void addLayerComponent(LayerComponent layerComponent) {
@@ -96,13 +99,21 @@ public class Event {
         this.eventDescriptor = descriptor;
     }
 
-    public Layer getLayer() {
-        return layer;
+//    public Layer getLayer() {
+//        return layer;
+//    }
+
+    public String getLayerName() {
+        return layerName;
     }
 
-    public void setLayer(Layer layer) {
-        this.layer = layer;
+    public void setLayerName(String layerName) {
+        this.layerName = layerName;
     }
+
+//    public void setLayer(Layer layer) {
+//        this.layer = layer;
+//    }
 
     public ArrayList<LayerComponent> getLayerComponents() {
         return layerComponents;
