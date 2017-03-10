@@ -12,6 +12,8 @@ import org.geotools.swing.control.JMapStatusBar;
 import org.timetravellersmap.TimeTravellersMapException;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
+import org.timetravellersmap.jsonio.JsonIO;
+import org.timetravellersmap.jsonio.JsonIOObject;
 import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.core.event.EventIndex;
 import org.timetravellersmap.core.event.Event;
@@ -44,6 +46,8 @@ public class MapFrame extends JFrame {
 
     public static final boolean UPDATE_MAP_ON_DRAG = false;
 
+    private static final String JSON_FILE_NAME = "ttm_state.json";
+
     private JMapPane mapPane;
     private JToolBar toolBar;
     private boolean uiSet;
@@ -54,6 +58,9 @@ public class MapFrame extends JFrame {
     private AnnotatePane annotatePane;
     private JSplitPane eventAnnotateSplitPane;
     private TimelineWidget timelineWidget;
+
+    private JsonIO jsonIO;
+    private JsonIOObject jsonIOObject;
 
     private static Layer baseLayer = null;
 
@@ -208,7 +215,7 @@ public class MapFrame extends JFrame {
         btn.setName(TOOLBAR_RESET_BUTTON_NAME);
         toolBar.add(btn);
 
-        btn = new JButton(new SaveAction(mapPane));
+        btn = new JButton(new SaveAction(mapPane, this));
         btn.setName("Save");
         toolBar.add(btn);
 
@@ -250,6 +257,11 @@ public class MapFrame extends JFrame {
         this.getContentPane().add(panel);
         uiSet = true;
 
+        // Set up JsonIO and JsonIOObject
+        jsonIO = new JsonIO();
+        jsonIOObject = new JsonIOObject(layerList, eventIndex);
+
+        // Set pointer to initial position
         timelineWidget.setPointer(1950);
     }
 
@@ -305,4 +317,9 @@ public class MapFrame extends JFrame {
         return mapPane;
     }
 
+    public void saveStateToJson() {
+        if (jsonIO != null && jsonIOObject != null && jsonIOObject.isReady()) {
+            jsonIO.saveJson(JSON_FILE_NAME, jsonIOObject);
+        }
+    }
 }

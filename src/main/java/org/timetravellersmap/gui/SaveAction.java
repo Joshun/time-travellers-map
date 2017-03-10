@@ -10,13 +10,16 @@ import java.awt.event.ActionEvent;
  * Created by joshua on 10/03/17.
  */
 public class SaveAction extends MapAction {
+    private MapFrame mapFrame;
 
-    public SaveAction(MapPane mapPane) {
+    public SaveAction(MapPane mapPane, MapFrame mapFrame) {
         super.init(mapPane, "Save", "Save to file", null);
+        this.mapFrame = mapFrame;
     }
 
 
     public void actionPerformed(ActionEvent e) {
         System.out.println("Save clicked...");
+        mapFrame.saveStateToJson();
     }
 }

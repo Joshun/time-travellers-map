@@ -25,9 +25,13 @@ public class JsonIOObject {
 
     public JsonIOObject(LayerList layerList, EventIndex eventIndex) {
         this.layerList = layerList;
-        this.defaultLayerName = layerList.DEFAULT_LAYER.getName();
+        this.defaultLayerName = LayerList.DEFAULT_LAYER.getName();
         this.eventIndex = eventIndex;
         this.writeTime = LocalDateTime.now().toString();
+    }
+
+    public boolean isReady() {
+        return layerList != null && eventIndex != null;
     }
 
     @Override

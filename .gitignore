@@ -1,4 +1,4 @@
 *.iml
 .idea/
 target/
-ttm.db
+ttm_state.json
