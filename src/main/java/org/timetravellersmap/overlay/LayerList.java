@@ -179,4 +179,8 @@ public class LayerList {
                 DefaultGeographicCRS.WGS84
         ));
     }
+
+    public void setMapContent(MapContent mapContent) {
+        this.mapContent = mapContent;
+    }
 }

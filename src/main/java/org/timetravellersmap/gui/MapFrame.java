@@ -74,12 +74,12 @@ public class MapFrame extends JFrame {
         // Constructor code adapted from org.geotools.swing.JMapFrame example
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        layerList = new LayerList(content, baseLayer);
+
         // If ttm_state file already exists, load the state from it
         if (jsonStateFileExists()) {
             loadStateFromJson();
         }
-
-        layerList = new LayerList(content, baseLayer);
 
 //        showStatusBar = false;
 //        showToolBar = false;
@@ -306,6 +306,8 @@ public class MapFrame extends JFrame {
 
             }
         });
+
+        layerList.setMapContent(getMapPane().getMapContent());
 
         // Set pointer to initial position
         timelineWidget.setPointer(1950);
