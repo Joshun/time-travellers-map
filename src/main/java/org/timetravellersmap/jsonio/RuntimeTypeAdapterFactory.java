@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package org.timetravellersmap;
+package org.timetravellersmap.jsonio;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;

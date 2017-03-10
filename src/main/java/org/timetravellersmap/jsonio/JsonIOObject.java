@@ -1,4 +1,4 @@
-package org.timetravellersmap;
+package org.timetravellersmap.jsonio;
 
 import com.google.gson.annotations.Expose;
 import org.timetravellersmap.core.event.EventIndex;
