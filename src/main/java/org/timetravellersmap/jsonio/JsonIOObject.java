@@ -34,6 +34,14 @@ public class JsonIOObject {
         return layerList != null && eventIndex != null;
     }
 
+    public LayerList getLayerList() {
+        return layerList;
+    }
+
+    public EventIndex getEventIndex() {
+        return eventIndex;
+    }
+
     @Override
     public String toString() {
         LayerComponent test = eventIndex.getStartEventsForYear(2017).get(0).getLayerComponents().get(0);

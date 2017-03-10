@@ -22,6 +22,7 @@ import org.timetravellersmap.core.event.Event;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 /**
  * MapFrame: the GUI component in which the main GUI components reside
@@ -59,7 +60,7 @@ public class MapFrame extends JFrame {
     private JSplitPane eventAnnotateSplitPane;
     private TimelineWidget timelineWidget;
 
-    private JsonIO jsonIO;
+    private JsonIO jsonIO = new JsonIO();
     private JsonIOObject jsonIOObject;
 
     private static Layer baseLayer = null;
@@ -72,6 +73,11 @@ public class MapFrame extends JFrame {
 
         // Constructor code adapted from org.geotools.swing.JMapFrame example
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // If ttm_state file already exists, load the state from it
+        if (jsonStateFileExists()) {
+            loadStateFromJson();
+        }
 
         layerList = new LayerList(content, baseLayer);
 
@@ -257,9 +263,10 @@ public class MapFrame extends JFrame {
         this.getContentPane().add(panel);
         uiSet = true;
 
-        // Set up JsonIO and JsonIOObject
-        jsonIO = new JsonIO();
-        jsonIOObject = new JsonIOObject(layerList, eventIndex);
+        // Set up JsonIOObject for saving if not already created
+        if (jsonIOObject == null) {
+            jsonIOObject = new JsonIOObject(layerList, eventIndex);
+        }
 
         // Set pointer to initial position
         timelineWidget.setPointer(1950);
@@ -318,8 +325,18 @@ public class MapFrame extends JFrame {
     }
 
     public void saveStateToJson() {
-        if (jsonIO != null && jsonIOObject != null && jsonIOObject.isReady()) {
+        if (jsonIOObject != null && jsonIOObject.isReady()) {
             jsonIO.saveJson(JSON_FILE_NAME, jsonIOObject);
         }
+    }
+
+    public void loadStateFromJson() {
+        JsonIOObject jsonIOObject = jsonIO.loadJson(JSON_FILE_NAME);
+        layerList = jsonIOObject.getLayerList();
+        eventIndex = jsonIOObject.getEventIndex();
+    }
+
+    public boolean jsonStateFileExists() {
+        return new File(JSON_FILE_NAME).exists();
     }
 }
