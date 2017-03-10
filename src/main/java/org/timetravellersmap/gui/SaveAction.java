@@ -16,12 +16,6 @@ public class SaveAction extends MapAction {
     }
 
 
-    /**
-     * Get the map pane that this Action is working with
-     *
-     * @return the map pane
-     */
-
     public void actionPerformed(ActionEvent e) {
         System.out.println("Save clicked...");
     }
