@@ -26,45 +26,66 @@ import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
 /**
- * Created by joshua on 09/03/17.
+ * JsonIO: load and save program state to JSON file
  */
 public class JsonIO {
     private final static Logger LOGGER = Logger.getLogger(JsonIO.class.getName());
     private Gson gson;
 
-    private LayerList layerList;
-    private EventIndex eventIndex;
-
-    public JsonIO(LayerList layerList, EventIndex eventIndex) {
-        this.layerList = layerList;
-        this.eventIndex = eventIndex;
-    }
-
-    public void loadJson(File jsonFile) {
-    }
-
-    public void saveJson(String jsonFile) {
-        saveJson(new File(jsonFile));
-    }
-
-    public void saveJson(File jsonFile) {
+    public JsonIO() {
+        // RuntimeTypeAdapterFactory is needed to properly handle polymorphic types
         RuntimeTypeAdapterFactory<LayerComponent> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
                 .of(LayerComponent.class)
                 .registerSubtype(PointComponent.class)
                 .registerSubtype(RectangleComponent.class);
 
-        gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
+        // Set up new Gson object for serialization and deserialization
+        // serializeNulls: ensure nulls are stored
+        // excludeFieldsWithoutExposeAnnotation: only fields with @Expose are included
+        // registerTypeAdapterFactory: register the runtimeTypeAdaptorFactory for handling polymorphic types
+        gson = new GsonBuilder()
+                .serializeNulls()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapterFactory(runtimeTypeAdapterFactory)
+                .create();
+
+    }
+
+    public JsonIOObject loadJson(String jsonFile) {
+        return loadJson(new File(jsonFile));
+    }
+
+    public JsonIOObject loadJson(File jsonFile) {
+        try {
+            FileReader fileReader = new FileReader(jsonFile);
+            JsonReader jsonReader = new JsonReader(fileReader);
+            JsonIOObject readIn = gson.fromJson(jsonReader, JsonIOObject.class);
+            LOGGER.info("Load success: " + jsonFile.getName());
+            return readIn;
+        }
+        catch (java.io.FileNotFoundException e) {
+            LOGGER.warning("File not found " + jsonFile.getPath());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void saveJson(String jsonFile, JsonIOObject jsonIOObject) {
+        saveJson(new File(jsonFile), jsonIOObject);
+    }
+
+    public void saveJson(File jsonFile, JsonIOObject jsonIOObject) {
         try {
             FileWriter fileWriter = new FileWriter(jsonFile);
             JsonWriter jsonWriter = new JsonWriter(fileWriter);
             jsonWriter.setIndent("  ");
 
-            gson.toJson(new JsonIOObject(layerList, eventIndex), JsonIOObject.class, jsonWriter);
-
+            gson.toJson(jsonIOObject, JsonIOObject.class, jsonWriter);
+            LOGGER.info("Save success: " + jsonFile.getPath());
             jsonWriter.close();
         }
         catch (java.io.IOException e) {
-            LOGGER.warning("Failed to write to file " + jsonFile.getName() + ": " + e);
+            LOGGER.warning("Failed to write to file " + jsonFile.getPath() + ": " + e);
             e.printStackTrace();
         }
     }
@@ -79,30 +100,14 @@ public class JsonIO {
         event.addLayerComponent(pointComponent);
         eventIndex.addEvent(event);
 
-        JsonIO jsonIO = new JsonIO(layerList, eventIndex);
-        jsonIO.saveJson("test.json");
-
-
-        LayerList readingLayerList = new LayerList(mapContent, baseLayer);
-        JsonIOObject readingObject = new JsonIOObject(layerList, eventIndex);
-
-        RuntimeTypeAdapterFactory<LayerComponent> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-                .of(LayerComponent.class)
-                .registerSubtype(PointComponent.class)
-                .registerSubtype(RectangleComponent.class);
-
-        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().registerTypeAdapterFactory(runtimeTypeAdapterFactory).create();
-
-        try {
-            FileReader fileReader = new FileReader("test.json");
-            JsonReader jsonReader = new JsonReader(fileReader);
-//            JsonIOObject readIn = new JsonIOObject(layerList, eventIndex);
-            JsonIOObject readIn = gson.fromJson(jsonReader, JsonIOObject.class);
-            System.out.println(readIn);
-        }
-        catch (java.io.FileNotFoundException e) {
-            LOGGER.warning("File not found ");
-            e.printStackTrace();
-        }
+        JsonIO jsonIO = new JsonIO();
+        System.out.println("Generating JSONIOObject...");
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex);
+        System.out.println(jsonIOObject);
+        System.out.println("Saving...");
+        jsonIO.saveJson("test.json", jsonIOObject);
+        System.out.println("Loading...");
+        JsonIOObject newIOObject = jsonIO.loadJson("test.json");
+        System.out.println(newIOObject);
     }
 }
