@@ -72,7 +72,6 @@ public class EventIndex {
             countSet.put(year, yearCountValue);
         }
         else {
-            System.out.println("increment=" + increment + "year=" + year);
             yearCountValue += increment;
             if (yearCountValue <= 0) {
                 countSet.remove(year);
