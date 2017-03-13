@@ -176,16 +176,13 @@ public class EventIndex {
             for (ArrayList<Event> el: endYearEventIndex.values()) {
                 events.addAll(el);
             }
-            return events;
         }
-        else {
-            return null;
-        }
+        return events;
     }
 
     public String generateStartEventSummary(int year) {
         ArrayList<Event> events = getStartEventsForYear(year);
-        if (events == null) {
+        if (events.size() == 0) {
             return null;
         }
         String eventString = "<html>";
