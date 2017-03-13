@@ -416,6 +416,17 @@ public class MapFrame extends JFrame {
 
     }
 
+    public File pickLoadStateFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        int returnVal = fileChooser.showDialog(this, "Load");
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile();
+        }
+        else {
+            return null;
+        }
+    }
+
     public void saveStateToJson() {
         if (jsonIOObject != null && jsonIOObject.isReady()) {
             jsonIO.saveJson(JSON_FILE_NAME, jsonIOObject);
