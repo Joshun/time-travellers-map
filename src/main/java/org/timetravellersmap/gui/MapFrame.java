@@ -1,14 +1,21 @@
 package org.timetravellersmap.gui;
 
 import net.miginfocom.swing.MigLayout;
+import org.geotools.data.FileDataStore;
+import org.geotools.data.FileDataStoreFinder;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.geotools.styling.SLD;
+import org.geotools.styling.Style;
 import org.geotools.swing.JMapPane;
 import org.geotools.swing.MapPane;
 import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
+import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.TimeTravellersMapException;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
@@ -225,6 +232,10 @@ public class MapFrame extends JFrame {
         btn.setName("Save");
         toolBar.add(btn);
 
+        btn = new JButton(new LoadAction(mapPane, this));
+        btn.setName("Load");
+        toolBar.add(btn);
+
         eventPane = new EventPane(this);
 
         // Here the core widget will be configured
@@ -363,6 +374,46 @@ public class MapFrame extends JFrame {
 
     public MapPane getMapPane() {
         return mapPane;
+    }
+
+    public void refreshMapPane() {
+        timelineWidget.redraw();
+        eventPane.timelineChanged(timelineWidget.getPointerYear(), true);
+        annotatePane.annotationsChanged();
+    }
+
+    public void loadStateOnTheFly() {
+        loadStateFromJson();
+        File shapeFile = new File("/home/joshua/Documents/Computer Science/Dissertation Project/sample data/ne_50m_admin_0_sovereignty.shp");
+        SimpleFeatureSource featureSource;
+        FileDataStore shapeFileStore;
+        Style style;
+        Layer layer;
+
+        try {
+            shapeFileStore = FileDataStoreFinder.getDataStore(shapeFile);
+            featureSource = shapeFileStore.getFeatureSource();
+            style = SLD.createSimpleStyle(featureSource.getSchema());
+            layer = new FeatureLayer(featureSource, style);
+
+            MapContent mapContent = new MapContent();
+            mapContent.setTitle("Time Traveller's Map");
+//            mapPane.setMapContent(mapContent);
+//            repaintMapContent();
+//            mapPane.repaint();
+            layerList.setMapContent(mapContent);
+//            layerList.updateMapContent();
+//            refreshMapPane();
+
+            setBaseLayer(layer);
+//            mapPane.setMapContent(mapContent);
+            mapPane = new JMapPane(mapContent);
+        }
+        catch (java.io.IOException e) {
+            System.out.println("Error loading shapefile.");
+        }
+
+
     }
 
     public void saveStateToJson() {
