@@ -36,6 +36,7 @@ public class LayerListTest extends TestCase {
 
     @Test
     public void testDefault() {
+        // In a newly created LayerList, there is 1 layer: the default layer (which cannot be removed)
         assertEquals(layerList.getLayers().length, 1);
     }
 
