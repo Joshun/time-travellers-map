@@ -57,11 +57,11 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
 
         timelinePointerYear = parentMapFrame.INITIAL_START_YEAR;
 
-        currentEvents.add(new Event(
-                new GregorianCalendar(1900, 0, 1),
-                new GregorianCalendar(1910, 0, 1),
-                new Descriptor("Test event", "This is a description")
-        ));
+//        currentEvents.add(new Event(
+//                new GregorianCalendar(1900, 0, 1),
+//                new GregorianCalendar(1910, 0, 1),
+//                new Descriptor("Test event", "This is a description")
+//        ));
 
         eventTable = new JTable(new TableModel() {
             @Override
