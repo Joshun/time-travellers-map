@@ -70,10 +70,14 @@ public class MapFrame extends JFrame {
     private JsonIO jsonIO = new JsonIO();
     private JsonIOObject jsonIOObject;
 
-    private static Layer baseLayer = null;
+    private Layer baseLayer = null;
 
-    public MapFrame(MapContent content) throws TimeTravellersMapException {
+    private MapContent mapContent;
+
+    public MapFrame(MapContent content, Layer baseLayer) throws TimeTravellersMapException {
         super(content == null ? "" : content.getTitle());
+        this.mapContent = content;
+        this.baseLayer = baseLayer;
         if (baseLayer == null) {
             throw new TimeTravellersMapException("Must set a baselayer with MapFrame.setBaseLayer");
         }
@@ -126,31 +130,34 @@ public class MapFrame extends JFrame {
         });
     }
 
-    public static void showMap(final MapContent content)  {
+    public void showMap()  {
         if (SwingUtilities.isEventDispatchThread()) {
-            doShowMap(content);
+            doShowMap();
         } else {
             SwingUtilities.invokeLater(new Runnable() {
 
                 @Override
                 public void run() {
-                    doShowMap(content);
+                    doShowMap();
                 }
             });
         }
     }
 
-    private static void doShowMap(MapContent content) {
-        try {
-            System.out.println("doshowmapcontent.");
-            final MapFrame frame = new MapFrame(content);
-            frame.initComponents();
-            frame.setSize(1024, 800);
-            frame.setVisible(true);
-        }
-        catch (TimeTravellersMapException e) {
-            System.out.println("Failed " + e);
-        }
+    private void doShowMap() {
+//        try {
+        System.out.println("doshowmapcontent.");
+        initComponents();
+        setSize(1024, 800);
+        setVisible(true);
+//            final MapFrame frame = new MapFrame();
+//            frame.initComponents();
+//            frame.setSize(1024, 800);
+//            frame.setVisible(true);
+//        }
+//        catch (TimeTravellersMapException e) {
+//            System.out.println("Failed " + e);
+//        }
     }
 
     public void initComponents() {
@@ -358,8 +365,8 @@ public class MapFrame extends JFrame {
         }
     }
 
-    public static void setBaseLayer(org.geotools.map.Layer baseLayer) {
-        MapFrame.baseLayer = baseLayer;
+    public void setBaseLayer(org.geotools.map.Layer baseLayer) {
+        this.baseLayer = baseLayer;
     }
 
     public void repaintMapContent() {

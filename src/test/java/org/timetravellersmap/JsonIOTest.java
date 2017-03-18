@@ -34,8 +34,8 @@ public class JsonIOTest extends TestCase {
     public void setUp() {
         try {
             mapContent = new MapContent();
-            mapFrame = new MapFrame(mapContent);
-            baseLayer = new Layer();
+            baseLayer = new Layer("test");
+            mapFrame = new MapFrame(mapContent, baseLayer);
             layerList = new LayerList(mapContent, baseLayer);
         }
         catch (TimeTravellersMapException e) {

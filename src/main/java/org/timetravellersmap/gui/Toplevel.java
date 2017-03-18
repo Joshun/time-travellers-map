@@ -13,6 +13,7 @@ import org.geotools.styling.Style;
 import org.geotools.swing.data.JFileDataStoreChooser;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.timetravellersmap.TimeTravellersMapException;
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.overlay.LayerComponent;
@@ -75,8 +76,16 @@ public class Toplevel {
     }
 
     public void show() {
+        try {
+            MapFrame mapFrame = new MapFrame(mapContent, layer);
+            mapFrame.showMap();
+        }
+        catch (TimeTravellersMapException e) {
+            System.out.println("Failed to start the Time Traveller's Map " + e);
+            e.printStackTrace();
+        }
         // Display the map
-        MapFrame.setBaseLayer(layer);
-        MapFrame.showMap(mapContent);
+//        MapFrame.setBaseLayer(layer);
+//        MapFrame.showMap(mapContent);
     }
 }

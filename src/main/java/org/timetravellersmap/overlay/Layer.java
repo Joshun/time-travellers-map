@@ -24,7 +24,7 @@ public class Layer extends org.geotools.map.DirectLayer {
     private String name;
 
     public Layer() {
-        this(null);
+        this("");
     }
 
     public Layer(String layerName) {
