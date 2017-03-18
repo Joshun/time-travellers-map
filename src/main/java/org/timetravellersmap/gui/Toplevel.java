@@ -40,6 +40,8 @@ public class Toplevel {
     private Style style;
     private Layer layer;
 
+    private MapFrame mapFrame;
+
     // Set coordinate system to WGS84 (the most commonly used and that used by GPS)
     private CoordinateReferenceSystem coordinateReferenceSystem = DefaultGeographicCRS.WGS84;
 
@@ -73,19 +75,21 @@ public class Toplevel {
         style = SLD.createSimpleStyle(featureSource.getSchema());
         layer = new FeatureLayer(featureSource, style);
 
+        try {
+            mapFrame = new MapFrame(mapContent, layer);
+        }
+        catch (TimeTravellersMapException e) {
+            System.out.println("Failed to initialise GUI " + e);
+            e.printStackTrace();
+        }
+
     }
 
     public void show() {
-        try {
-            MapFrame mapFrame = new MapFrame(mapContent, layer);
-            mapFrame.showMap();
-        }
-        catch (TimeTravellersMapException e) {
-            System.out.println("Failed to start the Time Traveller's Map " + e);
-            e.printStackTrace();
-        }
-        // Display the map
-//        MapFrame.setBaseLayer(layer);
-//        MapFrame.showMap(mapContent);
+        mapFrame.showMap();
+    }
+
+    public MapFrame getMapFrame() {
+        return mapFrame;
     }
 }
