@@ -45,7 +45,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 
     public AnnotatePane(MapFrame parentMapFrame) {
         addLayerComponentChangeListener(parentMapFrame.getEventPane());
-        this.annotateMenu = new AnnotateMenu(this);
+        this.annotateMenu = new AnnotateMenu(parentMapFrame, this);
         this.mapFrame = parentMapFrame;
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();

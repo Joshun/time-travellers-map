@@ -329,6 +329,7 @@ public class MapFrame extends JFrame {
 
         // Set pointer to initial position
         timelineWidget.setPointer(1950);
+
     }
 
     public EventIndex getEventIndex() {

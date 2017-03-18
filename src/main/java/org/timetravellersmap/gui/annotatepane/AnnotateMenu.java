@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.annotatepane;
 
+import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.eventpane.AddPoint;
 
 import javax.swing.*;
@@ -16,10 +17,10 @@ public class AnnotateMenu extends JPopupMenu {
 //    private MapFrame mapFrame;
     private AnnotatePane annotatePane;
 
-    public AnnotateMenu(AnnotatePane parentAnnotatePane) {
+    public AnnotateMenu(MapFrame ancestorMapFrame, AnnotatePane parentAnnotatePane) {
         this.annotatePane = parentAnnotatePane;
         newPointerAction.addActionListener(actionEvent ->  {
-            new AddPoint(annotatePane, annotatePane.getSelectedEvent()).setVisible(true);
+            new AddPoint(ancestorMapFrame, annotatePane, annotatePane.getSelectedEvent()).setVisible(true);
         });
         newRectangleAction.addActionListener(actionEvent -> {
             System.out.println("TODO: create new rectangle");
