@@ -74,6 +74,10 @@ public class AddPoint extends AddComponent {
                         mapFrame.getMapPane().removeMouseListener(that);
                         setEnabled(true);
                         getLongLatFromMapButton.setText(GET_LONG_LAT_FROM_MAP_BUTTON_INITIAL_TEXT);
+
+                        // Bring the AddPoint GUI back to the front
+                        toFront();
+                        repaint();
                     });
                 }
                 public void onMouseClicked(MapMouseEvent e) {
