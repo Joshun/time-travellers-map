@@ -228,7 +228,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         // Using linear interpolation, compute the year in the core nearest to the mouse click
 
         // Difference between end and start years
-        double yearWidth = end - start;
+        double yearWidth = Math.abs(end - start);
 
         // Fraction of core bar's screen area that was clicked
         double proportionOfBar = (xMousePosition-xDrawOffset)/barWidth;
