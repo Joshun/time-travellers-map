@@ -196,11 +196,14 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         System.out.println("end" + end + " xpos " + xPos);
         // Ignore out-of-range clicks
         if (xPos < width && xPos >= 0) {
-            System.out.println("click " + xPos);
             int year = computeYearClicked(xPos, 0, width, start, end);
-            System.out.println("year " + year);
-            setPointer(year);
-//            fireChangeListeners(year);
+            if (year == 0) {
+                // Year zero does not exist in Gregorian Calendar (special case)
+                System.out.println("0ad cannot be selected");
+            }
+            else {
+                setPointer(year);
+            }
             paintArea.repaint();
         }
     }
@@ -263,6 +266,12 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         for (TimelineCursor timelineCursor: timeline) {
             double timePosition = timelineCursor.getPosition();
             boolean isMajorInterval = timelineCursor.isMajorInterval();
+
+            // Drawing of greyed block to show year zero cannot be selected (special case)
+            if (timePosition == 0) {
+                graphics2D.setPaint(new Color(128, 128, 128));
+                graphics2D.fillRect(screenXCursor, textYOffset, 4, lineYOffset+15);
+            }
             
             // Drawing of the timeline ruler lines
             if (isMajorInterval) {
