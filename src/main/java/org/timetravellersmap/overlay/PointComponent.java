@@ -16,23 +16,35 @@ public class PointComponent extends LayerComponent{
     private double x;
     @Expose
     private double y;
-    private final static int DEFAULT_RADIUS = 1;
+    private static final int DEFAULT_RADIUS = 1;
+    private static final Color DEFAULT_COLOR = new Color(0, 0, 0);
     private final static boolean USE_SCALING = false;
     @Expose
     private double radius;
+    @Expose
+    private Color color;
 
     public PointComponent() {
-        this(0, 0, 0);
+        this(0, 0, 0, new Color(0,0,0));
     }
 
-    public PointComponent(double x, double y, double radius) {
+    public PointComponent(double x, double y, double radius, Color color) {
         this.x = x;
         this.y = y;
         this.radius = radius;
+        this.color = color;
     }
 
-    public PointComponent(int x, int y) {
-        this(x, y, DEFAULT_RADIUS);
+    public PointComponent(double x, double y) {
+        this(x, y, DEFAULT_RADIUS, DEFAULT_COLOR);
+    }
+
+    public PointComponent(double x, double y, double radius) {
+        this(x, y, radius, DEFAULT_COLOR);
+    }
+
+    public PointComponent(double x, double y, Color color) {
+        this(x, y, DEFAULT_RADIUS, color);
     }
 
     public String toString() {
