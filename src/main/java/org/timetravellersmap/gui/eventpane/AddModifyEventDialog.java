@@ -207,7 +207,16 @@ public class AddModifyEventDialog extends JFrame {
                 new Descriptor(eventName, eventDescription),
                 layer
         );
-        if (datesAreOk(startDate, endDate)) {
+        if (eventName.length() == 0) {
+            showInputError("Event must have a name!");
+        }
+        else if (endDateBeforeStartDate(startDate, endDate)) {
+            showDateError("End date cannot occur before start date!");
+        }
+        else if (datesAreZero(startDate, endDate)) {
+            showDateError("Year zero does not exist!");
+        }
+        else {
             if (existingEvent != null) {
                 eventPane.updateExistingEvent(existingEvent, newEvent);
                 mapFrame.getEventIndex().updateEvent(existingEvent, newEvent);
@@ -215,21 +224,25 @@ public class AddModifyEventDialog extends JFrame {
                 eventPane.addNewEvent(newEvent);
                 mapFrame.getEventIndex().addEvent(newEvent);
             }
-//            mapFrame.getTimelineWidget().redraw();
             fireChangeListeners();
             this.dispose();
         }
-        else {
-            showDateError();
-        }
     }
 
-    private boolean datesAreOk(int startDate, int endDate) {
-        return endDate >= startDate;
+    private static boolean endDateBeforeStartDate(int startDate, int endDate) {
+        return endDate <= startDate;
     }
 
-    private void showDateError() {
-        JOptionPane.showMessageDialog(this, "End date cannot occur before start date!","Date error", JOptionPane.ERROR_MESSAGE);
+    private static boolean datesAreZero(int startDate, int endDate) {
+        return startDate == 0 || endDate == 0;
+    }
+
+    private void showDateError(String dateErrorMessage) {
+        JOptionPane.showMessageDialog(this, dateErrorMessage,"Date error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void showInputError(String inputErrorMessage) {
+        JOptionPane.showMessageDialog(this, inputErrorMessage, "Input error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void addChangeListener(EventChangeListener changeListener) {
