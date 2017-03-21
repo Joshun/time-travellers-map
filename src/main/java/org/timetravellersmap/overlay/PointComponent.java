@@ -85,6 +85,14 @@ public class PointComponent extends LayerComponent{
         double width = 4.0*scaledRadius;
         double height = 4.0*scaledRadius;
 
+        // Set colour to be the shape's colour
+        if (color != null) {
+            graphics2D.setColor(color);
+        }
+        else {
+            graphics2D.setColor(new Color(0, 0, 0));
+        }
+
         graphics2D.fill(new Ellipse2D.Double(topX, topY, width, height));
     }
 

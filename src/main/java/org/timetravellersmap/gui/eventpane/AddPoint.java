@@ -5,6 +5,9 @@ import org.geotools.swing.event.MapMouseEvent;
 import org.geotools.swing.event.MapMouseListener;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
+import org.timetravellersmap.gui.annotatepane.ColorChangeListener;
+import org.timetravellersmap.gui.annotatepane.ColorPanel;
+import org.timetravellersmap.gui.annotatepane.ColorPicker;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.PointComponent;
 import org.timetravellersmap.core.event.Event;
@@ -19,10 +22,12 @@ import java.awt.geom.Point2D;
 /**
  * AddPoint: a GUI for the user to add a PointComponent to an Event
  */
-public class AddPoint extends AddComponent {
+public class AddPoint extends AddComponent implements ColorChangeListener {
     private JTextField longitudeEntry = new JTextField(10);
     private JTextField latitudeEntry = new JTextField(10);
     private JSpinner radiusEntry = new JSpinner(new SpinnerNumberModel(4, 1, 10, 1));
+    private JButton pickColorButton = new JButton("Pick colour...");
+    private ColorPanel colorPanel = new ColorPanel(16, 16, new Color(0, 0, 0));
 
     private static final String GET_LONG_LAT_FROM_MAP_BUTTON_INITIAL_TEXT = "Get coordinates from map...";
     private static final String GET_LONG_LAT_FROM_MAP_BUTTON_CLICKED_TEXT = "(click map)";
@@ -30,6 +35,8 @@ public class AddPoint extends AddComponent {
     private boolean inGetLongLatFromMapState = false;
     private int mouseX = 0;
     private int mouseY = 0;
+
+    private Color colorState = new Color(0,0,0);
 
 //    private JButton addPointButton = new JButton("Add point");
 //    private JButton cancelButton = new JButton("Cancel");
@@ -107,6 +114,38 @@ public class AddPoint extends AddComponent {
             this.setEnabled(false);
         });
 
+        AddPoint that = this;
+        colorPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                System.out.println("Colour picker clicked");
+                ColorPicker colorPicker = new ColorPicker(colorState);
+                colorPicker.addColorChangeListener(colorPanel);
+                colorPicker.addColorChangeListener(that);
+                colorPicker.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+
+            }
+        });
+
         // End setting up action listeners
 
         // Begin layout of GUI components
@@ -147,7 +186,20 @@ public class AddPoint extends AddComponent {
         gc.weighty = 0.2;
         panel.add(radiusEntry, gc);
 
+        gc.gridx = 0;
+        gc.gridy = 4;
+        gc.weighty = 0.2;
+        panel.add(new JLabel("Colour:"), gc);
 
+        gc.gridx = 1;
+        gc.gridy = 4;
+        gc.weighty = 0.2;
+        panel.add(colorPanel, gc);
+
+//        gc.gridx = 1;
+//        gc.gridy = 5;
+//        gc.weighty = 0.2;
+//        panel.add(pickColorButton, gc);
 
         setTitle("Add new point");
         pack();
@@ -173,7 +225,12 @@ public class AddPoint extends AddComponent {
 
 
     private PointComponent createPointComponent() {
-        return new PointComponent(Double.valueOf(longitudeEntry.getText()), Double.valueOf(latitudeEntry.getText()), Double.valueOf((int)radiusEntry.getValue()));
+        return new PointComponent(Double.valueOf(longitudeEntry.getText()), Double.valueOf(latitudeEntry.getText()), Double.valueOf((int)radiusEntry.getValue()), colorState);
+    }
+
+    public void colorChanged(Color color) {
+        colorState = color;
+        colorPanel.repaint();
     }
     public static void main(String[] args) {
 //        new AddPoint().setVisible(true);

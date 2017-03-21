@@ -3,25 +3,32 @@ package org.timetravellersmap.gui.annotatepane;
 import javax.swing.*;
 import javax.swing.colorchooser.DefaultColorSelectionModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
- * ColourPicker: a GUI window for selecting annotation colour
+ * ColorPicker: a GUI window for selecting annotation colour
  */
-public class ColourPicker extends JFrame {
+public class ColorPicker extends JFrame {
     private JPanel panel = new JPanel();
     private JColorChooser jColorChooser = new JColorChooser(new DefaultColorSelectionModel());
     private JButton okButton = new JButton("OK");
     private JButton cancelButton = new JButton("Cancel");
+    private Color existingColor;
 
-    public ColourPicker() {
+    private ArrayList<ColorChangeListener> colorChangeListeners = new ArrayList<>();
+
+    public ColorPicker() {
         this(null);
     }
 
-    public ColourPicker(Color existingColour) {
+    public ColorPicker(Color existingColour) {
+        this.existingColor = existingColour;
         if (existingColour != null ) {
             jColorChooser.setColor(existingColour);
         }
         okButton.addActionListener(actionEvent -> {
+//            this.existingColor = getSelectedColour();
+            fireColorChangeListeners(jColorChooser.getColor());
             System.out.println(getSelectedColour() + " was selected.");
             dispose();
         });
@@ -63,8 +70,22 @@ public class ColourPicker extends JFrame {
         return jColorChooser.getColor();
     }
 
+    public void addColorChangeListener(ColorChangeListener listener) {
+        colorChangeListeners.add(listener);
+    }
+
+    public void removeColorChangeListener(ColorChangeListener listener) {
+        colorChangeListeners.remove(listener);
+    }
+
+    private void fireColorChangeListeners(Color color) {
+        for (ColorChangeListener listener: colorChangeListeners) {
+            listener.colorChanged(color);
+        }
+    }
+
     public static void main(String[] args) {
         // Test harness
-        new ColourPicker(new Color(0, 255, 0)).setVisible(true);
+        new ColorPicker(new Color(0, 255, 0)).setVisible(true);
     }
 }
