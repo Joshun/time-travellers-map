@@ -123,6 +123,16 @@ public class Event {
         return "event start="+getStartDateAsYear()+" end="+getEndDateAsYear()+" annotation="+ eventDescriptor;
     }
 
+    public String getTooltipText() {
+        return "<html>"
+                + "<b>"
+                + eventDescriptor.getName()
+                + " (" + getStartDateAsYear() + " - " + getEndDateAsYear() + ")"
+                + "</b><br>"
+                + eventDescriptor.getDescription()
+                + "</html>";
+    }
+
     public static void main(String[] args) {
         // Test harness for Event
         Event event = new Event(

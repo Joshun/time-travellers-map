@@ -15,6 +15,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -144,6 +146,25 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
             @Override
             public void removeTableModelListener(TableModelListener tableModelListener) {
 
+            }
+        });
+
+        eventTable.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent mouseEvent) {
+                int row = eventTable.rowAtPoint(mouseEvent.getPoint());
+                if (row > -1) {
+                    Event event = currentEvents.get(row);
+                    eventTable.setToolTipText(event.getTooltipText());
+                }
+                else {
+                    eventTable.setToolTipText("");
+                }
             }
         });
 
