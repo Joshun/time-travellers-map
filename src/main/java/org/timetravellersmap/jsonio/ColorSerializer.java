@@ -13,8 +13,10 @@ import java.lang.reflect.Type;
  */
 public class ColorSerializer implements JsonSerializer<Color> {
     public JsonElement serialize(Color color, Type typeOfColor, JsonSerializationContext context) {
-        String jsonString = color.getAlpha() + "," + color.getRGB();
-
+        String jsonString = String.valueOf(color.getRed())
+                + "," + String.valueOf(color.getGreen())
+                + "," + String.valueOf(color.getBlue())
+                + "," + String.valueOf(color.getAlpha());
         return new JsonPrimitive(jsonString);
     }
 }

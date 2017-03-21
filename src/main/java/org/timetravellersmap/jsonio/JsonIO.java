@@ -13,6 +13,7 @@ import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.overlay.PointComponent;
 import org.timetravellersmap.overlay.RectangleComponent;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -40,9 +41,10 @@ public class JsonIO {
         gson = new GsonBuilder()
                 .serializeNulls()
                 .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(Color.class, new ColorSerializer())
+                .registerTypeAdapter(Color.class, new ColorDeserializer())
                 .registerTypeAdapterFactory(runtimeTypeAdapterFactory)
                 .create();
-
     }
 
     public JsonIOObject loadJson(String jsonFile) {
