@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
+import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.core.event.Event;
@@ -13,12 +14,15 @@ import java.util.ArrayList;
  * AddComponent: base GUI for adding LayerComponent annotations
  */
 public abstract class AddComponent extends JFrame {
+    protected MapFrame mapFrame;
     protected AnnotatePane annotatePane;
     protected JPanel panel = new JPanel();
     protected Event event;
 
     private JButton addButton = new JButton("Add point");
     private JButton cancelButton = new JButton("Cancel");
+
+    protected LayerComponent existingLayerComponent = null;
 
 //    protected abstract void setUpPanel();
     protected abstract LayerComponent createLayerComponent();
@@ -27,23 +31,45 @@ public abstract class AddComponent extends JFrame {
 
     private void addLayerComponent() {
         System.out.println("ADDD");
-//        event.getLayer().addComponent(createLayerComponent(), event);
         event.addLayerComponent(createLayerComponent());
         fireLayerComponentChangeListenersChanged();
-//        System.out.println(event.getLayer().getEventLayerComponents(event));
 
     }
 
+    private void updateLayerComponent() {
+        System.out.println("UPDATE");
+        event.removeLayerComponent(existingLayerComponent);
+        event.addLayerComponent(createLayerComponent());
+        fireLayerComponentChangeListenersChanged();
+    }
 
-    public AddComponent(AnnotatePane annotatePane, Event event) {
+    public AddComponent(MapFrame ancestorMapFrame, AnnotatePane annotatePane, Event event, LayerComponent existingLayerComponent) {
+        this(ancestorMapFrame, annotatePane, event);
+        this.existingLayerComponent = existingLayerComponent;
+
+        // If editing an existing LayerComponent, set button text to "Update point" instead of "Add point"
+        // And set title to "Edit point"
+        if (existingLayerComponent != null) {
+            addButton.setText("Update point");
+        }
+    }
+
+
+    public AddComponent(MapFrame ancestorMapFrame, AnnotatePane annotatePane, Event event) {
 //        this.layerComponentChangeListeners.addAll(annotatePane.getLayerComponentChangeListeners());
         this.layerComponentChangeListeners.add(annotatePane);
+        this.mapFrame = ancestorMapFrame;
         this.annotatePane = annotatePane;
         this.event = event;
 
         // Begin adding listeners
         addButton.addActionListener(actionEvent -> {
-            addLayerComponent();
+            if (existingLayerComponent != null) {
+                updateLayerComponent();
+            }
+            else {
+                addLayerComponent();
+            }
             annotatePane.annotationsChanged();
             dispose();
         });

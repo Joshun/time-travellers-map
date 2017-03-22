@@ -3,12 +3,10 @@ package org.timetravellersmap.gui.annotatepane;
 import org.timetravellersmap.core.event.EventChangeListener;
 import org.timetravellersmap.core.event.EventSelectChangeListener;
 import org.timetravellersmap.gui.MapFrame;
+import org.timetravellersmap.gui.eventpane.AddPoint;
 import org.timetravellersmap.gui.eventpane.LayerComboBoxModel;
-import org.timetravellersmap.overlay.Layer;
-import org.timetravellersmap.overlay.LayerComponent;
-import org.timetravellersmap.overlay.LayerChangeListener;
+import org.timetravellersmap.overlay.*;
 import org.timetravellersmap.core.event.Event;
-import org.timetravellersmap.overlay.LayerComponentChangeListener;
 
 import javax.swing.*;
 import javax.swing.event.ListDataListener;
@@ -28,6 +26,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
     private final static Logger LOGGER = Logger.getLogger(AnnotatePane.class.getName());
     private AnnotateMenu annotateMenu;
     private JButton addAnnotationButton = new JButton("Add...");
+    private JButton editAnnotationButton = new JButton("Edit...");
     private JButton removeAnnotationButton = new JButton("Remove");
     private JComboBox<Layer> layerSelectCombo = new JComboBox<>();
     private JTable annotationTable = new JTable();
@@ -59,6 +58,21 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
                 int x = btn.getX();
                 int y = btn.getY() + btn.getHeight();
                 annotateMenu.show(this, x, y);
+            }
+        });
+
+        editAnnotationButton.addActionListener(actionEvent -> {
+            if (selectedEvent != null) {
+                LOGGER.info("Add clicked, Spawn AnnotateMenu (selectedEvent="+selectedEvent+")");
+//                JButton btn = (JButton) actionEvent.getSource();
+//                // Spawn popup annotate menu underneath button
+//                int x = btn.getX();
+//                int y = btn.getY() + btn.getHeight();
+//                annotateMenu.show(this, x, y);
+                LayerComponent selectedAnnotation = getSelectedAnnotation();
+                if (selectedAnnotation instanceof PointComponent) {
+                    new AddPoint(mapFrame, this, getSelectedEvent(), (PointComponent)selectedAnnotation).setVisible(true);
+                }
             }
         });
 
@@ -109,15 +123,21 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         gc.gridy = 0;
         gc.weightx = 0.5;
         gc.weighty = 0.1;
-        this.add(removeAnnotationButton, gc);
+        this.add(editAnnotationButton, gc);
 
         gc.gridx = 2;
         gc.gridy = 0;
         gc.weightx = 0.5;
         gc.weighty = 0.1;
-        add(new JLabel("Event layer"), gc);
+        this.add(removeAnnotationButton, gc);
 
         gc.gridx = 3;
+        gc.gridy = 0;
+        gc.weightx = 0.5;
+        gc.weighty = 0.1;
+        add(new JLabel("Event layer"), gc);
+
+        gc.gridx = 4;
         gc.gridy = 0;
         gc.weightx = 0.5;
         gc.weighty = 0.1;

@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
+import com.vividsolutions.jts.geom.*;
 import org.geotools.map.MapViewport;
 import org.geotools.swing.event.MapMouseEvent;
 import org.geotools.swing.event.MapMouseListener;
@@ -49,8 +50,8 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
 //    private AnnotatePane annotatePane;
     private Event event;
 
-    public AddPoint(MapFrame ancestorMapFrame, AnnotatePane annotatePane, Event event) {
-        super(annotatePane, event);
+    public AddPoint(MapFrame ancestorMapFrame, AnnotatePane annotatePane, Event event, PointComponent existingPointComponent) {
+        super(ancestorMapFrame, annotatePane, event, existingPointComponent);
         this.mapFrame = ancestorMapFrame;
 //        setUpPanel();
         this.annotatePane = annotatePane;
@@ -201,13 +202,35 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
 //        gc.weighty = 0.2;
 //        panel.add(pickColorButton, gc);
 
-        setTitle("Add new point");
         pack();
         // End layout of GUI components
 
-        longitudeEntry.setText(String.valueOf(0));
-        latitudeEntry.setText(String.valueOf(0));
-//
+
+        if (existingPointComponent != null) {
+            loadExistingPointComponent();
+            setTitle("Edit point");
+        }
+        else {
+            longitudeEntry.setText(String.valueOf(0));
+            latitudeEntry.setText(String.valueOf(0));
+            setTitle("Add new point");
+        }
+    }
+
+    public AddPoint(MapFrame ancestorMapFrame, AnnotatePane annotatePane, Event event) {
+        this(ancestorMapFrame, annotatePane, event, null);
+    }
+
+    private void loadExistingPointComponent() {
+        // Check the existingLayerComponent is not null or of another type
+        if (existingLayerComponent instanceof PointComponent) {
+            PointComponent existingPointComponent = (PointComponent) existingLayerComponent;
+            longitudeEntry.setText(String.valueOf(existingPointComponent.getX()));
+            latitudeEntry.setText(String.valueOf(existingPointComponent.getY()));
+            radiusEntry.setValue(existingPointComponent.getRadius());
+            colorState = existingPointComponent.getColor();
+            colorPanel.colorChanged(existingPointComponent.getColor());
+        }
     }
 
     private static Point2D.Double screenToWorld(Point2D.Double point, MapViewport mapViewport) {
@@ -223,9 +246,17 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
         return createPointComponent();
     }
 
+    private double castRadiusEntryValue(Object value) {
+        if (value instanceof Integer) {
+            return (double)((Integer)value);
+        }
+        else {
+            return (Double)value;
+        }
+    }
 
     private PointComponent createPointComponent() {
-        return new PointComponent(Double.valueOf(longitudeEntry.getText()), Double.valueOf(latitudeEntry.getText()), Double.valueOf((int)radiusEntry.getValue()), colorState);
+        return new PointComponent(Double.valueOf(longitudeEntry.getText()), Double.valueOf(latitudeEntry.getText()), castRadiusEntryValue(radiusEntry.getValue()), colorState);
     }
 
     public void colorChanged(Color color) {

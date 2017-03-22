@@ -99,4 +99,20 @@ public class PointComponent extends LayerComponent{
     public void displayAnnotation() {
 
     }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }
