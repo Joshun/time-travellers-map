@@ -53,7 +53,7 @@ public class LayerListTest extends TestCase {
         layerList.addLayer(layer);
         assertEquals(layerList.getLayers().length, 2);
 
-        layerList.removeLayer(layer);
+        layerList.removeLayer(layer.getName());
         assertEquals(layerList.getLayers().length, 1);
     }
 

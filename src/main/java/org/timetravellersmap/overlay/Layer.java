@@ -18,7 +18,6 @@ import java.util.Objects;
  */
 public class Layer extends org.geotools.map.DirectLayer {
     private ArrayList<LayerComponent> layerComponentsToDraw;
-    private ArrayList<Event> registeredEvents;
     private ArrayList<Event> eventsToDraw;
     @Expose
     private String name;
@@ -30,35 +29,20 @@ public class Layer extends org.geotools.map.DirectLayer {
     public Layer(String layerName) {
         this.name = layerName;
 
-        this.registeredEvents = new ArrayList<>();
         this.layerComponentsToDraw = new ArrayList<>();
         this.eventsToDraw = new ArrayList<>();
     }
 
-    public void registerEvent(Event event) {
-        System.out.println("registeredEvents " + registeredEvents);
-        if (! registeredEvents.contains(event)) {
-            registeredEvents.add(event);
-        }
-    }
-
-    public void deregisterEvent(Event event) {
-        registeredEvents.remove(event);
-    }
-
     public void makeDrawRequest(LayerComponent layerComponent, Event event) {
-        registerEvent(event);
         layerComponentsToDraw.add(layerComponent);
     }
 
     public void makeDrawRequest(List<LayerComponent> layerComponentList, Event event) {
-        registerEvent(event);
         layerComponentsToDraw.addAll(layerComponentList);
     }
 
     public void clearDrawRequests() {
         layerComponentsToDraw.clear();
-        registeredEvents.clear();
     }
 
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
@@ -67,10 +51,6 @@ public class Layer extends org.geotools.map.DirectLayer {
                 layerComponent.draw(graphics2D, mapContent, mapViewport);
             }
         }
-    }
-
-    public ArrayList<Event> getRegisteredEvents() {
-        return registeredEvents;
     }
 
     private void fireChanged() {

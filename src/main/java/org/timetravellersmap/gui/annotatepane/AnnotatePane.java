@@ -95,7 +95,8 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
             Layer selectedLayer = (Layer)itemEvent.getItem();
             if (selectedEvent != null) {
                 LOGGER.info("Changing event " + selectedEvent + " to layer " + selectedLayer);
-                mapFrame.getLayerList().moveEventToLayer(selectedEvent, selectedLayer);
+//                mapFrame.getLayerList().moveEventToLayer(selectedEvent, selectedLayer);
+                mapFrame.getLayerList().moveEventToLayer(selectedEvent, selectedLayer.getName());
             }
         });
 

@@ -205,7 +205,7 @@ public class AddModifyEventDialog extends JFrame {
                 yearToCalendar(startDate),
                 yearToCalendar(endDate),
                 new Descriptor(eventName, eventDescription),
-                layer
+                layer.getName()
         );
 
         if (eventName.length() == 0) {

@@ -95,7 +95,7 @@ public class LayerManager extends JFrame {
         removeLayerButton.addActionListener(actionEvent -> {
             Layer layer = getSelectedLayer();
             if (layer != null) {
-                layerList.removeLayer(getSelectedLayer());
+                layerList.removeLayer(getSelectedLayer().getName());
                 layerTable.clearSelection();
                 updateTable();
                 fireChangeListeners();

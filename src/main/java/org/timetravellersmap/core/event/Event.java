@@ -46,9 +46,9 @@ public class Event {
         this.layerComponents = layerComponents;
     }
 
-    public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, Layer layer) {
+    public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, String layerName) {
         this(startDate, endDate, eventDescriptor);
-//        this.layer = layer;
+        this.layerName = layerName;
     }
 
     public void addLayerComponent(LayerComponent layerComponent) {
