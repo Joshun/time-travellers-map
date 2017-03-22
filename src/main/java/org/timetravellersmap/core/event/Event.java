@@ -138,7 +138,7 @@ public class Event {
                 + eventDescriptor.getName()
                 + " (" + getStartDateAsYear() + " - " + getEndDateAsYear() + ")"
                 + "</b><br>"
-                + eventDescriptor.getDescription()
+                + Descriptor.encodeMultilineHTML(eventDescriptor.getDescription())
                 + "</html>";
     }
 

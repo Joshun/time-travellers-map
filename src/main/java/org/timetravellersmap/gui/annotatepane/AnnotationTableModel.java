@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by joshua on 07/02/17.
  */
 public class AnnotationTableModel implements TableModel {
-    private String[] layerComponentTableColumns = {"Index", "Type"};
+    private String[] layerComponentTableColumns = {"#", "Name", "Type"};
     private ArrayList<LayerComponent> layerComponents = new ArrayList<>();
 
     public AnnotationTableModel(Event event) {
@@ -62,11 +62,14 @@ public class AnnotationTableModel implements TableModel {
 
     @Override
     public Object getValueAt(int i, int i1) {
+        LayerComponent layerComponent = layerComponents.get(i);
         if (i1==0) {
-            return i;
+            return String.valueOf(i);
         }
         else if (i1==1) {
-            LayerComponent layerComponent = layerComponents.get(i);
+            return layerComponent.getDescriptor().getName();
+        }
+        else if (i1==2) {
             if (layerComponent.getClass() == PointComponent.class) {
                 return "Point";
             }

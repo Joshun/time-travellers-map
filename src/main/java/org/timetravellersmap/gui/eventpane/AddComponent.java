@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
+import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.overlay.LayerComponent;
@@ -18,6 +19,9 @@ public abstract class AddComponent extends JFrame {
     protected AnnotatePane annotatePane;
     protected JPanel panel = new JPanel();
     protected Event event;
+
+    private JTextField nameField = new JTextField(20);
+    private JTextArea descriptionField = new JTextArea(3, 20);
 
     private JButton addButton = new JButton("Add point");
     private JButton cancelButton = new JButton("Cancel");
@@ -43,6 +47,10 @@ public abstract class AddComponent extends JFrame {
         fireLayerComponentChangeListenersChanged();
     }
 
+    protected Descriptor createDescriptor() {
+        return new Descriptor(nameField.getText(), descriptionField.getText());
+    }
+
     public AddComponent(MapFrame ancestorMapFrame, AnnotatePane annotatePane, Event event, LayerComponent existingLayerComponent) {
         this(ancestorMapFrame, annotatePane, event);
         this.existingLayerComponent = existingLayerComponent;
@@ -51,6 +59,9 @@ public abstract class AddComponent extends JFrame {
         // And set title to "Edit point"
         if (existingLayerComponent != null) {
             addButton.setText("Update point");
+            Descriptor existingLayerComponentDescriptor = existingLayerComponent.getDescriptor();
+            nameField.setText(existingLayerComponentDescriptor.getName());
+            descriptionField.setText(existingLayerComponentDescriptor.getDescription());
         }
     }
 
@@ -89,10 +100,30 @@ public abstract class AddComponent extends JFrame {
         gc.gridx = 0;
         gc.gridy = 1;
         gc.gridwidth = 1;
-        add(addButton, gc);
+        add(new JLabel("Name:"), gc);
 
         gc.gridx = 1;
         gc.gridy = 1;
+        gc.gridwidth = 1;
+        add(nameField, gc);
+
+        gc.gridx = 0;
+        gc.gridy = 2;
+        gc.gridwidth = 1;
+        add(new JLabel("Description:"), gc);
+
+        gc.gridx = 1;
+        gc.gridy = 2;
+        gc.gridwidth = 1;
+        add(descriptionField, gc);
+
+        gc.gridx = 0;
+        gc.gridy = 3;
+        gc.gridwidth = 1;
+        add(addButton, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 3;
         gc.gridwidth = 1;
         add(cancelButton, gc);
         // End layout of GUI components

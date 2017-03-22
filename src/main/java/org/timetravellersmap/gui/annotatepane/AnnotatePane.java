@@ -16,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -159,6 +161,29 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
         annotationTable.setFillsViewportHeight(true);
         annotationTableContainer.setMinimumSize(new Dimension(300, 100));
         // End layout of GUI components
+
+        annotationTable.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent mouseEvent) {
+                System.out.println("mouse e");
+                Point point = mouseEvent.getPoint();
+                int row = annotationTable.rowAtPoint(point);
+                System.out.println(row);
+                if (row >= 0) {
+                    LayerComponent layerComponent = selectedEvent.getLayerComponents().get(row);
+                    System.out.println(layerComponent.getDescriptor().getTooltipText());
+                    annotationTable.setToolTipText(layerComponent.getDescriptor().getTooltipText());
+                }
+                else {
+                    annotationTable.setToolTipText("");
+                }
+            }
+        });
 
     }
 

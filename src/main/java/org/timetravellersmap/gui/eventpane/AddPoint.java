@@ -256,7 +256,7 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
     }
 
     private PointComponent createPointComponent() {
-        return new PointComponent(Double.valueOf(longitudeEntry.getText()), Double.valueOf(latitudeEntry.getText()), castRadiusEntryValue(radiusEntry.getValue()), colorState);
+        return new PointComponent(Double.valueOf(longitudeEntry.getText()), Double.valueOf(latitudeEntry.getText()), castRadiusEntryValue(radiusEntry.getValue()), colorState, createDescriptor());
     }
 
     public void colorChanged(Color color) {

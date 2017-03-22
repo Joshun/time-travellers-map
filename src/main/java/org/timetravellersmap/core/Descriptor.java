@@ -12,7 +12,7 @@ public class Descriptor {
     private final String description;
 
     public Descriptor() {
-        this(null, null);
+        this("", "");
     }
 
     public Descriptor(String name, String description) {
@@ -34,5 +34,28 @@ public class Descriptor {
 
     public String getDescription() {
         return description;
+    }
+
+    public static String encodeMultilineHTML(String rawString) {
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<rawString.length(); i++) {
+            char charAt = rawString.charAt(i);
+            sb.append(charAt);
+            if (charAt == '\n') {
+                sb.append("<br>");
+            }
+        }
+        return sb.toString();
+    }
+
+    public String getTooltipText() {
+        String descriptionEncoded = encodeMultilineHTML(description);
+
+        return "<html>" +
+                "<b>" + name + "</b>" + "<br>"
+                + descriptionEncoded
+                + "</html>";
+
+
     }
 }

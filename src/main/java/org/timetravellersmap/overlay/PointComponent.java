@@ -3,6 +3,7 @@ package org.timetravellersmap.overlay;
 import com.google.gson.annotations.Expose;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
+import org.timetravellersmap.core.Descriptor;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -29,6 +30,11 @@ public class PointComponent extends LayerComponent{
     }
 
     public PointComponent(double x, double y, double radius, Color color) {
+        this(x, y, radius, color, new Descriptor());
+    }
+
+    public PointComponent(double x, double y, double radius, Color color, Descriptor descriptor) {
+        super(descriptor);
         this.x = x;
         this.y = y;
         this.radius = radius;
