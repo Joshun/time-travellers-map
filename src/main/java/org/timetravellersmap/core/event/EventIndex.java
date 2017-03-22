@@ -61,13 +61,11 @@ public class EventIndex {
     }
 
     private void increaseYearCounts(int startYear, int endYear) {
-        System.out.println("increaseYearCounts " + startYear + " " + endYear);
         updateCount(startYearCounts, startYear, 1);
         updateCount(endYearCounts, endYear, 1);
     }
 
     private void reduceYearCounts(int startYear, int endYear) {
-        System.out.println("reduceYearCounts " + startYear + " " + endYear);
         updateCount(startYearCounts, startYear, -1);
         updateCount(endYearCounts, endYear, -1);
     }
