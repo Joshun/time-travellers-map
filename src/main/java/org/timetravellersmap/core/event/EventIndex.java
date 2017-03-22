@@ -61,11 +61,13 @@ public class EventIndex {
     }
 
     private void increaseYearCounts(int startYear, int endYear) {
+        System.out.println("increaseYearCounts " + startYear + " " + endYear);
         updateCount(startYearCounts, startYear, 1);
         updateCount(endYearCounts, endYear, 1);
     }
 
     private void reduceYearCounts(int startYear, int endYear) {
+        System.out.println("reduceYearCounts " + startYear + " " + endYear);
         updateCount(startYearCounts, startYear, -1);
         updateCount(endYearCounts, endYear, -1);
     }
@@ -92,11 +94,9 @@ public class EventIndex {
     public void updateEvent(Event oldEvent, Event newEvent) {
         // Here we are using removeEvent since this carrys out all the relevant cleanup operations
         removeEvent(oldEvent);
-        reduceYearCounts(oldEvent.getStartDateAsYear(), oldEvent.getEndDateAsYear());
 
         // Here we are using addEvent since this reinserts it into the tree (the year(s) could have changed)
         addEvent(newEvent);
-        increaseYearCounts(newEvent.getStartDateAsYear(), newEvent.getEndDateAsYear());
     }
 
     public void removeEvent(Event event) {
