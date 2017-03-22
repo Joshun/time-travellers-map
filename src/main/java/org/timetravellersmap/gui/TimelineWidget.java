@@ -11,12 +11,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * TimelineWidget: a widget for selecting the current year / date
  * Allows selecting within a century and skipping 100 and 1000 year periods
  */
 public class TimelineWidget extends JPanel implements EventChangeListener {
+    private final static Logger LOGGER = Logger.getLogger(TimelineWidget.class.getName());
     private JPanel paintArea;
     private JButton prevHundredYearsButton;
     private JButton nextHundredYearsButton;
@@ -60,7 +62,6 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         paintArea.setPreferredSize(new Dimension(width, height));
         setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        System.out.println("width " + getWidth());
 
         nextHundredYearsButton = new JButton(">");
         nextHundredYearsButton.setToolTipText("Forward 100 years");
@@ -123,8 +124,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
                 String eventSummary = mapFrame.getEventIndex().generateStartEventSummary(year);
                 if (eventSummary != null) {
                     paintArea.setToolTipText(eventSummary);
-
-                    System.out.println(eventSummary);
+                    LOGGER.info("timeline hover, displaying summary: " + eventSummary);
                 }
                 else {
                     paintArea.setToolTipText(null);
@@ -193,19 +193,21 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
     }
 
     private void updatePointer(int xPos) {
-        System.out.println("end" + end + " xpos " + xPos);
+        LOGGER.info("check pointer is in range: end" + end + " xpos " + xPos);
         // Ignore out-of-range clicks
         if (xPos < width && xPos >= 0) {
+            LOGGER.info(" in range.");
             int year = computeYearClicked(xPos, 0, width, start, end);
             if (year == 0) {
                 // Year zero does not exist in Gregorian Calendar (special case)
-                System.out.println("0ad cannot be selected");
+                LOGGER.info("Ignoring attempt to select year zero");
             }
             else {
                 setPointer(year);
             }
             paintArea.repaint();
         }
+        LOGGER.info(" out of range.");
     }
 
     public void redraw() {
@@ -224,7 +226,6 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
 
     public void setPointer(double timePosition) {
         this.pointerPosition = timePosition;
-        System.out.println("position " + timePosition);
     }
 
     private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {
@@ -260,8 +261,6 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         int lineYOffset = 20;
 
         EventIndex eventIndex = mapFrame.getEventIndex();
-
-        System.out.println("paint");
 
         for (TimelineCursor timelineCursor: timeline) {
             double timePosition = timelineCursor.getPosition();

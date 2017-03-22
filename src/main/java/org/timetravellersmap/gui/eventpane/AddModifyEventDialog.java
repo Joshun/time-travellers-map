@@ -11,13 +11,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.logging.Logger;
 
 /**
  * AddModifyEventDialog: dialog for adding new events or modifying existing events
  * Used by EventPane which displays the list of current events for the time period
  */
 public class AddModifyEventDialog extends JFrame {
-//    private JFrame parentFrame;
+    private final static Logger LOGGER = Logger.getLogger(AddModifyEventDialog.class.getName());
     private JPanel panel;
     private Event event;
     private JTextField eventNameField;
@@ -194,7 +195,7 @@ public class AddModifyEventDialog extends JFrame {
     private void updateOrAddEvent(Event existingEvent) {
         // if existingEvent is null, add new event
         // else update existing event
-        System.out.println("Updating event " + existingEvent);
+        LOGGER.info("Updating event " + existingEvent);
         String eventName = eventNameField.getText();
         String eventDescription = eventDescriptionField.getText();
         int startDate = (int)startDateField.getValue();

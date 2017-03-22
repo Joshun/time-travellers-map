@@ -4,15 +4,18 @@ import com.google.gson.annotations.Expose;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
 import org.timetravellersmap.core.Descriptor;
+import sun.rmi.runtime.Log;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.util.logging.Logger;
 
 /**
  * PointComponent: represents a point to draw with optional radius parameter
  */
 public class PointComponent extends LayerComponent{
+    private static final Logger LOGGER = Logger.getLogger(PointComponent.class.getName());
     @Expose
     private double x;
     @Expose
@@ -61,16 +64,13 @@ public class PointComponent extends LayerComponent{
         return this.x == other.x && this.y == other.y && this.radius == other.radius;
     }
 
-//    public void draw() {
-//        System.out.println("Drawing " + this.toString());
-//    }
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
         double screenX, screenY;
         Point2D.Double point = worldToScreen(new Point2D.Double(x, y), mapContent, mapViewport);
         screenX = point.getX();
         screenY = point.getY();
 
-        System.out.println("scale " + computeMapScale(mapViewport));
+        LOGGER.info("scale " + computeMapScale(mapViewport));
 
         double scaledRadius;
         if (USE_SCALING) {

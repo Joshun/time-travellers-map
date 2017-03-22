@@ -54,8 +54,6 @@ public class RectangleComponent extends LayerComponent {
         screenX2 = point2.getX();
         screenY2 = point2.getY();
 
-        System.out.println(this.toString() + " draw called");
-        System.out.println(screenX1 + " " + screenY1 + " " + screenX2 + " " + screenY2);
 //        graphics2D.setStroke(new BasicStroke(40));
         graphics2D.draw(new Rectangle.Double(screenX1, screenY1, (screenX2-screenX1), (screenY2-screenY1)));
     }

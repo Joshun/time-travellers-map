@@ -2,6 +2,7 @@ package org.timetravellersmap.core.timeline;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.logging.Logger;
 
 /**
  * Timeline: an iterable object for generating core rulers
@@ -10,6 +11,7 @@ import java.util.NoSuchElementException;
  * Used by TimelineWidget to draw the core ruler
  */
 public class Timeline implements Iterable<TimelineCursor> {
+    private static final Logger LOGGER = Logger.getLogger(Timeline.class.getName());
     private double start;
     private double end;
     private double minorInterval;
@@ -29,7 +31,7 @@ public class Timeline implements Iterable<TimelineCursor> {
         double majorInterval = minorInterval*4.0;
         this.minorInterval = minorInterval;
         this.majorInterval = majorInterval;
-        System.out.println("min " + minorInterval + " maj " + majorInterval);
+        LOGGER.info("created new timeline " + "min " + minorInterval + " maj " + majorInterval);
     }
 
     public Timeline(double start, double end, double minorInterval, double majorInterval) {

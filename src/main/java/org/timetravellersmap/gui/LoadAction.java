@@ -16,7 +16,6 @@ public class LoadAction extends MapAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Load clicked...");
         mapFrame.loadStateOnTheFly();
     }
 }

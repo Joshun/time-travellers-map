@@ -30,12 +30,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * MapFrame: the GUI component in which the main GUI components reside
  * Based off Geotools' JMapFrame but customising to include core and other components
  */
 public class MapFrame extends JFrame {
+    private static final Logger LOGGER = Logger.getLogger(MapFrame.class.getName());
     /** Name assigned to toolbar button for feature info queries. */
     private static final String TOOLBAR_INFO_BUTTON_NAME = "ToolbarInfoButton";
     /** Name assigned to toolbar button for map panning. */
@@ -146,7 +148,7 @@ public class MapFrame extends JFrame {
 
     private void doShowMap() {
 //        try {
-        System.out.println("doshowmapcontent.");
+        LOGGER.info("doshowmapcontent.");
         initComponents();
         setSize(1024, 800);
         setVisible(true);
@@ -161,7 +163,7 @@ public class MapFrame extends JFrame {
     }
 
     public void initComponents() {
-        System.out.println("init.");
+        LOGGER.info("init.");
         if (uiSet) {
             // @todo log a warning ?
             return;
@@ -295,7 +297,7 @@ public class MapFrame extends JFrame {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 // Save state on exit
-                System.out.println("Quit signal received, saving...");
+                LOGGER.info("Quit signal received, saving...");
                 saveStateToJson();
             }
 
@@ -418,7 +420,7 @@ public class MapFrame extends JFrame {
             mapPane = new JMapPane(mapContent);
         }
         catch (java.io.IOException e) {
-            System.out.println("Error loading shapefile.");
+            LOGGER.warning("Error loading shapefile.");
         }
 
 

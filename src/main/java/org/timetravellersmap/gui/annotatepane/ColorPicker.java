@@ -4,11 +4,13 @@ import javax.swing.*;
 import javax.swing.colorchooser.DefaultColorSelectionModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * ColorPicker: a GUI window for selecting annotation colour
  */
 public class ColorPicker extends JFrame {
+    private final static Logger LOGGER = Logger.getLogger(ColorPicker.class.getName());
     private JPanel panel = new JPanel();
     private JColorChooser jColorChooser = new JColorChooser(new DefaultColorSelectionModel());
     private JButton okButton = new JButton("OK");
@@ -29,7 +31,7 @@ public class ColorPicker extends JFrame {
         okButton.addActionListener(actionEvent -> {
 //            this.existingColor = getSelectedColour();
             fireColorChangeListeners(jColorChooser.getColor());
-            System.out.println(getSelectedColour() + " was selected.");
+            LOGGER.info(getSelectedColour() + " was selected.");
             dispose();
         });
 

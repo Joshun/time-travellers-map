@@ -10,11 +10,13 @@ import org.timetravellersmap.overlay.LayerComponentChangeListener;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * AddComponent: base GUI for adding LayerComponent annotations
  */
 public abstract class AddComponent extends JFrame {
+    private final static Logger LOGGER = Logger.getLogger(AddComponent.class.getName());
     protected MapFrame mapFrame;
     protected AnnotatePane annotatePane;
     protected JPanel panel = new JPanel();
@@ -34,14 +36,14 @@ public abstract class AddComponent extends JFrame {
     private ArrayList<LayerComponentChangeListener> layerComponentChangeListeners = new ArrayList<>();
 
     private void addLayerComponent() {
-        System.out.println("ADDD");
+        LOGGER.info("addLayerComponent called");
         event.addLayerComponent(createLayerComponent());
         fireLayerComponentChangeListenersChanged();
 
     }
 
     private void updateLayerComponent() {
-        System.out.println("UPDATE");
+        LOGGER.info("updateLayerComponent called");
         event.removeLayerComponent(existingLayerComponent);
         event.addLayerComponent(createLayerComponent());
         fireLayerComponentChangeListenersChanged();

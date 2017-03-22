@@ -171,13 +171,12 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
 
             @Override
             public void mouseMoved(MouseEvent mouseEvent) {
-                System.out.println("mouse e");
+                LOGGER.info("mouseMoved " + mouseEvent);
                 Point point = mouseEvent.getPoint();
                 int row = annotationTable.rowAtPoint(point);
-                System.out.println(row);
+                LOGGER.info("row: " + row);
                 if (row >= 0) {
                     LayerComponent layerComponent = selectedEvent.getLayerComponents().get(row);
-                    System.out.println(layerComponent.getDescriptor().getTooltipText());
                     annotationTable.setToolTipText(layerComponent.getDescriptor().getTooltipText());
                 }
                 else {

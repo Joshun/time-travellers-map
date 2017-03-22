@@ -21,12 +21,14 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.logging.Logger;
 
 /**
  * EventPane: displays a list of events for the current time period
  * This will display events that start, finish or are taking place during the selected year
  */
 public class EventPane extends JPanel implements TimelineChangeListener, LayerComponentChangeListener {
+    private final static Logger LOGGER = Logger.getLogger(EventPane.class.getName());
     private JScrollPane eventTableContainer;
     private JTable eventTable;
     private JButton addEventButton;
@@ -172,7 +174,7 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
         eventTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                System.out.println("select " + listSelectionEvent);
+                LOGGER.info("select " + listSelectionEvent);
                 if (eventTable.getRowCount() > 0) {
                     setContextDependentButtonsEnabled(true);
                     fireSelectChangeListenersSelect(getSelectedEvent());
@@ -192,12 +194,12 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
 
         addEventButton.addActionListener(actionEvent ->  {
             eventSelected = false;
-            System.out.println("Add event...");
+            LOGGER.info("Add event...");
             new AddModifyEventDialog(mapFrame, parentEventPane, timelinePointerYear);
         });
 
         removeEventButton.addActionListener(actionEvent ->  {
-            System.out.println("Remove event...");
+            LOGGER.info("Remove event...");
             Event event = getSelectedEvent();
             if (event != null) {
                 currentEvents.remove(event);
@@ -330,7 +332,7 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
 
     public Event getSelectedEvent() {
         int eventReference = eventTable.getSelectedRow();
-        System.out.println("index " + eventReference);
+        LOGGER.info("index " + eventReference);
         if (eventReference == -1 || eventTable.getRowCount() == 0) {
             return null;
         }
@@ -372,7 +374,7 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
     }
 
     public void layerComponentChanged() {
-        System.out.println("layerComponentChanged()!!!!");
+        LOGGER.info("layerComponentChanged called");
         replaceCurrentEvents(mapFrame.getTimelineWidget().getPointerYear());
         mapFrame.getLayerList().setEventsToDraw(currentEvents);
         // Try to prevent flickering

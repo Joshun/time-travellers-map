@@ -56,7 +56,7 @@ public class LayerList {
         for (Layer layer: layers) {
             if (layer.getName().equals(layerName)) {
                 layerMapping.remove(layer.getName());
-                System.out.println("Remove layer " + layerName);
+                LOGGER.info("Remove layer " + layerName);
                 layersToRemove.add(layer);
             }
         }
@@ -68,22 +68,6 @@ public class LayerList {
 
         updateMapContent();
     }
-
-//    private void removeLayer(Layer layer) {
-//        if (layer != DEFAULT_LAYER) {
-//            // Set all of its events to the default layer
-//            System.out.println(layer.getRegisteredEvents());
-//            for (Event event: layer.getRegisteredEvents()) {
-//                event.setLayerName(DEFAULT_LAYER.getName());
-//            }
-//            layers.remove(layer);
-//            layerMapping.remove(layer.getName());
-//            updateMapContent();
-//        }
-//        else {
-//            LOGGER.warning("Refusing request to remove default layer.");
-//        }
-//    }
 
     public void swapLayers(Layer layer1, Layer layer2) {
         List<org.geotools.map.Layer> mapContentLayers = mapContent.layers();
@@ -136,8 +120,7 @@ public class LayerList {
 //    }
 
     public Layer getLayer(String layerName) {
-        System.out.println("getLayer " + layerName);
-        System.out.println(layerMapping);
+        LOGGER.info("getLayer " + layerName);
         Object mapping =  layerMapping.get(layerName);
         if (mapping == null) {
             return null;
@@ -198,13 +181,12 @@ public class LayerList {
         }
 
         for (Event event: events) {
-//            Layer layer = event.getLayer();
-            System.out.println("Layer " + event.getLayerName());
-//            Layer layer = getLayer(new Layer(event.getLayerName()));
+            // Check that Layer exists and that the event's layer hasn't been deleted
             Layer layer = getLayer(event.getLayerName());
-            System.out.println(layer);
             if (layer == null) {
+                // Event layer must have been deleted, tell it to use the default layer
                 event.setLayerName(DEFAULT_LAYER.getName());
+                // Make requests to default layer instead
                 layer = DEFAULT_LAYER;
             }
             layer.makeDrawRequest(event.getLayerComponents(), event);
@@ -213,11 +195,9 @@ public class LayerList {
     }
 
     public void moveEventToLayer(Event event, String newLayerName) {
-//        Layer newLayerP = getLayer(newLayer);
         Layer newLayer = getLayer(newLayerName);
 
         LOGGER.info("move event \"" + event + "\" to " + newLayer);
-//        Layer currentLayer = getLayer(new Layer(event.getLayerName()));
         Layer currentLayer = getLayer(event.getLayerName());
         if (newLayerName.equals(currentLayer.getName())) {
             return;

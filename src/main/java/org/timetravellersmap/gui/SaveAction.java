@@ -19,7 +19,6 @@ public class SaveAction extends MapAction {
 
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Save clicked...");
         mapFrame.saveStateToJson();
     }
 }

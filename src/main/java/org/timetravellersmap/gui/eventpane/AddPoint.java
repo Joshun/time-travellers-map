@@ -19,11 +19,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.util.logging.Logger;
 
 /**
  * AddPoint: a GUI for the user to add a PointComponent to an Event
  */
 public class AddPoint extends AddComponent implements ColorChangeListener {
+    private Logger LOGGER = Logger.getLogger(AddPoint.class.getName());
     private JTextField longitudeEntry = new JTextField(10);
     private JTextField latitudeEntry = new JTextField(10);
     private JSpinner radiusEntry = new JSpinner(new SpinnerNumberModel(4, 1, 10, 1));
@@ -76,7 +78,8 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
                     longitudeEntry.setText(String.valueOf(worldCoordsLong));
                     latitudeEntry.setText(String.valueOf(worldCoordsLat));
 
-                    System.out.println("X: " + mouseX + " Y: " + mouseY);
+                    LOGGER.info("map clicked X: " + mouseX + " Y: " + mouseY);
+                    LOGGER.info("converted to world coords: " + worldCoords);
                     MapMouseListener that = this;
                     SwingUtilities.invokeLater(() -> {
                         mapFrame.getMapPane().removeMouseListener(that);
@@ -119,7 +122,7 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
         colorPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-                System.out.println("Colour picker clicked");
+                LOGGER.info("Colour picker clicked");
                 ColorPicker colorPicker = new ColorPicker(colorState);
                 colorPicker.addColorChangeListener(colorPanel);
                 colorPicker.addColorChangeListener(that);
