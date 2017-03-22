@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui.eventpane;
 
+import org.geotools.swing.JMapPane;
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.core.event.EventChangeListener;
 import org.timetravellersmap.core.event.EventSelectChangeListener;
@@ -374,7 +375,8 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
         System.out.println("layerComponentChanged()!!!!");
         replaceCurrentEvents(mapFrame.getTimelineWidget().getPointerYear());
         mapFrame.getLayerList().setEventsToDraw(currentEvents);
-        System.out.println(currentEvents.get(0).getLayerComponents());
+        // Try to prevent flickering
+        ((JMapPane)mapFrame.getMapPane()).repaint();
     }
 
 
