@@ -164,7 +164,7 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
                     eventTable.setToolTipText(event.getTooltipText());
                 }
                 else {
-                    eventTable.setToolTipText("");
+                    eventTable.setToolTipText(null);
                 }
             }
         });

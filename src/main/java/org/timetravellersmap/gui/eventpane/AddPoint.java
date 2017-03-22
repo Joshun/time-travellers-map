@@ -227,7 +227,7 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
             PointComponent existingPointComponent = (PointComponent) existingLayerComponent;
             longitudeEntry.setText(String.valueOf(existingPointComponent.getX()));
             latitudeEntry.setText(String.valueOf(existingPointComponent.getY()));
-            radiusEntry.setValue(existingPointComponent.getRadius());
+            radiusEntry.setValue(radiusToInt(existingPointComponent.getRadius()));
             colorState = existingPointComponent.getColor();
             colorPanel.colorChanged(existingPointComponent.getColor());
         }
@@ -252,6 +252,15 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
         }
         else {
             return (Double)value;
+        }
+    }
+
+    private int radiusToInt(Object value) {
+        if (value instanceof Double) {
+            return (int)Math.round((Double)value);
+        }
+        else {
+            return (int)value;
         }
     }
 

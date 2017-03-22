@@ -127,7 +127,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
                     System.out.println(eventSummary);
                 }
                 else {
-                    paintArea.setToolTipText("");
+                    paintArea.setToolTipText(null);
                 }
             }
         });

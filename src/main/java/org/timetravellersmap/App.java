@@ -2,6 +2,8 @@ package org.timetravellersmap;
 
 import org.timetravellersmap.gui.Toplevel;
 
+import javax.swing.*;
+
 /**
  * App: the launcher for the program
  *
@@ -13,7 +15,8 @@ public class App
      * contents on the screen in a map frame
      */
     public static void main(String[] args) throws Exception {
-       Toplevel toplevelGui = new Toplevel();
-       toplevelGui.show();
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        Toplevel toplevelGui = new Toplevel();
+        toplevelGui.show();
     }
 }

@@ -180,7 +180,7 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
                     annotationTable.setToolTipText(layerComponent.getDescriptor().getTooltipText());
                 }
                 else {
-                    annotationTable.setToolTipText("");
+                    annotationTable.setToolTipText(null);
                 }
             }
         });
