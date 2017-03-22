@@ -207,6 +207,7 @@ public class AddModifyEventDialog extends JFrame {
                 new Descriptor(eventName, eventDescription),
                 layer
         );
+
         if (eventName.length() == 0) {
             showInputError("Event must have a name!");
         }
@@ -218,6 +219,7 @@ public class AddModifyEventDialog extends JFrame {
         }
         else {
             if (existingEvent != null) {
+                newEvent.setLayerComponents(existingEvent.getLayerComponents());
                 eventPane.updateExistingEvent(existingEvent, newEvent);
                 mapFrame.getEventIndex().updateEvent(existingEvent, newEvent);
             } else {

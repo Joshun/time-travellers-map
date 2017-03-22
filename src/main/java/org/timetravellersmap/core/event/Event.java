@@ -41,6 +41,11 @@ public class Event {
         layerComponents = new ArrayList<>();
     }
 
+    public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, ArrayList<LayerComponent> layerComponents) {
+        this(startDate, endDate, eventDescriptor);
+        this.layerComponents = layerComponents;
+    }
+
     public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, Layer layer) {
         this(startDate, endDate, eventDescriptor);
 //        this.layer = layer;
@@ -117,6 +122,10 @@ public class Event {
 
     public ArrayList<LayerComponent> getLayerComponents() {
         return layerComponents;
+    }
+
+    public void setLayerComponents(ArrayList<LayerComponent> layerComponents) {
+        this.layerComponents = layerComponents;
     }
 
     public String toString() {
