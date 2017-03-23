@@ -189,7 +189,7 @@ public class LayerList {
                 // Make requests to default layer instead
                 layer = DEFAULT_LAYER;
             }
-            layer.makeDrawRequest(event.getLayerComponents(), event);
+            layer.makeDrawRequest(event.getLayerComponents());
         }
         updateMapContent();
     }

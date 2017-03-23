@@ -18,7 +18,6 @@ import java.util.Objects;
  */
 public class Layer extends org.geotools.map.DirectLayer {
     private ArrayList<LayerComponent> layerComponentsToDraw;
-    private ArrayList<Event> eventsToDraw;
     @Expose
     private String name;
 
@@ -30,14 +29,13 @@ public class Layer extends org.geotools.map.DirectLayer {
         this.name = layerName;
 
         this.layerComponentsToDraw = new ArrayList<>();
-        this.eventsToDraw = new ArrayList<>();
     }
 
-    public void makeDrawRequest(LayerComponent layerComponent, Event event) {
+    public void makeDrawRequest(LayerComponent layerComponent) {
         layerComponentsToDraw.add(layerComponent);
     }
 
-    public void makeDrawRequest(List<LayerComponent> layerComponentList, Event event) {
+    public void makeDrawRequest(List<LayerComponent> layerComponentList) {
         layerComponentsToDraw.addAll(layerComponentList);
     }
 
@@ -78,4 +76,13 @@ public class Layer extends org.geotools.map.DirectLayer {
             return other.equals(this);
         }
     }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + layerComponentsToDraw.hashCode();
+        return result;
+    }
+
 }
