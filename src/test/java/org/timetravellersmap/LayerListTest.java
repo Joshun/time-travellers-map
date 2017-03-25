@@ -64,7 +64,12 @@ public class LayerListTest {
         }
         assertEquals(layerList.getLayers().length, 2);
 
-        layerList.removeLayer(layer.getName());
+        try {
+            layerList.removeLayer(layer.getName());
+        }
+        catch (AttemptRemoveDefaultLayerException e) {
+            fail();
+        }
         assertEquals(layerList.getLayers().length, 1);
     }
 

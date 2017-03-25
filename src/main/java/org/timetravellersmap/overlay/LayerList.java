@@ -54,7 +54,11 @@ public class LayerList {
         updateMapContent();
     }
 
-    public void removeLayer(String layerName) {
+    public void removeLayer(String layerName) throws AttemptRemoveDefaultLayerException {
+        if (DEFAULT_LAYER.getName().equals(layerName)) {
+            throw new AttemptRemoveDefaultLayerException("attempt to remove Default layer " + DEFAULT_LAYER);
+        }
+
         ArrayList<Layer> layersToRemove = new ArrayList<>();
         for (Layer layer: layers) {
             if (layer.getName().equals(layerName)) {

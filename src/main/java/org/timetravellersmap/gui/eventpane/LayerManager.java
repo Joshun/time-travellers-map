@@ -1,10 +1,7 @@
 package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.overlay.Layer;
-import org.timetravellersmap.overlay.LayerAlreadyExistsException;
-import org.timetravellersmap.overlay.LayerList;
-import org.timetravellersmap.overlay.LayerChangeListener;
+import org.timetravellersmap.overlay.*;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
@@ -89,7 +86,6 @@ public class LayerManager extends JFrame {
             String layerName = JOptionPane.showInputDialog(this, "Layer name", "New layer", JOptionPane.PLAIN_MESSAGE);
             try {
                 layerList.addLayer(new Layer(layerName));
-                //
                 updateTable();
                 fireChangeListeners();
             }
@@ -101,10 +97,15 @@ public class LayerManager extends JFrame {
         removeLayerButton.addActionListener(actionEvent -> {
             Layer layer = getSelectedLayer();
             if (layer != null) {
-                layerList.removeLayer(getSelectedLayer().getName());
-                layerTable.clearSelection();
-                updateTable();
-                fireChangeListeners();
+                try {
+                    layerList.removeLayer(getSelectedLayer().getName());
+                    layerTable.clearSelection();
+                    updateTable();
+                    fireChangeListeners();
+                }
+                catch (AttemptRemoveDefaultLayerException e) {
+                    JOptionPane.showMessageDialog(this, "Default layer cannot be removed!", "Failed to remove layer", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
