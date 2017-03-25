@@ -1,16 +1,18 @@
 package org.timetravellersmap;
 
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.timetravellersmap.core.timeline.Timeline;
 import org.timetravellersmap.core.timeline.TimelineCursor;
 
+import static org.junit.Assert.*;
+
 /**
  * Created by joshua on 17/03/17.
  */
-public class TimelineTest extends TestCase {
+
+public class TimelineTest {
     private static final int START_YEAR = 1900;
     private static final int END_YEAR = 2000;
     private static final int MINOR_INTERVAL = 1;

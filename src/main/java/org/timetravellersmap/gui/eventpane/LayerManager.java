@@ -2,6 +2,7 @@ package org.timetravellersmap.gui.eventpane;
 
 import org.timetravellersmap.gui.MapFrame;
 import org.timetravellersmap.overlay.Layer;
+import org.timetravellersmap.overlay.LayerAlreadyExistsException;
 import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.overlay.LayerChangeListener;
 
@@ -86,10 +87,15 @@ public class LayerManager extends JFrame {
 
         addLayerButton.addActionListener(actionEvent -> {
             String layerName = JOptionPane.showInputDialog(this, "Layer name", "New layer", JOptionPane.PLAIN_MESSAGE);
-            layerList.addLayer(new Layer(layerName));
-//
-            updateTable();
-            fireChangeListeners();
+            try {
+                layerList.addLayer(new Layer(layerName));
+                //
+                updateTable();
+                fireChangeListeners();
+            }
+            catch (LayerAlreadyExistsException e) {
+                JOptionPane.showMessageDialog(this, "Layer \"" + layerName + "\" already exists", "Failed to add layer", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         removeLayerButton.addActionListener(actionEvent -> {

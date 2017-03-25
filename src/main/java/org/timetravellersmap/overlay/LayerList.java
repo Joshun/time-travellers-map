@@ -45,7 +45,10 @@ public class LayerList {
         updateMapContent();
     }
 
-    public void addLayer(Layer layer) {
+    public void addLayer(Layer layer) throws LayerAlreadyExistsException {
+        if (layerMapping.containsKey(layer.getName())) {
+            throw new LayerAlreadyExistsException("failed to add layer: " + layer.getName());
+        }
         layers.add(layer);
         layerMapping.put(layer.getName(), layers.indexOf(layer));
         updateMapContent();

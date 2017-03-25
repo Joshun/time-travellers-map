@@ -17,10 +17,12 @@ import org.timetravellersmap.overlay.LayerList;
 import java.io.File;
 import java.util.GregorianCalendar;
 
+import static org.junit.Assert.*;
+
 /**
  * Created by joshua on 17/03/17.
  */
-public class JsonIOTest extends TestCase {
+public class JsonIOTest {
     private JsonIO jsonIO;
     private File jsonFile;
 

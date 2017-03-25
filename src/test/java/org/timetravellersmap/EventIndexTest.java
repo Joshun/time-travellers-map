@@ -1,6 +1,5 @@
 package org.timetravellersmap;
 
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +10,12 @@ import org.timetravellersmap.core.event.EventIndex;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import static org.junit.Assert.*;
+
 /**
  * Created by joshua on 13/03/17.
  */
-public class EventIndexTest extends TestCase {
+public class EventIndexTest {
     private EventIndex eventIndex;
     @Before
     public void setUp() {

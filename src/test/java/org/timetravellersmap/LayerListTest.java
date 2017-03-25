@@ -1,6 +1,5 @@
 package org.timetravellersmap;
 
-import junit.framework.TestCase;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.*;
 import org.geotools.map.Layer;
@@ -11,10 +10,12 @@ import org.timetravellersmap.overlay.*;
 
 import java.awt.*;
 
+import static org.junit.Assert.*;
+
 /**
  * Created by joshua on 13/03/17.
  */
-public class LayerListTest extends TestCase {
+public class LayerListTest {
     private LayerList layerList;
 
     @Before
@@ -43,14 +44,24 @@ public class LayerListTest extends TestCase {
     @Test
     public void testAddLayer() {
         org.timetravellersmap.overlay.Layer layer = new org.timetravellersmap.overlay.Layer("Test Layer");
-        layerList.addLayer(layer);
+        try {
+            layerList.addLayer(layer);
+        }
+        catch (LayerAlreadyExistsException e) {
+            fail();
+        }
         assertEquals(layerList.getLayers().length, 2);
     }
 
     @Test
     public void testRemoveLayer() {
         org.timetravellersmap.overlay.Layer layer = new org.timetravellersmap.overlay.Layer("Test Layer");
-        layerList.addLayer(layer);
+        try {
+            layerList.addLayer(layer);
+        }
+        catch (LayerAlreadyExistsException e) {
+            fail();
+        }
         assertEquals(layerList.getLayers().length, 2);
 
         layerList.removeLayer(layer.getName());
@@ -60,8 +71,13 @@ public class LayerListTest extends TestCase {
     public void testMoveLayerUp() {
         org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer("Layer 1");
         org.timetravellersmap.overlay.Layer layer2 = new org.timetravellersmap.overlay.Layer("Layer 2");
-        layerList.addLayer(layer1);
-        layerList.addLayer(layer2);
+        try {
+            layerList.addLayer(layer1);
+            layerList.addLayer(layer2);
+        }
+        catch (LayerAlreadyExistsException e) {
+            fail();
+        }
 
         // Initial ordering
         Layer[] layers = layerList.getLayers();
