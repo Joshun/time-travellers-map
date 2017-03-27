@@ -53,14 +53,15 @@ public class BasemapList {
         Object[][] tableRows = new Object[flattenedBasemaps.size()][];
         for (int i=0; i<tableRows.length; i++) {
             Basemap basemap = flattenedBasemaps.get(i);
-            tableRows[i] = new Object[3];
-            tableRows[i][0] = basemap.getName();
+            tableRows[i] = new Object[4];
+            tableRows[i][0] = basemap.getMapName();
+            tableRows[i][1] = basemap.getFileName();
             Calendar start = new GregorianCalendar();
             start.setTime(basemap.getValidStartDate());
             Calendar end = new GregorianCalendar();
             end.setTime(basemap.getValidEndDate());
-            tableRows[i][1] = start.get(Calendar.YEAR);
-            tableRows[i][2] = end.get(Calendar.YEAR);
+            tableRows[i][2] = start.get(Calendar.YEAR);
+            tableRows[i][3] = end.get(Calendar.YEAR);
         }
         return tableRows;
     }

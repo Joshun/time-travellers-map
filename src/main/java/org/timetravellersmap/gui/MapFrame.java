@@ -17,6 +17,7 @@ import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.TimeTravellersMapException;
+import org.timetravellersmap.core.BasemapList;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.jsonio.JsonIO;
@@ -64,6 +65,7 @@ public class MapFrame extends JFrame {
 
     private EventIndex eventIndex = new EventIndex();
     private LayerList layerList;
+    private BasemapList basemapList = new BasemapList();
     private EventPane eventPane;
     private AnnotatePane annotatePane;
     private JSplitPane eventAnnotateSplitPane;
@@ -238,11 +240,12 @@ public class MapFrame extends JFrame {
         toolBar.add(btn);
 
         btn = new JButton(new SaveAction(mapPane, this));
-        btn.setName("Save");
         toolBar.add(btn);
 
         btn = new JButton(new LoadAction(mapPane, this));
-        btn.setName("Load");
+        toolBar.add(btn);
+
+        btn = new JButton(new BasemapManagerAction(this, basemapList));
         toolBar.add(btn);
 
         eventPane = new EventPane(this);
@@ -384,6 +387,10 @@ public class MapFrame extends JFrame {
 
     public MapPane getMapPane() {
         return mapPane;
+    }
+
+    public BasemapList getBasemapList() {
+        return basemapList;
     }
 
     public void refreshMapPane() {

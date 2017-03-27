@@ -57,7 +57,7 @@ public class BasemapManager extends JFrame {
         setTitle("Manage Basemaps");
     }
 
-    private void basemapsChanged() {
+    public void basemapsChanged() {
         System.out.println(basemapList.generateTableRows().length);
 //        basemapTableModel.setDataVector(basemapList.generateTableRows(), columnNames);
         basemapTable.setModel(new DefaultTableModel(basemapList.generateTableRows(), columnNames));
@@ -66,7 +66,7 @@ public class BasemapManager extends JFrame {
     public static void main(String[] args) {
         MapFrame mapFrame = null;
         BasemapList bsl = new BasemapList();
-        bsl.addBasemap(new Basemap("test", new Date(), new Date(), null));
+        bsl.addBasemap(new Basemap("filename", "mapname", new Date(), new Date()));
         new BasemapManager(mapFrame, bsl).setVisible(true);
     }
 }
