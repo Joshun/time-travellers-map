@@ -11,14 +11,14 @@ import java.util.*;
  */
 public class BasemapList {
     @Expose
-    private HashMap<Integer,HashMap<Integer, ArrayList<Basemap>>> basemapDateMap = new HashMap<>();
+    private TreeMap<Integer,TreeMap<Integer, ArrayList<Basemap>>> basemapDateMap = new TreeMap<>();
 
     public void addBasemap(Basemap basemap) {
         Integer startDate = basemap.getValidStartDate();
         Integer endDate = basemap.getValidEndDate();
 
         if (!basemapDateMap.containsKey(startDate)) {
-           basemapDateMap.put(startDate, new HashMap<>());
+           basemapDateMap.put(startDate, new TreeMap<>());
         }
         if (! basemapDateMap.get(startDate).containsKey(endDate)) {
             basemapDateMap.get(startDate).put(endDate, new ArrayList<>());
@@ -41,8 +41,8 @@ public class BasemapList {
 
     public ArrayList<Basemap> getFlattenedBasemaps() {
         ArrayList<Basemap> flattened = new ArrayList<>();
-        Collection<HashMap<Integer, ArrayList<Basemap>>> flat1 = basemapDateMap.values();
-        for (HashMap<Integer, ArrayList<Basemap>> flat2: flat1) {
+        Collection<TreeMap<Integer, ArrayList<Basemap>>> flat1 = basemapDateMap.values();
+        for (TreeMap<Integer, ArrayList<Basemap>> flat2: flat1) {
             Collection<ArrayList<Basemap>> flat3 = flat2.values();
             for (ArrayList<Basemap> flat4: flat3) {
                 flattened.addAll(flat4);
@@ -69,9 +69,9 @@ public class BasemapList {
         return tableRows;
     }
 
-    public Basemap getForYears(int start, int end) {
+    public Basemap getForExactYears(int start, int end) {
         Basemap target = null;
-        HashMap<Integer, ArrayList<Basemap>> hashMap = basemapDateMap.get(start);
+        TreeMap<Integer, ArrayList<Basemap>> hashMap = basemapDateMap.get(start);
         if (hashMap != null) {
             ArrayList<Basemap> arrayList = hashMap.get(end);
             if (arrayList != null) {
@@ -82,5 +82,17 @@ public class BasemapList {
             }
         }
         return target;
+    }
+
+    public Basemap getForYears(int start, int end) {
+        NavigableMap<Integer, TreeMap<Integer, ArrayList<Basemap>>> navigableMap = basemapDateMap.headMap(start, true);
+        for (TreeMap<Integer, ArrayList<Basemap>> endYearMap: navigableMap.values()) {
+            for (Integer endYear: endYearMap.navigableKeySet()) {
+                if (endYear >= end) {
+                    return endYearMap.get(endYear).get(0);
+                }
+            }
+        }
+        return null;
     }
 }

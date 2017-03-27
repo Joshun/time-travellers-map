@@ -3,6 +3,7 @@ package org.timetravellersmap.gui;
 import net.miginfocom.swing.MigLayout;
 import org.geotools.data.FileDataStore;
 import org.geotools.data.FileDataStoreFinder;
+import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.FeatureLayer;
@@ -459,6 +460,9 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         layerList = jsonIOObject.getLayerList();
         eventIndex = jsonIOObject.getEventIndex();
         basemapList = jsonIOObject.getBasemapList();
+        if (basemapList == null) {
+            basemapList = new BasemapList();
+        }
     }
 
     public boolean jsonStateFileExists() {
@@ -478,7 +482,27 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     public void timelineChanged(int year, boolean redraw) {
         LOGGER.info("Timeline changed, basemap expired? " + basemapExpired());
         if (basemapExpired()) {
-            currentBasemap = basemapList.getForYears(timelineWidget.getStart(), timelineWidget.getEnd());
+            Basemap basemap = basemapList.getForYears(timelineWidget.getStart(), timelineWidget.getEnd());
+            LOGGER.info("Attempting to load basemap " + basemap);
+            if (basemap != null ) {
+                currentBasemap = basemap;
+                loadBasemapFile(new File(basemap.getFilePath()));
+            }
+        }
+    }
+
+    private void loadBasemapFile(File file) {
+        try {
+            FileDataStore shapeFileStore = FileDataStoreFinder.getDataStore(file);
+            SimpleFeatureSource featureSource = shapeFileStore.getFeatureSource();
+            Style style = SLD.createSimpleStyle(featureSource.getSchema());
+            baseLayer = new FeatureLayer(featureSource, style);
+            layerList.setBaseLayer(baseLayer);
+            LOGGER.info("Loaded " + file.getName());
+        }
+        catch (java.io.IOException e) {
+            LOGGER.warning("Failed to load Shapefile ");
+            e.printStackTrace();
         }
     }
 }

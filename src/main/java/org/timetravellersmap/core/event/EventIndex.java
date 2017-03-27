@@ -38,7 +38,7 @@ public class EventIndex {
         // Case 1: a {start year, {end year, event list}} set does not exist in startYearIndex
         // Add startYearIndex entry and corresponding {endYear, events} entry
         if (endYearMap == null) {
-            endYearMap = new TreeMap<Integer, ArrayList<Event>>();
+            endYearMap = new TreeMap<>();
             ArrayList<Event> eventArrayList = new ArrayList<>();
             eventArrayList.add(event);
             endYearMap.put(endYear, eventArrayList);

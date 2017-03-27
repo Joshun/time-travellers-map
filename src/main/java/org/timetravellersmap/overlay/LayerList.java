@@ -225,4 +225,11 @@ public class LayerList {
     public void setMapContent(MapContent mapContent) {
         this.mapContent = mapContent;
     }
+
+    public void setBaseLayer(org.geotools.map.Layer layer) {
+//        this.baseLayer.preDispose();
+//        this.baseLayer.dispose();
+        this.baseLayer = layer;
+        mapContent.layers().set(0, baseLayer);
+    }
 }
