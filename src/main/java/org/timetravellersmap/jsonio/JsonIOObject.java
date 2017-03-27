@@ -1,6 +1,8 @@
 package org.timetravellersmap.jsonio;
 
 import com.google.gson.annotations.Expose;
+import org.timetravellersmap.core.Basemap;
+import org.timetravellersmap.core.BasemapList;
 import org.timetravellersmap.core.event.EventIndex;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.LayerList;
@@ -19,14 +21,17 @@ public class JsonIOObject {
     @Expose
     private EventIndex eventIndex;
     @Expose
+    private BasemapList basemapList;
+    @Expose
     private String writeTime;
     @Expose
     private String defaultLayerName;
 
-    public JsonIOObject(LayerList layerList, EventIndex eventIndex) {
+    public JsonIOObject(LayerList layerList, EventIndex eventIndex, BasemapList basemapList) {
         this.layerList = layerList;
         this.defaultLayerName = LayerList.DEFAULT_LAYER.getName();
         this.eventIndex = eventIndex;
+        this.basemapList = basemapList;
         this.writeTime = LocalDateTime.now().toString();
     }
 
@@ -40,6 +45,10 @@ public class JsonIOObject {
 
     public EventIndex getEventIndex() {
         return eventIndex;
+    }
+
+    public BasemapList getBasemapList() {
+        return basemapList;
     }
 
     @Override

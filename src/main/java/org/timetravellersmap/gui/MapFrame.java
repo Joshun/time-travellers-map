@@ -288,7 +288,7 @@ public class MapFrame extends JFrame {
 
         // Set up JsonIOObject for saving if not already created
         if (jsonIOObject == null) {
-            jsonIOObject = new JsonIOObject(layerList, eventIndex);
+            jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
         }
 
         addWindowListener(new WindowListener() {
@@ -454,6 +454,7 @@ public class MapFrame extends JFrame {
         JsonIOObject jsonIOObject = jsonIO.loadJson(JSON_FILE_NAME);
         layerList = jsonIOObject.getLayerList();
         eventIndex = jsonIOObject.getEventIndex();
+        basemapList = jsonIOObject.getBasemapList();
     }
 
     public boolean jsonStateFileExists() {

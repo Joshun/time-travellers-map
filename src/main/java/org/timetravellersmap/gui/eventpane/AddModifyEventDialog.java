@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
@@ -190,6 +191,21 @@ public class AddModifyEventDialog extends JFrame {
         Calendar calendar = new GregorianCalendar(year, 0, 1);
         calendar.set(Calendar.ERA, eraField);
         return calendar;
+    }
+
+    public static int calendarToYear(Calendar calendar) {
+        int year = calendar.get(Calendar.YEAR);
+        int era = calendar.get(Calendar.ERA);
+        if (era == GregorianCalendar.BC) {
+            year = -year;
+        }
+        return year;
+    }
+
+    public static int dateToYear(Date date) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        return calendarToYear(cal);
     }
 
     private void updateOrAddEvent(Event existingEvent) {

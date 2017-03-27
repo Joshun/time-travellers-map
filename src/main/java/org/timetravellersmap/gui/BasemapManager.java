@@ -83,7 +83,7 @@ public class BasemapManager extends JFrame {
     public static void main(String[] args) {
         MapFrame mapFrame = null;
         BasemapList bsl = new BasemapList();
-        bsl.addBasemap(new Basemap("filename", "mapname", new Date(), new Date()));
+        bsl.addBasemap(new Basemap("filename", "mapname", 1900, 1901));
         new BasemapManager(mapFrame, bsl).setVisible(true);
     }
 }

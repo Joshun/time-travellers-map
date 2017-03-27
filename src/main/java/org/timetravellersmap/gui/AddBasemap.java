@@ -111,12 +111,14 @@ public class AddBasemap extends JFrame {
         });
 
         addBasemapButton.addActionListener(actionEvent -> {
-            Calendar startYear = AddModifyEventDialog.yearToCalendar((int) startDateEntry.getValue());
-            Calendar endYear = AddModifyEventDialog.yearToCalendar((int) endDateEntry.getValue());
+//            Calendar startYear = AddModifyEventDialog.yearToCalendar((int) startDateEntry.getValue());
+//            Calendar endYear = AddModifyEventDialog.yearToCalendar((int) endDateEntry.getValue());
+            int startYear = (int)startDateEntry.getValue();
+            int endYear = (int)endDateEntry.getValue();
             Basemap basemap = new Basemap(fileNameField.getText(),
                 nameField.getText(),
-                startYear.getTime(),
-                endYear.getTime()
+                startYear,
+                endYear
             );
             mapFrame.getBasemapList().addBasemap(basemap);
             basemapManager.basemapsChanged();

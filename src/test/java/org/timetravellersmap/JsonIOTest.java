@@ -5,6 +5,7 @@ import org.geotools.map.MapContent;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.timetravellersmap.core.BasemapList;
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.core.event.Event;
 import org.timetravellersmap.core.event.EventIndex;
@@ -31,6 +32,7 @@ public class JsonIOTest {
     private Layer baseLayer;
     private LayerList layerList;
     private EventIndex eventIndex;
+    private BasemapList basemapList;
 
     @Before
     public void setUp() {
@@ -39,6 +41,7 @@ public class JsonIOTest {
             baseLayer = new Layer("test");
             mapFrame = new MapFrame(mapContent, baseLayer);
             layerList = new LayerList(mapContent, baseLayer);
+            basemapList = new BasemapList();
         }
         catch (TimeTravellersMapException e) {
 
@@ -58,7 +61,7 @@ public class JsonIOTest {
                 new Descriptor("Test Event", "An event for testing")
             );
         eventIndex.addEvent(sampleEvent);
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
         jsonIO.saveJson(jsonFile, jsonIOObject);
     }
 
@@ -70,7 +73,7 @@ public class JsonIOTest {
                 new Descriptor("Test Event", "An event for testing")
         );
         eventIndex.addEvent(sampleEvent);
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
         jsonIO.saveJson(jsonFile, jsonIOObject);
 
         JsonIO readingJsonIO = new JsonIO();

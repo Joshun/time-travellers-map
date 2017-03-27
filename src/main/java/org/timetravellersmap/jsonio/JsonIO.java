@@ -5,6 +5,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.timetravellersmap.core.BasemapList;
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.core.event.Event;
 import org.timetravellersmap.core.event.EventIndex;
@@ -43,6 +44,7 @@ public class JsonIO {
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(Color.class, new ColorSerializer())
                 .registerTypeAdapter(Color.class, new ColorDeserializer())
+//                .registerTypeAdapter(UtcDateTypeAdapter.class, new UtcDateTypeAdapter())
                 .registerTypeAdapterFactory(runtimeTypeAdapterFactory)
                 .create();
     }
@@ -91,6 +93,7 @@ public class JsonIO {
         MapContent mapContent = new MapContent();
         LayerList layerList = new LayerList(mapContent, baseLayer);
         EventIndex eventIndex = new EventIndex();
+        BasemapList basemapList = new BasemapList();
         Event event = new Event(new GregorianCalendar(), new GregorianCalendar(), new Descriptor("event name", "event description"));
         PointComponent pointComponent = new PointComponent(1, 1, 4);
         event.addLayerComponent(pointComponent);
@@ -98,7 +101,7 @@ public class JsonIO {
 
         JsonIO jsonIO = new JsonIO();
         System.out.println("Generating JSONIOObject...");
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
         System.out.println(jsonIOObject);
         System.out.println("Saving...");
         jsonIO.saveJson("test.json", jsonIOObject);
