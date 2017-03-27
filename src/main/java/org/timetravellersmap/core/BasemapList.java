@@ -36,7 +36,7 @@ public class BasemapList {
         return getValidBasemaps(validStartDate, validEndDate).get(0);
     }
 
-    private ArrayList<Basemap> getFlattenedBasemaps() {
+    public ArrayList<Basemap> getFlattenedBasemaps() {
         ArrayList<Basemap> flattened = new ArrayList<>();
         Collection<HashMap<Date, ArrayList<Basemap>>> flat1 = basemapDateMap.values();
         for (HashMap<Date, ArrayList<Basemap>> flat2: flat1) {
@@ -55,7 +55,7 @@ public class BasemapList {
             Basemap basemap = flattenedBasemaps.get(i);
             tableRows[i] = new Object[4];
             tableRows[i][0] = basemap.getMapName();
-            tableRows[i][1] = basemap.getFileName();
+            tableRows[i][1] = basemap.getFilePath();
             Calendar start = new GregorianCalendar();
             start.setTime(basemap.getValidStartDate());
             Calendar end = new GregorianCalendar();

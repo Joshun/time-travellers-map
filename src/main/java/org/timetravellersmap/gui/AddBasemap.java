@@ -1,3 +1,5 @@
+package org.timetravellersmap.gui;
+
 import org.geotools.map.FeatureLayer;
 import org.opengis.filter.expression.Add;
 import org.timetravellersmap.core.Basemap;
@@ -84,6 +86,16 @@ public class AddBasemap extends JFrame {
         gc.gridwidth = 2;
         panel.add(endDateEntry, gc);
 
+        gc.gridx = 0;
+        gc.gridy = 4;
+        gc.gridwidth = 1;
+        panel.add(addBasemapButton, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 4;
+        gc.gridwidth = 2;
+        panel.add(cancelButton, gc);
+
         add(panel);
         pack();
         setTitle("Add Basemap");
@@ -118,7 +130,7 @@ public class AddBasemap extends JFrame {
     }
 
 //    public static void main(String[] args) {
-//        AddBasemap ab = new AddBasemap();
+//        org.timetravellersmap.gui.AddBasemap ab = new org.timetravellersmap.gui.AddBasemap();
 //        ab.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        ab.setVisible(true);
 //    }

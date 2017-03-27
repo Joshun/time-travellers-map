@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ public class BasemapManager extends JFrame {
     private JTable basemapTable;
     private DefaultTableModel basemapTableModel;
     private BasemapList basemapList;
-    private String[] columnNames = {"Name", "Valid Start", "Valid End"};
+    private String[] columnNames = {"Name", "Path", "Valid Start", "Valid End"};
 
     private JButton addBasemapButton = new JButton("Add...");
     private JButton removeBasemapButton = new JButton("Remove");
@@ -55,6 +56,22 @@ public class BasemapManager extends JFrame {
         add(panel);
         pack();
         setTitle("Manage Basemaps");
+
+        // Begin add action listeners
+        addBasemapButton.addActionListener(actionEvent -> {
+            new AddBasemap(ancestorMapFrame, this).setVisible(true);
+        });
+
+        removeBasemapButton.addActionListener(actionEvent -> {
+//            Object[][] basemapListObj = basemapList.generateTableRows();
+            ArrayList<Basemap> flattened = basemapList.getFlattenedBasemaps();
+            int selectedRow = basemapTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                basemapList.removeBasemap(flattened.get(selectedRow));
+                basemapsChanged();
+            }
+        });
+        // End add action listeners
     }
 
     public void basemapsChanged() {
