@@ -17,7 +17,9 @@ import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.TimeTravellersMapException;
+import org.timetravellersmap.core.Basemap;
 import org.timetravellersmap.core.BasemapList;
+import org.timetravellersmap.core.timeline.TimelineChangeListener;
 import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.jsonio.JsonIO;
@@ -37,7 +39,7 @@ import java.util.logging.Logger;
  * MapFrame: the GUI component in which the main GUI components reside
  * Based off Geotools' JMapFrame but customising to include core and other components
  */
-public class MapFrame extends JFrame {
+public class MapFrame extends JFrame implements TimelineChangeListener{
     private static final Logger LOGGER = Logger.getLogger(MapFrame.class.getName());
     /** Name assigned to toolbar button for feature info queries. */
     private static final String TOOLBAR_INFO_BUTTON_NAME = "ToolbarInfoButton";
@@ -77,6 +79,8 @@ public class MapFrame extends JFrame {
     private Layer baseLayer = null;
 
     private MapContent mapContent;
+
+    private Basemap currentBasemap;
 
     public MapFrame(MapContent content, Layer baseLayer) throws TimeTravellersMapException {
         super(content == null ? "" : content.getTitle());
@@ -334,7 +338,7 @@ public class MapFrame extends JFrame {
 
         // Set pointer to initial position
         timelineWidget.setPointer(1950);
-
+        timelineWidget.addChangeListener(this);
     }
 
     public EventIndex getEventIndex() {
@@ -459,5 +463,22 @@ public class MapFrame extends JFrame {
 
     public boolean jsonStateFileExists() {
         return new File(JSON_FILE_NAME).exists();
+    }
+
+    public void loadBasemapForYears(int start, int end) {
+        Basemap basemap = basemapList.getForYears(start, end);
+    }
+
+    private boolean basemapExpired() {
+        return currentBasemap == null
+            || currentBasemap.getValidStartDate() > timelineWidget.getPointerYear()
+            || currentBasemap.getValidEndDate() < timelineWidget.getPointerYear();
+    }
+
+    public void timelineChanged(int year, boolean redraw) {
+        LOGGER.info("Timeline changed, basemap expired? " + basemapExpired());
+        if (basemapExpired()) {
+            currentBasemap = basemapList.getForYears(timelineWidget.getStart(), timelineWidget.getEnd());
+        }
     }
 }

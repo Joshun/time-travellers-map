@@ -324,4 +324,12 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
     public int getPointerYear() {
         return (int)pointerPosition;
     }
+
+    public int getStart() {
+        return (int)start;
+    }
+
+    public int getEnd() {
+        return (int)end;
+    }
 }

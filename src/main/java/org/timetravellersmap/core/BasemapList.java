@@ -68,4 +68,19 @@ public class BasemapList {
         }
         return tableRows;
     }
+
+    public Basemap getForYears(int start, int end) {
+        Basemap target = null;
+        HashMap<Integer, ArrayList<Basemap>> hashMap = basemapDateMap.get(start);
+        if (hashMap != null) {
+            ArrayList<Basemap> arrayList = hashMap.get(end);
+            if (arrayList != null) {
+                Basemap basemap = arrayList.get(0);
+                if (basemap != null) {
+                    target = basemap;
+                }
+            }
+        }
+        return target;
+    }
 }
