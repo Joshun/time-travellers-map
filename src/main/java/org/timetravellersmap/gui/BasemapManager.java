@@ -15,7 +15,6 @@ import java.util.Date;
  */
 public class BasemapManager extends JFrame {
     private JTable basemapTable;
-    private DefaultTableModel basemapTableModel;
     private BasemapList basemapList;
     private String[] columnNames = {"Name", "Path", "Valid Start", "Valid End"};
 
@@ -27,7 +26,7 @@ public class BasemapManager extends JFrame {
     public BasemapManager(MapFrame ancestorMapFrame, BasemapList basemapList) {
         this.basemapList = basemapList;
         basemapTable = new JTable();
-        basemapTableModel = new DefaultTableModel();
+        // Populate table
         basemapsChanged();
 
         GridBagLayout layout = new GridBagLayout();
@@ -63,7 +62,6 @@ public class BasemapManager extends JFrame {
         });
 
         removeBasemapButton.addActionListener(actionEvent -> {
-//            Object[][] basemapListObj = basemapList.generateTableRows();
             ArrayList<Basemap> flattened = basemapList.getFlattenedBasemaps();
             int selectedRow = basemapTable.getSelectedRow();
             if (selectedRow >= 0) {
@@ -75,9 +73,9 @@ public class BasemapManager extends JFrame {
     }
 
     public void basemapsChanged() {
-        System.out.println(basemapList.generateTableRows().length);
-//        basemapTableModel.setDataVector(basemapList.generateTableRows(), columnNames);
-        basemapTable.setModel(new DefaultTableModel(basemapList.generateTableRows(), columnNames));
+        basemapTable.setModel(new DefaultTableModel(
+                BasemapList.generateTableRows(basemapList.getFlattenedBasemaps()),
+                columnNames));
     }
 
     public static void main(String[] args) {

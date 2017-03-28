@@ -28,15 +28,22 @@ public class BasemapList {
     }
 
     public void removeBasemap(Basemap basemap) {
-        basemapDateMap.get(basemap.getValidStartDate()).get(basemap.getValidEndDate()).remove(basemap);
-    }
+        Integer startDate = basemap.getValidStartDate();
+        Integer endDate = basemap.getValidEndDate();
 
-    public ArrayList<Basemap> getValidBasemaps(int validStartDate, int validEndDate) {
-        return basemapDateMap.get(validStartDate).get(validEndDate);
-    }
-
-    public Basemap getValidBasemap(int validStartDate, int validEndDate) {
-        return getValidBasemaps(validStartDate, validEndDate).get(0);
+        TreeMap<Integer, ArrayList<Basemap>> endYearMap = basemapDateMap.get(startDate);
+        if (endYearMap != null) {
+            ArrayList<Basemap> basemaps = endYearMap.get(endDate);
+            if (basemaps != null) {
+                basemaps.remove(basemap);
+                if (basemaps.size() == 0) {
+                    endYearMap.remove(endDate);
+                    if (endYearMap.size() == 0) {
+                        basemapDateMap.remove(startDate);
+                    }
+                }
+            }
+        }
     }
 
     public ArrayList<Basemap> getFlattenedBasemaps() {
@@ -51,37 +58,17 @@ public class BasemapList {
         return flattened;
     }
 
-    public Object[][] generateTableRows() {
-        ArrayList<Basemap> flattenedBasemaps = getFlattenedBasemaps();
+    public static Object[][] generateTableRows(ArrayList<Basemap> flattenedBasemaps) {
         Object[][] tableRows = new Object[flattenedBasemaps.size()][];
         for (int i=0; i<tableRows.length; i++) {
             Basemap basemap = flattenedBasemaps.get(i);
             tableRows[i] = new Object[4];
             tableRows[i][0] = basemap.getMapName();
             tableRows[i][1] = basemap.getFilePath();
-//            Calendar start = new GregorianCalendar();
-//            start.setTime(basemap.getValidStartDate());
-//            Calendar end = new GregorianCalendar();
-//            end.setTime(basemap.getValidEndDate());
             tableRows[i][2] = basemap.getValidStartDate();
             tableRows[i][3] = basemap.getValidEndDate();
         }
         return tableRows;
-    }
-
-    public Basemap getForExactYears(int start, int end) {
-        Basemap target = null;
-        TreeMap<Integer, ArrayList<Basemap>> hashMap = basemapDateMap.get(start);
-        if (hashMap != null) {
-            ArrayList<Basemap> arrayList = hashMap.get(end);
-            if (arrayList != null) {
-                Basemap basemap = arrayList.get(0);
-                if (basemap != null) {
-                    target = basemap;
-                }
-            }
-        }
-        return target;
     }
 
     public Basemap getForYears(int start, int end) {
@@ -89,7 +76,11 @@ public class BasemapList {
         for (TreeMap<Integer, ArrayList<Basemap>> endYearMap: navigableMap.values()) {
             for (Integer endYear: endYearMap.navigableKeySet()) {
                 if (endYear >= end) {
-                    return endYearMap.get(endYear).get(0);
+                    // .get will return null if it cannot find Basemap
+                    ArrayList<Basemap> basemaps = endYearMap.get(endYear);
+                    return (basemaps != null && basemaps.size() > 0)
+                            ? basemaps.get(0)
+                            : null;
                 }
             }
         }
