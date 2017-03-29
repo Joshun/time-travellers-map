@@ -221,6 +221,7 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
                 setTimeline(start, end, minorInterval, majorInterval);
                 setPointer(pointerPosition+yearDifference);
                 paintArea.repaint();
+                fireChangeListeners((int)pointerPosition, true);
         };
     }
 

@@ -39,7 +39,8 @@ public class JsonIOTest {
         try {
             mapContent = new MapContent();
             baseLayer = new Layer("test");
-            mapFrame = new MapFrame(mapContent, baseLayer);
+//            mapFrame = new MapFrame(mapContent, baseLayer);
+            mapFrame = new MapFrame(mapContent);
             layerList = new LayerList(mapContent, baseLayer);
             basemapList = new BasemapList();
         }

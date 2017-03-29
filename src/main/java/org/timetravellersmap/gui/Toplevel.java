@@ -72,11 +72,12 @@ public class Toplevel {
                 coordinateReferenceSystem
         ));
 
-        style = SLD.createSimpleStyle(featureSource.getSchema());
-        layer = new FeatureLayer(featureSource, style);
+//        style = SLD.createSimpleStyle(featureSource.getSchema());
+//        layer = new FeatureLayer(featureSource, style);
 
         try {
-            mapFrame = new MapFrame(mapContent, layer);
+//            mapFrame = new MapFrame(mapContent, layer);
+            mapFrame = new MapFrame(mapContent);
         }
         catch (TimeTravellersMapException e) {
             System.out.println("Failed to initialise GUI " + e);

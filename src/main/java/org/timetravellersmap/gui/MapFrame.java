@@ -34,6 +34,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -73,6 +74,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     private AnnotatePane annotatePane;
     private JSplitPane eventAnnotateSplitPane;
     private TimelineWidget timelineWidget;
+    private StatusBar statusBar = new StatusBar(this, 600, 200);
 
     private JsonIO jsonIO = new JsonIO();
     private JsonIOObject jsonIOObject;
@@ -82,14 +84,37 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     private MapContent mapContent;
 
     private Basemap currentBasemap;
+    private ArrayList<BasemapChangeListener> basemapChangeListeners = new ArrayList<>();
 
-    public MapFrame(MapContent content, Layer baseLayer) throws TimeTravellersMapException {
+    public void addBasemapChangeListener(BasemapChangeListener basemapChangeListener) {
+        basemapChangeListeners.add(basemapChangeListener);
+    }
+
+    public void removeBasemapChangeListener(BasemapChangeListener basemapChangeListener) {
+        basemapChangeListeners.remove(basemapChangeListener);
+    }
+
+    private void fireBasemapExpired() {
+        for (BasemapChangeListener changeListener: basemapChangeListeners) {
+            changeListener.basemapExpired();
+        }
+    }
+
+    private void fireBasemapChanged(Basemap basemap, boolean isValid) {
+        for (BasemapChangeListener changeListener: basemapChangeListeners) {
+            changeListener.basemapChanged(basemap, isValid);
+        }
+    }
+
+
+//    public MapFrame(MapContent content, Layer baseLayer) throws TimeTravellersMapException {
+    public MapFrame(MapContent content) throws TimeTravellersMapException {
         super(content == null ? "" : content.getTitle());
         this.mapContent = content;
-        this.baseLayer = baseLayer;
-        if (baseLayer == null) {
-            throw new TimeTravellersMapException("Must set a baselayer with MapFrame.setBaseLayer");
-        }
+//        this.baseLayer = baseLayer;
+//        if (baseLayer == null) {
+//            throw new TimeTravellersMapException("Must set a baselayer with MapFrame.setBaseLayer");
+//        }
 
         // Constructor code adapted from org.geotools.swing.JMapFrame example
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -288,6 +313,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
         panel.add(timelineWidget, "grow");
 
+        panel.add(statusBar, "grow");
+
         this.getContentPane().add(panel);
         uiSet = true;
 
@@ -340,6 +367,14 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         // Set pointer to initial position
         timelineWidget.setPointer(1950);
         timelineWidget.addChangeListener(this);
+        timelineChanged(1950, true);
+
+        eventPane.addChangeListener(statusBar);
+
+//        statusBar.setBasemapStatus(basemapList.getForYears(1800, 1900), false);
+//        statusBar.setBasemapStatus(currentBasemap, true);
+        statusBar.setEventCountStatus(eventIndex.getTotalEvents());
+        addBasemapChangeListener(statusBar);
     }
 
     public EventIndex getEventIndex() {
@@ -469,26 +504,28 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         return new File(JSON_FILE_NAME).exists();
     }
 
-    public void loadBasemapForYears(int start, int end) {
-        Basemap basemap = basemapList.getForYears(start, end);
-    }
-
-    private boolean basemapExpired() {
-        return currentBasemap == null
-            || currentBasemap.getValidStartDate() > timelineWidget.getPointerYear()
-            || currentBasemap.getValidEndDate() < timelineWidget.getPointerYear();
-    }
 
     public void timelineChanged(int year, boolean redraw) {
-        LOGGER.info("Timeline changed, basemap expired? " + basemapExpired());
-        if (basemapExpired()) {
+        boolean basemapExpired = BasemapList.basemapExpired(currentBasemap, timelineWidget.getPointerYear());
+        LOGGER.info("Timeline changed, basemap expired? " + basemapExpired);
+        if (basemapExpired) {
+            fireBasemapExpired();
             Basemap basemap = basemapList.getForYears(timelineWidget.getStart(), timelineWidget.getEnd());
             LOGGER.info("Attempting to load basemap " + basemap);
             if (basemap != null ) {
+                mapContent.dispose();
+                mapContent = new MapContent();
+                layerList.setMapContent(mapContent);
                 currentBasemap = basemap;
                 loadBasemapFile(new File(basemap.getFilePath()));
+                fireBasemapChanged(currentBasemap, true);
+                mapPane.setMapContent(mapContent);
             }
         }
+    }
+
+    public StatusBar getStatusBar() {
+        return statusBar;
     }
 
     private void loadBasemapFile(File file) {

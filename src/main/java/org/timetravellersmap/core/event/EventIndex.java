@@ -18,6 +18,9 @@ public class EventIndex {
     @Expose
     private TreeMap<Integer, Integer> endYearCounts = new TreeMap<>();
 
+    @Expose
+    private int totalEvents;
+
     public EventIndex() {
 
     }
@@ -58,6 +61,7 @@ public class EventIndex {
             eventArrayList.add(event);
         }
         increaseYearCounts(startYear, endYear);
+        totalEvents++;
     }
 
     private void increaseYearCounts(int startYear, int endYear) {
@@ -116,6 +120,7 @@ public class EventIndex {
             startYearIndex.remove(startYear);
         }
         reduceYearCounts(startYear, endYear);
+        totalEvents--;
     }
 
     public ArrayList<Event> getPointerEvents(int pointerYear) {
@@ -201,6 +206,10 @@ public class EventIndex {
         }
         eventString += "</html>";
         return eventString;
+    }
+
+    public int getTotalEvents() {
+        return totalEvents;
     }
 
     public static void main(String[] args) {

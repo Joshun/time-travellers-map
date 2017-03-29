@@ -86,4 +86,10 @@ public class BasemapList {
         }
         return null;
     }
+
+    public static boolean basemapExpired(Basemap currentBasemap, int pointerYear) {
+        return currentBasemap == null
+                || currentBasemap.getValidStartDate() > pointerYear
+                || currentBasemap.getValidEndDate() < pointerYear;
+    }
 }

@@ -36,8 +36,10 @@ public class LayerList {
     private org.geotools.map.Layer baseLayer = null;
 
     public LayerList(MapContent mapContent, org.geotools.map.Layer baseLayer) {
-        this.baseLayer = baseLayer;
-        mapContent.addLayer(baseLayer);
+        if (baseLayer != null) {
+            this.baseLayer = baseLayer;
+            mapContent.addLayer(baseLayer);
+        }
         this.mapContent = mapContent;
         // By default there is one layer
         layers.add(DEFAULT_LAYER);
@@ -122,9 +124,6 @@ public class LayerList {
         return layerArr;
     }
 
-//    public Layer getLayer(Layer layer) {
-//        return layers.get(layers.indexOf(layer));
-//    }
 
     public Layer getLayer(String layerName) {
         LOGGER.info("getLayer " + layerName);
@@ -226,10 +225,23 @@ public class LayerList {
         this.mapContent = mapContent;
     }
 
+    private void cleanupBaseLayer() {
+        if (baseLayer != null) {
+            this.baseLayer.preDispose();
+            this.baseLayer.dispose();
+        }
+    }
+
     public void setBaseLayer(org.geotools.map.Layer layer) {
-//        this.baseLayer.preDispose();
-//        this.baseLayer.dispose();
-        this.baseLayer = layer;
-        mapContent.layers().set(0, baseLayer);
+        if (layer != null) {
+            cleanupBaseLayer();
+            this.baseLayer = layer;
+            if (mapContent.layers().size() > 0) {
+                mapContent.layers().set(0, baseLayer);
+            }
+            else {
+                mapContent.addLayer(layer);
+            }
+        }
     }
 }
