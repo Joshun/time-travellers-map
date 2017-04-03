@@ -522,6 +522,9 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
                 mapPane.setMapContent(mapContent);
             }
         }
+        else {
+            fireBasemapChanged(currentBasemap, true);
+        }
     }
 
     public StatusBar getStatusBar() {
