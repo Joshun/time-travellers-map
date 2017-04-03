@@ -1,6 +1,10 @@
 package org.timetravellersmap.gui;
 
+import org.timetravellersmap.TimeTravellersMapException;
+import org.timetravellersmap.gui.eventpane.SettingsDialog;
+
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 
 /**
@@ -104,6 +108,71 @@ public class WelcomeDialog extends JFrame {
         add(panel);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Begin adding action listeners
+        createNewButton.addActionListener(actionEvent -> {
+            System.out.println("TODO: spawn new map frame instance");
+//            try {
+//                new MapFrame(null, null);
+//            }
+//            catch (TimeTravellersMapException e) {
+//                e.printStackTrace();
+//            }
+        });
+
+        loadExistingButton.addActionListener(actionEvent -> {
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("TTM project files", "json");
+            fileChooser.setFileFilter(filter);
+            if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                System.out.println("TODO: spawn map frame instance for " + fileChooser.getSelectedFile().getPath());
+            }
+        });
+
+        settingsButton.addActionListener(actionEvent -> {
+            setEnabled(false);
+            new SettingsDialog(this).setVisible(true);
+        });
+
+        // End adding action listeners
+    }
+
+    public void configure(SettingsState settingsState) {
+        System.out.println(settingsState);
+        if (settingsState.getStyle().equals("Native")) {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            }
+            catch (UnsupportedLookAndFeelException e) {
+                e.printStackTrace();
+            }
+            catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+            catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            }
+            catch (UnsupportedLookAndFeelException e) {
+                e.printStackTrace();
+            }
+            catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+            catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void main(String[] args) throws Exception {
