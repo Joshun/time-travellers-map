@@ -20,6 +20,8 @@ public class WelcomeDialog extends JFrame {
 
     private ImageIcon imageIcon;
 
+    private SettingsState settingsState = new SettingsState("Native");
+
     public WelcomeDialog() {
         java.net.URL imgURL = getClass().getResource("/icon.png");
         if (imgURL != null ) {
@@ -131,7 +133,7 @@ public class WelcomeDialog extends JFrame {
 
         settingsButton.addActionListener(actionEvent -> {
             setEnabled(false);
-            new SettingsDialog(this).setVisible(true);
+            new SettingsDialog(this, settingsState).setVisible(true);
         });
 
         // End adding action listeners
@@ -142,6 +144,7 @@ public class WelcomeDialog extends JFrame {
         if (settingsState.getStyle().equals("Native")) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                SwingUtilities.updateComponentTreeUI(this);
             }
             catch (UnsupportedLookAndFeelException e) {
                 e.printStackTrace();
@@ -173,6 +176,7 @@ public class WelcomeDialog extends JFrame {
                 e.printStackTrace();
             }
         }
+        this.settingsState = settingsState;
     }
 
     public static void main(String[] args) throws Exception {

@@ -17,9 +17,9 @@ public class SettingsDialog extends JFrame {
     private JPanel panel = new JPanel();
     private WelcomeDialog welcomeDialog;
     private JComboBox<String> styleChooser = new JComboBox<>();
-    private static final String[] styleChoices = { "Swing", "Native"};
+    private static final String[] styleChoices = { "Native", "Swing" };
 
-    public SettingsDialog(WelcomeDialog parentWelcomeDialog) {
+    public SettingsDialog(WelcomeDialog parentWelcomeDialog, SettingsState currentSettingsState) {
         this.welcomeDialog = parentWelcomeDialog;
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints gc = new GridBagConstraints();
@@ -33,6 +33,11 @@ public class SettingsDialog extends JFrame {
         gc.gridx = 1;
         gc.gridy = 0;
         panel.add(styleChooser, gc);
+
+        if (currentSettingsState != null) {
+            System.out.println(currentSettingsState.getStyle());
+            styleChooser.setSelectedItem(currentSettingsState.getStyle());
+        }
 
         add(panel);
         pack();
