@@ -60,6 +60,30 @@ public class Basemap {
         return AddModifyEventDialog.yearToCalendar(validEndDate);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Basemap) {
+            Basemap basemapOther = (Basemap)other;
+            return this.mapName.equals(basemapOther.getMapName())
+                    && this.filePath.equals(basemapOther.getFilePath())
+                    && this.validStartDate == basemapOther.getValidStartDate()
+                    && this.validEndDate == basemapOther.getValidEndDate();
+        }
+        else {
+            return other.equals(this);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 31;
+        result = result + 17 * filePath.hashCode();
+        result = result + 17 * mapName.hashCode();
+        result = result + 17 * validStartDate;
+        result = result + 17 * validEndDate;
+        return result;
+    }
+
 //    public FeatureLayer getLayer() {
 //        return layer;
 //    }
