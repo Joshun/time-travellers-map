@@ -381,16 +381,14 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         layerList.setMapContent(getMapPane().getMapContent());
 
         // Set pointer to initial position
-        timelineWidget.setPointer(1950);
         timelineWidget.addChangeListener(this);
-        timelineChanged(1950, true);
-
         eventPane.addChangeListener(statusBar);
-
-//        statusBar.setBasemapStatus(basemapList.getForYears(1800, 1900), false);
-//        statusBar.setBasemapStatus(currentBasemap, true);
         statusBar.setEventCountStatus(eventIndex.getTotalEvents());
         addBasemapChangeListener(statusBar);
+
+        timelineWidget.setPointer(1950);
+        timelineChanged(1950, true);
+
     }
 
     public EventIndex getEventIndex() {
