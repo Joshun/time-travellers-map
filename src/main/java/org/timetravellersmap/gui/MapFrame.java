@@ -180,10 +180,21 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         }
     }
 
+    private boolean hasValidFilenameExtension(String f) {
+        int i = f.lastIndexOf(".");
+        return i > 0 && i+1 < f.length()-1 && f.substring(i+1).equals("ttm");
+    }
+
     private void doShowMap() {
 //        try {
         if (new File(jsonFileName).exists()) {
             loadStateFromJson();
+        }
+        else {
+            System.out.println("hasValidFileName " + hasValidFilenameExtension(jsonFileName));
+            if (!hasValidFilenameExtension(jsonFileName)) {
+                jsonFileName = jsonFileName + ".ttm";
+            }
         }
         LOGGER.info("doshowmapcontent.");
         initComponents();

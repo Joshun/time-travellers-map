@@ -121,7 +121,7 @@ public class WelcomeDialog extends JFrame {
 
         loadExistingButton.addActionListener(actionEvent -> {
             JFileChooser fileChooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("TTM project files", "json");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("TTM project files", "ttm");
             fileChooser.setFileFilter(filter);
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 System.out.println("TODO: spawn map frame instance for " + fileChooser.getSelectedFile().getPath());

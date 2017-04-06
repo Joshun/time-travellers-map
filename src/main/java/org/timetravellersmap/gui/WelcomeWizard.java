@@ -143,7 +143,7 @@ public class WelcomeWizard extends JFrame {
 
     private File savePrompt() {
         JFileChooser fileChooser = new JFileChooser("Save project");
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("TTM Project Files", "json");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("TTM Project Files", "ttm");
         fileChooser.setFileFilter(filter);
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             return fileChooser.getSelectedFile();
