@@ -156,6 +156,7 @@ public class WelcomeWizard extends JFrame {
     private boolean launch() {
         File fileToSave = savePrompt();
         if (fileToSave != null) {
+            mapFrame.setJsonFileName(fileToSave.getPath());
             mapFrame.showMap();
             return true;
         }

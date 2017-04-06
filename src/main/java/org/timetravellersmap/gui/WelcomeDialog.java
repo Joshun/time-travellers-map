@@ -1,5 +1,6 @@
 package org.timetravellersmap.gui;
 
+import org.geotools.map.MapContent;
 import org.timetravellersmap.TimeTravellersMapException;
 import org.timetravellersmap.gui.eventpane.SettingsDialog;
 
@@ -124,6 +125,16 @@ public class WelcomeDialog extends JFrame {
             fileChooser.setFileFilter(filter);
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 System.out.println("TODO: spawn map frame instance for " + fileChooser.getSelectedFile().getPath());
+                MapContent mapContent = new MapContent();
+                try {
+                    MapFrame mf = new MapFrame(mapContent);
+                    mf.setJsonFileName(fileChooser.getSelectedFile().getPath());
+                    mf.showMap();
+                    dispose();
+                }
+                catch (TimeTravellersMapException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

@@ -61,7 +61,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
     public static final boolean UPDATE_MAP_ON_DRAG = false;
 
-    private static final String JSON_FILE_NAME = "ttm_state.json";
+//    private final String JSON_FILE_NAME;
+    private String jsonFileName;
 
     private JMapPane mapPane;
     private JToolBar toolBar;
@@ -111,6 +112,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     public MapFrame(MapContent content) throws TimeTravellersMapException {
         super(content == null ? "" : content.getTitle());
         this.mapContent = content;
+//        this.JSON_FILE_NAME = jsonFilename;
 //        this.baseLayer = baseLayer;
 //        if (baseLayer == null) {
 //            throw new TimeTravellersMapException("Must set a baselayer with MapFrame.setBaseLayer");
@@ -122,9 +124,9 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         layerList = new LayerList(content, baseLayer);
 
         // If ttm_state file already exists, load the state from it
-        if (jsonStateFileExists()) {
-            loadStateFromJson();
-        }
+//        if (jsonStateFileExists()) {
+//            loadStateFromJson();
+//        }
 
 //        showStatusBar = false;
 //        showToolBar = false;
@@ -180,6 +182,9 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
     private void doShowMap() {
 //        try {
+        if (new File(jsonFileName).exists()) {
+            loadStateFromJson();
+        }
         LOGGER.info("doshowmapcontent.");
         initComponents();
         setSize(1024, 800);
@@ -486,12 +491,12 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
     public void saveStateToJson() {
         if (jsonIOObject != null && jsonIOObject.isReady()) {
-            jsonIO.saveJson(JSON_FILE_NAME, jsonIOObject);
+            jsonIO.saveJson(jsonFileName, jsonIOObject);
         }
     }
 
     public void loadStateFromJson() {
-        JsonIOObject jsonIOObject = jsonIO.loadJson(JSON_FILE_NAME);
+        JsonIOObject jsonIOObject = jsonIO.loadJson(jsonFileName);
         layerList = jsonIOObject.getLayerList();
         eventIndex = jsonIOObject.getEventIndex();
         basemapList = jsonIOObject.getBasemapList();
@@ -501,7 +506,11 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     }
 
     public boolean jsonStateFileExists() {
-        return new File(JSON_FILE_NAME).exists();
+        return new File(jsonFileName).exists();
+    }
+
+    public void setJsonFileName(String jsonFileName) {
+        this.jsonFileName = jsonFileName;
     }
 
 
