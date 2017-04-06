@@ -114,12 +114,8 @@ public class WelcomeDialog extends JFrame {
         // Begin adding action listeners
         createNewButton.addActionListener(actionEvent -> {
             System.out.println("TODO: spawn new map frame instance");
-//            try {
-//                new MapFrame(null, null);
-//            }
-//            catch (TimeTravellersMapException e) {
-//                e.printStackTrace();
-//            }
+            new WelcomeWizard().setVisible(true);
+            dispose();
         });
 
         loadExistingButton.addActionListener(actionEvent -> {

@@ -78,6 +78,10 @@ public class BasemapManager extends JFrame {
                 columnNames));
     }
 
+    public JPanel getPanel() {
+        return panel;
+    }
+
     public static void main(String[] args) {
         MapFrame mapFrame = null;
         BasemapList bsl = new BasemapList();

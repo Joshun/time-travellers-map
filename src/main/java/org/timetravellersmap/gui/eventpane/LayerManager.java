@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * LayerManager: a GUI for adding, removing and changing order of layers
  */
 public class LayerManager extends JFrame {
+    private JPanel panel = new JPanel();
     private JButton addLayerButton = new JButton("Add");
     private JButton removeLayerButton = new JButton("Remove");
     private JButton moveUpButton = new JButton("Move up");
@@ -79,7 +80,7 @@ public class LayerManager extends JFrame {
 
         this.layerList = layerList;
 
-        setLayout(new GridBagLayout());
+        panel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
         addLayerButton.addActionListener(actionEvent -> {
@@ -129,29 +130,30 @@ public class LayerManager extends JFrame {
 
         gc.gridx = 0;
         gc.gridy = 0;
-        add(addLayerButton, gc);
+        panel.add(addLayerButton, gc);
 
         gc.gridx = 1;
         gc.gridy = 0;
-        add(removeLayerButton, gc);
+        panel.add(removeLayerButton, gc);
 
         gc.gridx = 2;
         gc.gridy = 0;
-        add(moveUpButton, gc);
+        panel.add(moveUpButton, gc);
 
         gc.gridx = 3;
         gc.gridy = 0;
-        add(moveDownButton, gc);
+        panel.add(moveDownButton, gc);
 
         gc.gridx = 0;
         gc.gridy = 1;
         gc.gridwidth = 4;
-        add(layerTableContainer, gc);
+        panel.add(layerTableContainer, gc);
         layerTable.setFillsViewportHeight(true);
 
         layerTable.setModel(new DefaultTableModel(buildModelList(layerList), layerTableColumns));
         updateTable();
 
+        add(panel);
         pack();
     }
     private Layer getSelectedLayer() {
@@ -200,5 +202,7 @@ public class LayerManager extends JFrame {
         return modelList;
     }
 
-
+    public JPanel getPanel() {
+        return panel;
+    }
 }
