@@ -24,10 +24,10 @@ public class WelcomeWizard extends JFrame {
     private JButton prevButton = new JButton("Previous");
     private JButton nextButton = new JButton("Next");
 
-    private BasemapList basemapList = new BasemapList();
     private MapContent mapContent = new MapContent();
-    private LayerList layerList = new LayerList(mapContent, null);
     private MapFrame mapFrame;
+    private BasemapList basemapList;
+    private LayerList layerList;
 
     private class WizardItem {
         private JPanel panel;
@@ -80,6 +80,8 @@ public class WelcomeWizard extends JFrame {
     private void createWizards() {
         try {
             mapFrame = new MapFrame(mapContent);
+            basemapList = mapFrame.getBasemapList();
+            layerList = mapFrame.getLayerList();
         }
         catch (TimeTravellersMapException e) {
 
