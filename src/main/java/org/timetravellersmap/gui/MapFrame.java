@@ -339,42 +339,12 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
             jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
         }
 
-        addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent windowEvent) {
-
-            }
-
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 // Save state on exit
                 LOGGER.info("Quit signal received, saving...");
                 saveStateToJson();
-            }
-
-            @Override
-            public void windowClosed(WindowEvent windowEvent) {
-
-            }
-
-            @Override
-            public void windowIconified(WindowEvent windowEvent) {
-
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent windowEvent) {
-
-            }
-
-            @Override
-            public void windowActivated(WindowEvent windowEvent) {
-
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent windowEvent) {
-
             }
         });
 
