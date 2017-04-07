@@ -22,27 +22,27 @@ public class BasemapListTest {
         basemapList = new BasemapList();
     }
 
-//    @Test
-//    public void testAddBasemap() {
-//        Basemap basemap = new Basemap("testmap.shp", "Test Map", 1900, 2000);
-//        basemapList.addBasemap(basemap);
-//
-//        Basemap foundBasemap = basemapList.getForYears(1900, 2000);
-//        assertEquals(foundBasemap, basemap);
-//    }
-//
-//    @Test
-//    public void testRemoveBasemap() {
-//        Basemap basemap = new Basemap("testmap.shp", "Test Map", 1900, 2000);
-//        basemapList.addBasemap(basemap);
-//
-//        Basemap foundBasemap = basemapList.getForYears(1900, 2000);
-//        assertEquals(foundBasemap, basemap);
-//
-//        basemapList.removeBasemap(basemap);
-//        Basemap foundBasemap2 = basemapList.getForYears(1900, 2000);
-//        assertEquals(foundBasemap2, null);
-//    }
+    @Test
+    public void testAddBasemap() {
+        Basemap basemap = new Basemap("testmap.shp", "Test Map", 1900, 2000);
+        basemapList.addBasemap(basemap);
+
+        Basemap foundBasemap = basemapList.getFromPointer(1950);
+        assertEquals(foundBasemap, basemap);
+    }
+
+    @Test
+    public void testRemoveBasemap() {
+        Basemap basemap = new Basemap("testmap.shp", "Test Map", 1900, 2000);
+        basemapList.addBasemap(basemap);
+
+        Basemap foundBasemap = basemapList.getFromPointer(1950);
+        assertEquals(foundBasemap, basemap);
+
+        basemapList.removeBasemap(basemap);
+        Basemap foundBasemap2 = basemapList.getFromPointer(1950);
+        assertEquals(foundBasemap2, null);
+    }
 
     @Test
     public void testBasemapExpired() {
