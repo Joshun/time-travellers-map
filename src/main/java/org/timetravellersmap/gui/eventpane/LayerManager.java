@@ -101,6 +101,7 @@ public class LayerManager extends JFrame {
 
         gc.gridx = 0;
         gc.gridy = 0;
+        gc.weighty = 0.25;
         panel.add(addLayerButton, gc);
 
         gc.gridx = 1;
@@ -118,6 +119,9 @@ public class LayerManager extends JFrame {
         gc.gridx = 0;
         gc.gridy = 1;
         gc.gridwidth = 4;
+
+        layerTableContainer.setMinimumSize(new Dimension(500, 500));
+
         panel.add(layerTableContainer, gc);
         layerTable.setFillsViewportHeight(true);
 

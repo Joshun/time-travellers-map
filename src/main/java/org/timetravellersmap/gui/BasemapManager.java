@@ -49,6 +49,7 @@ public class BasemapManager extends JFrame {
         gc.gridy = 1;
 
         JScrollPane basemapTableContainer = new JScrollPane(basemapTable);
+        basemapTableContainer.setMinimumSize(new Dimension(500, 500));
         basemapTable.setFillsViewportHeight(true);
         panel.add(basemapTableContainer, gc);
 
