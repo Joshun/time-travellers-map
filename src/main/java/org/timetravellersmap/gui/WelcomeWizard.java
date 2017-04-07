@@ -104,11 +104,11 @@ public class WelcomeWizard extends JFrame {
         gc.gridy = 1;
         nameDescription.add(new JTextArea(3, 20), gc);
 
-        wizardItems.add(new WizardItem(
-                nameDescription,
-                "New Project",
-                "Enter name and description"
-        ));
+//        wizardItems.add(new WizardItem(
+//                nameDescription,
+//                "New Project",
+//                "Enter name and description"
+//        ));
 
         wizardItems.add(new WizardItem(
             basemapManager.getPanel(),
