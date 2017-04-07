@@ -71,16 +71,32 @@ public class BasemapList {
         return tableRows;
     }
 
-    public Basemap getForYears(int start, int end) {
-        NavigableMap<Integer, TreeMap<Integer, ArrayList<Basemap>>> navigableMap = basemapDateMap.headMap(start, true);
-        for (TreeMap<Integer, ArrayList<Basemap>> endYearMap: navigableMap.values()) {
-            for (Integer endYear: endYearMap.navigableKeySet()) {
-                if (endYear >= end) {
-                    // .get will return null if it cannot find Basemap
-                    ArrayList<Basemap> basemaps = endYearMap.get(endYear);
-                    return (basemaps != null && basemaps.size() > 0)
-                            ? basemaps.get(0)
-                            : null;
+//    public Basemap getForYears(int start, int end) {
+//        System.out.println(basemapDateMap);
+//        NavigableMap<Integer, TreeMap<Integer, ArrayList<Basemap>>> navigableMap = basemapDateMap.headMap(start, true);
+//        for (TreeMap<Integer, ArrayList<Basemap>> endYearMap: navigableMap.values()) {
+//            for (Integer endYear: endYearMap.navigableKeySet()) {
+//                if (endYear >= end) {
+//                    // .get will return null if it cannot find Basemap
+//                    ArrayList<Basemap> basemaps = endYearMap.get(endYear);
+//                    System.out.println(basemaps);
+//                    return (basemaps != null && basemaps.size() > 0)
+//                            ? basemaps.get(0)
+//                            : null;
+//                }
+//            }
+//        }
+//        return null;
+//    }
+
+    public Basemap getFromPointer(int pointerYear) {
+        System.out.println(basemapDateMap);
+        NavigableMap<Integer, TreeMap<Integer, ArrayList<Basemap>>> startNavigableMap = basemapDateMap.headMap(pointerYear, true);
+        for (TreeMap<Integer, ArrayList<Basemap>> endYearMap: startNavigableMap.values()) {
+            NavigableMap<Integer, ArrayList<Basemap>> endNavigableMap = endYearMap.tailMap(pointerYear, true);
+            for (ArrayList<Basemap> basemaps: endNavigableMap.values()) {
+                if (basemaps.size() > 0) {
+                    return basemaps.get(0);
                 }
             }
         }

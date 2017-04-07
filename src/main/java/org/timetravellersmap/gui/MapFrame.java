@@ -498,7 +498,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         LOGGER.info("Timeline changed, basemap expired? " + basemapExpired);
         if (basemapExpired) {
             fireBasemapExpired();
-            Basemap basemap = basemapList.getForYears(timelineWidget.getStart(), timelineWidget.getEnd());
+//            Basemap basemap = basemapList.getForYears(timelineWidget.getStart(), timelineWidget.getPointerYear());
+            Basemap basemap = basemapList.getFromPointer(timelineWidget.getPointerYear());
             LOGGER.info("Attempting to load basemap " + basemap);
             if (basemap != null ) {
                 mapContent.dispose();
