@@ -13,7 +13,7 @@ public class BasemapManagerAction extends MapAction {
     private BasemapList basemapList;
 
     public BasemapManagerAction(MapFrame mapFrame, BasemapList basemapList) {
-        super.init(mapFrame.getMapPane(), "Manage basemaps...","Add or remove basemaps", null);
+        super.init(mapFrame.getMapPane(), "Manage basemaps","Add or remove basemaps", "/maps.png");
         this.mapFrame = mapFrame;
         this.basemapList = basemapList;
     }

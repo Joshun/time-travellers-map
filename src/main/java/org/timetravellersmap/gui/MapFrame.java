@@ -285,13 +285,18 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         btn.setName(TOOLBAR_RESET_BUTTON_NAME);
         toolBar.add(btn);
 
+        toolBar.addSeparator();
+
         btn = new JButton(new SaveAction(mapPane, this));
         toolBar.add(btn);
 
-        btn = new JButton(new LoadAction(mapPane, this));
-        toolBar.add(btn);
+//        btn = new JButton(new LoadAction(mapPane, this));
+//        toolBar.add(btn);
 
         btn = new JButton(new BasemapManagerAction(this, basemapList));
+        toolBar.add(btn);
+
+        btn = new JButton(new TimeTravelAction(this));
         toolBar.add(btn);
 
         eventPane = new EventPane(this);
@@ -322,7 +327,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
                 false,
                 mapPane,
                 eventAnnotateSplitPane);
-        splitPane.setDividerLocation(0.7);
+        splitPane.setDividerLocation(0.9);
         panel.add(splitPane, "grow");
 
         panel.add(JMapStatusBar.createDefaultStatusBar(mapPane), "grow");

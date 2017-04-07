@@ -229,6 +229,36 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         this.pointerPosition = timePosition;
     }
 
+    public void setPointerJump(double timePosition) {
+        System.out.println("timeposition " + timePosition + " start " + start + " end " + end);
+        if (timePosition < start || timePosition > end) {
+            double nearestStartCentury;
+            double nearestEndCentury;
+            if (timePosition >= 0) {
+                // e.g. 1550:
+                //      start=1550 - (1550 % 100)
+                //           =1550 - 50
+                //      end  =1500
+                nearestStartCentury = timePosition - (timePosition % 100);
+                nearestEndCentury = nearestStartCentury + 100;
+            }
+            else {
+                // e.g. -50:
+                //      start = -50 + (-50 % -100)
+                //            = -50 - 50
+                //            = -100
+                //      end   = 0
+                nearestStartCentury = timePosition + (timePosition % -100);
+                nearestEndCentury = nearestStartCentury + 100;
+            }
+            start = nearestStartCentury;
+            end = nearestEndCentury;
+            setTimeline(start, end, minorInterval, majorInterval);
+            System.out.println("start " + start + " end " + end);
+        }
+        setPointer(timePosition);
+    }
+
     private static int computeYearClicked(double xMousePosition, double xDrawOffset, double barWidth, double start, double end) {
         // Using linear interpolation, compute the year in the core nearest to the mouse click
 

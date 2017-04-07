@@ -13,7 +13,7 @@ public class SaveAction extends MapAction {
     private MapFrame mapFrame;
 
     public SaveAction(MapPane mapPane, MapFrame mapFrame) {
-        super.init(mapPane, "Save", "Save to file", null);
+        super.init(mapPane, "Save", "Save to file", "/save.png");
         this.mapFrame = mapFrame;
     }
 
