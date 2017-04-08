@@ -525,7 +525,12 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     }
 
     private void loadBasemapFile(File file) {
+<<<<<<< e7ffffc11336bd16ae9dca367febf1590dedc532
         String fileExt = BasemapLoaderFactory.getExtension(file.getName());
+=======
+        int extPos = file.getName().lastIndexOf(".") + 1;
+        String fileExt = file.getName().substring(extPos);
+>>>>>>> Improve handling of different basemap file formats
         try {
             BasemapLoader loader = BasemapLoaderFactory.basemapLoaderFromFile(fileExt);
             baseLayer = loader.loadBasemap(file);

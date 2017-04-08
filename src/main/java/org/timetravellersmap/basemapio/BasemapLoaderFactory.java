@@ -22,7 +22,6 @@ public class BasemapLoaderFactory {
         }
         return loader;
     }
-
     public static String getExtension(String fileName) {
         int extPos = fileName.lastIndexOf(".") + 1;
         if (extPos < 0 || extPos > (fileName.length()-1)) {
