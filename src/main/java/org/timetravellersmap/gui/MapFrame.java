@@ -525,12 +525,16 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     }
 
     private void loadBasemapFile(File file) {
+<<<<<<< ddcd7275aeb9f5bfb9c42d4fd6dcaa2853bdd07e
 <<<<<<< e7ffffc11336bd16ae9dca367febf1590dedc532
         String fileExt = BasemapLoaderFactory.getExtension(file.getName());
 =======
         int extPos = file.getName().lastIndexOf(".") + 1;
         String fileExt = file.getName().substring(extPos);
 >>>>>>> Improve handling of different basemap file formats
+=======
+        String fileExt = BasemapLoaderFactory.getExtension(file.getName());
+>>>>>>> Add support for tiff and giff formats
         try {
             BasemapLoader loader = BasemapLoaderFactory.basemapLoaderFromFile(fileExt);
             baseLayer = loader.loadBasemap(file);
