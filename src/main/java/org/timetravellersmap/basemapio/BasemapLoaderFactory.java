@@ -11,10 +11,9 @@ public class BasemapLoaderFactory {
             case "shp":
                 loader = new ShapefileLoader();
                 break;
-            case "jpeg":
             case "tiff":
             case "tif":
-            case "gif":
+            case "jp2":
                 loader = new ImageLoader();
                 break;
             default:
