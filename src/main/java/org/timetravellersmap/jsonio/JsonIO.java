@@ -44,7 +44,6 @@ public class JsonIO {
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(Color.class, new ColorSerializer())
                 .registerTypeAdapter(Color.class, new ColorDeserializer())
-//                .registerTypeAdapter(UtcDateTypeAdapter.class, new UtcDateTypeAdapter())
                 .registerTypeAdapterFactory(runtimeTypeAdapterFactory)
                 .create();
     }
