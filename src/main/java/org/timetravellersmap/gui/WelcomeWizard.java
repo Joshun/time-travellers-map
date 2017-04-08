@@ -148,7 +148,19 @@ public class WelcomeWizard extends JFrame {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("TTM Project Files", "ttm");
         fileChooser.setFileFilter(filter);
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            return fileChooser.getSelectedFile();
+            File selectedFile = fileChooser.getSelectedFile();
+            if (selectedFile.exists()) {
+                if (JOptionPane.showConfirmDialog(this, "File exists, overwrite it?", "File exists", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    selectedFile.delete();
+                    return fileChooser.getSelectedFile();
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return fileChooser.getSelectedFile();
+            }
         }
         else {
             return null;
