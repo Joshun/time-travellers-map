@@ -10,6 +10,12 @@ public class BasemapLoaderFactory {
             case "shp":
                 loader = new ShapefileLoader();
                 break;
+            case "jp2":
+            case "jpeg":
+            case "tiff":
+            case "gif":
+                loader = new ImageLoader();
+                break;
             default:
                 throw new BasemapIOException("Unsupported file extension " + fileExt);
         }
