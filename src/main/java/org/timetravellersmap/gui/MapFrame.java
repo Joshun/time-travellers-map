@@ -9,6 +9,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.map.MapViewport;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.SLD;
 import org.geotools.styling.Style;
@@ -448,15 +449,9 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
             MapContent mapContent = new MapContent();
             mapContent.setTitle("Time Traveller's Map");
-//            mapPane.setMapContent(mapContent);
-//            repaintMapContent();
-//            mapPane.repaint();
             layerList.setMapContent(mapContent);
-//            layerList.updateMapContent();
-//            refreshMapPane();
 
             setBaseLayer(layer);
-//            mapPane.setMapContent(mapContent);
             mapPane = new JMapPane(mapContent);
         }
         catch (java.io.IOException e) {
@@ -530,8 +525,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     }
 
     private void loadBasemapFile(File file) {
-        int extPos = file.getName().lastIndexOf(".") + 1;
-        String fileExt = file.getName().substring(extPos);
+        String fileExt = BasemapLoaderFactory.getExtension(file.getName());
         try {
             BasemapLoader loader = BasemapLoaderFactory.basemapLoaderFromFile(fileExt);
             baseLayer = loader.loadBasemap(file);
