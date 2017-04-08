@@ -18,6 +18,9 @@ import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.TimeTravellersMapException;
+import org.timetravellersmap.basemapio.BasemapIOException;
+import org.timetravellersmap.basemapio.BasemapLoader;
+import org.timetravellersmap.basemapio.BasemapLoaderFactory;
 import org.timetravellersmap.core.Basemap;
 import org.timetravellersmap.core.BasemapList;
 import org.timetravellersmap.core.timeline.TimelineChangeListener;
@@ -527,16 +530,16 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     }
 
     private void loadBasemapFile(File file) {
+        int extPos = file.getName().lastIndexOf(".") + 1;
+        String fileExt = file.getName().substring(extPos);
         try {
-            FileDataStore shapeFileStore = FileDataStoreFinder.getDataStore(file);
-            SimpleFeatureSource featureSource = shapeFileStore.getFeatureSource();
-            Style style = SLD.createSimpleStyle(featureSource.getSchema());
-            baseLayer = new FeatureLayer(featureSource, style);
+            BasemapLoader loader = BasemapLoaderFactory.basemapLoaderFromFile(fileExt);
+            baseLayer = loader.loadBasemap(file);
             layerList.setBaseLayer(baseLayer);
-            LOGGER.info("Loaded " + file.getName());
+            LOGGER.info("Loaded basemap " + file.getName());
         }
-        catch (java.io.IOException e) {
-            LOGGER.warning("Failed to load Shapefile ");
+        catch (BasemapIOException e) {
+            LOGGER.warning("Failed to load basemap " + file.getName());
             e.printStackTrace();
         }
     }
