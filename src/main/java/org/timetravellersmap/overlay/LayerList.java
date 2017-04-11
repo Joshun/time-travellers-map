@@ -170,13 +170,15 @@ public class LayerList {
 
         for (int i=0; i<layers.size(); i++) {
             if (i+BASE_LAYER_INDEX+1>=mapContentLayers.size()) {
-                mapContentLayers.add(layers.get(i));
+                // Here, the order is inverted as the render order is the inverse of the layer order
+                mapContentLayers.add(layers.get(layers.size()-i-1));
             }
             else {
                 // preDispose() is needed to notify Geotools that the layer is being removed / changed
                 mapContentLayers.get(i + BASE_LAYER_INDEX + 1).preDispose();
                 mapContentLayers.get(i + BASE_LAYER_INDEX + 1).dispose();
-                mapContentLayers.set(i + BASE_LAYER_INDEX + 1, layers.get(i));
+                // Order is inverted as before
+                mapContentLayers.set(i + BASE_LAYER_INDEX + 1, layers.get(layers.size()-i-1));
             }
         }
     }
