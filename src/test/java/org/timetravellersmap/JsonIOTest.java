@@ -2,6 +2,7 @@ package org.timetravellersmap;
 
 import junit.framework.TestCase;
 import org.geotools.map.MapContent;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,7 +63,7 @@ public class JsonIOTest {
                 new Descriptor("Test Event", "An event for testing")
             );
         eventIndex.addEvent(sampleEvent);
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, DefaultGeographicCRS.WGS84);
         jsonIO.saveJson(jsonFile, jsonIOObject);
     }
 
@@ -74,7 +75,7 @@ public class JsonIOTest {
                 new Descriptor("Test Event", "An event for testing")
         );
         eventIndex.addEvent(sampleEvent);
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, DefaultGeographicCRS.WGS84);
         jsonIO.saveJson(jsonFile, jsonIOObject);
 
         JsonIO readingJsonIO = new JsonIO();

@@ -5,6 +5,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.timetravellersmap.core.BasemapList;
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.core.event.Event;
@@ -98,9 +100,11 @@ public class JsonIO {
         event.addLayerComponent(pointComponent);
         eventIndex.addEvent(event);
 
+        CoordinateReferenceSystem crs = DefaultGeographicCRS.WGS84;
+
         JsonIO jsonIO = new JsonIO();
         System.out.println("Generating JSONIOObject...");
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, crs);
         System.out.println(jsonIOObject);
         System.out.println("Saving...");
         jsonIO.saveJson("test.json", jsonIOObject);

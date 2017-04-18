@@ -16,6 +16,7 @@ import org.geotools.swing.JMapPane;
 import org.geotools.swing.MapPane;
 import org.geotools.swing.action.*;
 import org.geotools.swing.control.JMapStatusBar;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.timetravellersmap.ShapefileException;
 import org.timetravellersmap.TimeTravellersMapException;
 import org.timetravellersmap.core.Basemap;
@@ -86,6 +87,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
     private Basemap currentBasemap;
     private ArrayList<BasemapChangeListener> basemapChangeListeners = new ArrayList<>();
+
+    private CoordinateReferenceSystem coordinateReferenceSystem = DefaultGeographicCRS.WGS84;
 
     public void addBasemapChangeListener(BasemapChangeListener basemapChangeListener) {
         basemapChangeListeners.add(basemapChangeListener);
@@ -200,6 +203,13 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         initComponents();
         setSize(1024, 800);
         setVisible(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                LOGGER.info("Setting CoordinateReferenceSystem: " + coordinateReferenceSystem);
+                mapContent.getViewport().setCoordinateReferenceSystem(coordinateReferenceSystem);
+            }
+        });
 //            final MapFrame frame = new MapFrame();
 //            frame.initComponents();
 //            frame.setSize(1024, 800);
@@ -341,7 +351,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
         // Set up JsonIOObject for saving if not already created
         if (jsonIOObject == null) {
-            jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
+            jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, coordinateReferenceSystem);
         }
 
         addWindowListener(new WindowAdapter() {
@@ -474,6 +484,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     }
 
     public void saveStateToJson() {
+        coordinateReferenceSystem = mapContent.getViewport().getCoordinateReferenceSystem();
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, coordinateReferenceSystem);
         if (jsonIOObject != null && jsonIOObject.isReady()) {
             jsonIO.saveJson(jsonFileName, jsonIOObject);
         }
@@ -484,6 +496,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         layerList = jsonIOObject.getLayerList();
         eventIndex = jsonIOObject.getEventIndex();
         basemapList = jsonIOObject.getBasemapList();
+        coordinateReferenceSystem = jsonIOObject.getCoordinateReferenceSystem();
         if (basemapList == null) {
             basemapList = new BasemapList();
         }
