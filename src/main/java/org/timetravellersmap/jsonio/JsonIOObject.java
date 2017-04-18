@@ -50,10 +50,4 @@ public class JsonIOObject {
     public BasemapList getBasemapList() {
         return basemapList;
     }
-
-    @Override
-    public String toString() {
-        LayerComponent test = eventIndex.getStartEventsForYear(2017).get(0).getLayerComponents().get(0);
-        return "JSONIOObject " + test;
-    }
 }
