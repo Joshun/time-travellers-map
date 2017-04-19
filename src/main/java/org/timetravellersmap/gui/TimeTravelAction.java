@@ -19,6 +19,11 @@ public class TimeTravelAction extends MapAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         String inputValue = JOptionPane.showInputDialog(mapFrame, "Enter a year", "Time Travel", JOptionPane.PLAIN_MESSAGE);
+        // If user cancels dialog, return
+        if (inputValue == null) {
+            return;
+        }
+        // Otherwise, try to parse integer and seek to the year
         try {
             int year = Integer.parseInt(inputValue);
             if (year == 0) {
@@ -27,7 +32,6 @@ public class TimeTravelAction extends MapAction {
             System.out.println("time travel: " + year);
             System.out.println(mapFrame);
             System.out.println(mapFrame.getTimelineWidget());
-//            mapFrame.getTimelineWidget().setPointer(year);
             mapFrame.getTimelineWidget().setPointerJump(year);
             mapFrame.getTimelineWidget().redraw();
             mapFrame.timelineChanged(year, true);
