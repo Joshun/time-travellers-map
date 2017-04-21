@@ -127,7 +127,7 @@ public class WelcomeWizard extends JFrame {
         setTitle("New TTM Project");
         remove(container);
         container = new JPanel();
-        container.setLayout(new BorderLayout(10, 50));
+        container.setLayout(new BorderLayout(10, 1));
         JPanel currentWizardPanel = wizardItem.getPanel();
         String currentWizardText = wizardItem.getText();
 
