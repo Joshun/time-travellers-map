@@ -2,6 +2,7 @@ package org.timetravellersmap.gui;
 
 import org.geotools.map.FeatureLayer;
 import org.opengis.filter.expression.Add;
+import org.timetravellersmap.basemapio.BasemapLoaderFactory;
 import org.timetravellersmap.core.Basemap;
 import org.timetravellersmap.gui.BasemapManager;
 import org.timetravellersmap.gui.MapFrame;
@@ -103,7 +104,11 @@ public class AddBasemap extends JFrame {
         // Begin adding action listeners
         fileBrowseButton.addActionListener(actionEvent -> {
             JFileChooser chooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Map files (*.shp, *.tif, *.tiff)", "shp", "tiff", "tif");
+            boolean allowExperimentalFileFormats = ancestorMapFrame.getSettingsState().getUseExperimentalFileFormats();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Map files (" + BasemapLoaderFactory.getFilebrowserDescription(allowExperimentalFileFormats) + ")",
+                    BasemapLoaderFactory.getSupportedFormats(allowExperimentalFileFormats)
+                );
             chooser.setFileFilter(filter);
             if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 fileNameField.setText(chooser.getSelectedFile().getPath());

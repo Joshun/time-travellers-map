@@ -21,7 +21,7 @@ public class WelcomeDialog extends JFrame {
 
     private ImageIcon imageIcon;
 
-    private SettingsState settingsState = new SettingsState("Native");
+    private SettingsState settingsState = new SettingsState("Native", false);
 
     public WelcomeDialog() {
         java.net.URL imgURL = getClass().getResource("/icon.png");
@@ -115,7 +115,7 @@ public class WelcomeDialog extends JFrame {
         // Begin adding action listeners
         createNewButton.addActionListener(actionEvent -> {
             System.out.println("TODO: spawn new map frame instance");
-            new WelcomeWizard().setVisible(true);
+            new WelcomeWizard(settingsState).setVisible(true);
             dispose();
         });
 
@@ -127,7 +127,7 @@ public class WelcomeDialog extends JFrame {
                 System.out.println("TODO: spawn map frame instance for " + fileChooser.getSelectedFile().getPath());
                 MapContent mapContent = new MapContent();
                 try {
-                    MapFrame mf = new MapFrame(mapContent);
+                    MapFrame mf = new MapFrame(mapContent, settingsState);
                     mf.setJsonFileName(fileChooser.getSelectedFile().getPath());
                     mf.showMap();
                     dispose();

@@ -10,6 +10,7 @@ import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.core.event.Event;
 import org.timetravellersmap.core.event.EventIndex;
 import org.timetravellersmap.gui.MapFrame;
+import org.timetravellersmap.gui.SettingsState;
 import org.timetravellersmap.jsonio.JsonIO;
 import org.timetravellersmap.jsonio.JsonIOObject;
 import org.timetravellersmap.overlay.Layer;
@@ -40,7 +41,7 @@ public class JsonIOTest {
             mapContent = new MapContent();
             baseLayer = new Layer("test");
 //            mapFrame = new MapFrame(mapContent, baseLayer);
-            mapFrame = new MapFrame(mapContent);
+            mapFrame = new MapFrame(mapContent, new SettingsState());
             layerList = new LayerList(mapContent, baseLayer);
             basemapList = new BasemapList();
         }

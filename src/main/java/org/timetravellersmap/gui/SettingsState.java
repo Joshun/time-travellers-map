@@ -5,12 +5,22 @@ package org.timetravellersmap.gui;
  */
 public class SettingsState {
     private String style;
+    private boolean useExperimentalFileFormats;
 
-    public SettingsState(String style) {
+    public SettingsState(String style, boolean useExperimentalFileFormats) {
         this.style = style;
+        this.useExperimentalFileFormats = useExperimentalFileFormats;
+    }
+
+    public SettingsState() {
+        this("Native", false);
     }
 
     public String getStyle() {
         return style;
+    }
+
+    public boolean getUseExperimentalFileFormats() {
+        return useExperimentalFileFormats;
     }
 }

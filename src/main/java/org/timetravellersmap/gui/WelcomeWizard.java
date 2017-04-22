@@ -28,6 +28,7 @@ public class WelcomeWizard extends JFrame {
     private MapFrame mapFrame;
     private BasemapList basemapList;
     private LayerList layerList;
+    private SettingsState settingsState;
 
     private class WizardItem {
         private JPanel panel;
@@ -79,7 +80,7 @@ public class WelcomeWizard extends JFrame {
 
     private void createWizards() {
         try {
-            mapFrame = new MapFrame(mapContent);
+            mapFrame = new MapFrame(mapContent, settingsState);
             basemapList = mapFrame.getBasemapList();
             layerList = mapFrame.getLayerList();
         }
@@ -177,7 +178,8 @@ public class WelcomeWizard extends JFrame {
         return false;
     }
 
-    public WelcomeWizard() {
+    public WelcomeWizard(SettingsState settingsState) {
+        this.settingsState = settingsState;
         setTitle("New TTM Project");
         setPreferredSize(new Dimension(1000, 1000));
         createWizards();
@@ -200,7 +202,7 @@ public class WelcomeWizard extends JFrame {
     }
 
     public static void main(String[] args) {
-        WelcomeWizard w = new WelcomeWizard();
+        WelcomeWizard w = new WelcomeWizard(new SettingsState());
         w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         w.setVisible(true);
     }

@@ -42,7 +42,7 @@ public class ImageLoader implements BasemapLoader {
      *
      * @return a new Style object containing a raster symbolizer set up for RGB image
      */
-    private Style createRGBStyle(GridCoverage2DReader reader) {
+    protected Style createRGBStyle(GridCoverage2DReader reader) {
         GridCoverage2D cov = null;
         try {
             cov = reader.read(null);

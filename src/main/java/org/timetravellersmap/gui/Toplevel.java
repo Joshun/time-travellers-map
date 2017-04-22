@@ -77,7 +77,7 @@ public class Toplevel {
 
         try {
 //            mapFrame = new MapFrame(mapContent, layer);
-            mapFrame = new MapFrame(mapContent);
+            mapFrame = new MapFrame(mapContent, new SettingsState());
         }
         catch (TimeTravellersMapException e) {
             System.out.println("Failed to initialise GUI " + e);

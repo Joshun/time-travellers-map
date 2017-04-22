@@ -91,6 +91,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     private Basemap currentBasemap;
     private ArrayList<BasemapChangeListener> basemapChangeListeners = new ArrayList<>();
 
+    private final SettingsState settingsState;
+
     public void addBasemapChangeListener(BasemapChangeListener basemapChangeListener) {
         basemapChangeListeners.add(basemapChangeListener);
     }
@@ -113,9 +115,11 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
 
 //    public MapFrame(MapContent content, Layer baseLayer) throws TimeTravellersMapException {
-    public MapFrame(MapContent content) throws TimeTravellersMapException {
+    public MapFrame(MapContent content, SettingsState settingsState) throws TimeTravellersMapException {
         super(content == null ? "" : content.getTitle());
         this.mapContent = content;
+
+        this.settingsState = settingsState;
 //        this.JSON_FILE_NAME = jsonFilename;
 //        this.baseLayer = baseLayer;
 //        if (baseLayer == null) {
@@ -522,6 +526,10 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 
     public StatusBar getStatusBar() {
         return statusBar;
+    }
+
+    public SettingsState getSettingsState() {
+        return settingsState;
     }
 
     private void loadBasemapFile(File file) {
