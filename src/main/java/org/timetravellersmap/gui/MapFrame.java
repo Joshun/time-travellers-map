@@ -196,6 +196,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
                 jsonFileName = jsonFileName + ".ttm";
             }
         }
+        setTitle("Time Traveller's Map - " + new File(jsonFileName).getName());
         LOGGER.info("doshowmapcontent.");
         initComponents();
         setSize(1024, 800);
