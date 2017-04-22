@@ -1,8 +1,7 @@
-package org.timetravellersmap.gui.eventpane;
+package org.timetravellersmap.gui.annotatepane;
 
 import org.timetravellersmap.core.Descriptor;
 import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.core.event.Event;
 import org.timetravellersmap.overlay.LayerComponentChangeListener;

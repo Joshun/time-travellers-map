@@ -1,7 +1,6 @@
 package org.timetravellersmap.gui.annotatepane;
 
 import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.gui.eventpane.AddPoint;
 
 import javax.swing.*;
 

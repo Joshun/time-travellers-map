@@ -1,19 +1,11 @@
 package org.timetravellersmap.gui.annotatepane;
 
-import org.timetravellersmap.core.event.EventChangeListener;
 import org.timetravellersmap.core.event.EventSelectChangeListener;
 import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.gui.eventpane.AddPoint;
-import org.timetravellersmap.gui.eventpane.LayerComboBoxModel;
 import org.timetravellersmap.overlay.*;
 import org.timetravellersmap.core.event.Event;
 
 import javax.swing.*;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;

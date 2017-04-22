@@ -1,14 +1,10 @@
-package org.timetravellersmap.gui.eventpane;
+package org.timetravellersmap.gui.annotatepane;
 
-import com.vividsolutions.jts.geom.*;
 import org.geotools.map.MapViewport;
 import org.geotools.swing.event.MapMouseEvent;
 import org.geotools.swing.event.MapMouseListener;
 import org.timetravellersmap.gui.MapFrame;
-import org.timetravellersmap.gui.annotatepane.AnnotatePane;
-import org.timetravellersmap.gui.annotatepane.ColorChangeListener;
-import org.timetravellersmap.gui.annotatepane.ColorPanel;
-import org.timetravellersmap.gui.annotatepane.ColorPicker;
+import org.timetravellersmap.gui.eventpane.NameAndDescriptionInput;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.PointComponent;
 import org.timetravellersmap.core.event.Event;
