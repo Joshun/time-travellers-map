@@ -103,7 +103,7 @@ public class AddBasemap extends JFrame {
         // Begin adding action listeners
         fileBrowseButton.addActionListener(actionEvent -> {
             JFileChooser chooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Map files", "shp");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Map files (*.shp, *.tif, *.tiff)", "shp", "tiff", "tif");
             chooser.setFileFilter(filter);
             if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 fileNameField.setText(chooser.getSelectedFile().getPath());
