@@ -3,6 +3,7 @@ package org.timetravellersmap.gui.annotatepane;
 import org.timetravellersmap.overlay.LayerComponent;
 import org.timetravellersmap.overlay.PointComponent;
 import org.timetravellersmap.core.event.Event;
+import org.timetravellersmap.overlay.RectangleComponent;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -70,8 +71,12 @@ public class AnnotationTableModel implements TableModel {
             return layerComponent.getDescriptor().getName();
         }
         else if (i1==2) {
-            if (layerComponent.getClass() == PointComponent.class) {
+            Class layerComponentClass = layerComponent.getClass();
+            if (layerComponentClass == PointComponent.class) {
                 return "Point";
+            }
+            else if (layerComponentClass == RectangleComponent.class) {
+                return "Rectangle";
             }
             else {
                 return "Other";

@@ -201,7 +201,7 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
 //        gc.weighty = 0.2;
 //        panel.add(pickColorButton, gc);
 
-        pack();
+            pack();
         // End layout of GUI components
 
 
