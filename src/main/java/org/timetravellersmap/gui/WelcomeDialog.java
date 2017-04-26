@@ -114,7 +114,6 @@ public class WelcomeDialog extends JFrame {
 
         // Begin adding action listeners
         createNewButton.addActionListener(actionEvent -> {
-            System.out.println("TODO: spawn new map frame instance");
             new WelcomeWizard(settingsState).setVisible(true);
             dispose();
         });
@@ -124,7 +123,6 @@ public class WelcomeDialog extends JFrame {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("TTM project files", "ttm");
             fileChooser.setFileFilter(filter);
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                System.out.println("TODO: spawn map frame instance for " + fileChooser.getSelectedFile().getPath());
                 MapContent mapContent = new MapContent();
                 try {
                     MapFrame mf = new MapFrame(mapContent, settingsState);
