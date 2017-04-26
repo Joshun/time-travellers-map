@@ -60,10 +60,6 @@ public class PointComponent extends LayerComponent{
         return "PointComponent (" + this.x + "," + this.y + ") radius " + this.radius;
     }
 
-    public boolean equals(PointComponent other) {
-        return this.x == other.x && this.y == other.y && this.radius == other.radius;
-    }
-
     public void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport) {
         double screenX, screenY;
         Point2D.Double point = worldToScreen(new Point2D.Double(x, y), mapContent, mapViewport);

@@ -58,14 +58,6 @@ public class RectangleComponent extends LayerComponent {
         this.strokeWidth = strokeWidth;
     }
 
-    public boolean equals(RectangleComponent other) {
-        return
-            this.x1 == other.x1 &&
-            this.x2 == other.x2 &&
-            this.y1 == other.y1 &&
-            this.y2 == other.y2;
-    }
-
     public String toString() {
         return "RectangleComponent (" + this.x1 + "," + this.y1 + ") (" + this.x2 + "," + this.y2 + ")";
     }
