@@ -3,6 +3,7 @@ package org.timetravellersmap.overlay;
 import com.google.gson.annotations.Expose;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
+import org.timetravellersmap.core.Descriptor;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -26,6 +27,7 @@ public class RectangleComponent extends LayerComponent {
     private Color color;
     @Expose
     private float strokeWidth;
+
     private static final Color DEFAULT_COLOR = new Color(0, 0, 0);
     private static final float DEFAULT_STROKE_WIDTH = 1;
 
@@ -42,6 +44,11 @@ public class RectangleComponent extends LayerComponent {
     }
 
     public RectangleComponent(double x1, double y1, double x2, double y2, Color color, float strokeWidth) {
+        this(x1, y1, x2, y2, color, strokeWidth, new Descriptor());
+    }
+
+    public RectangleComponent(double x1, double y1, double x2, double y2, Color color, float strokeWidth, Descriptor descriptor) {
+        super(descriptor);
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;

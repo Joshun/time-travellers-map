@@ -121,6 +121,7 @@ public class AddRectangle extends AddComponent implements ColorChangeListener {
                 Double.valueOf(bottomX.getText()),
                 Double.valueOf(bottomY.getText()),
                 colorState,
-                Float.valueOf(String.valueOf((int)strokeWidthEntry.getValue())));
+                Float.valueOf(String.valueOf((int)strokeWidthEntry.getValue())),
+                createDescriptor());
     }
 }
