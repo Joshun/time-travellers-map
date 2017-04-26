@@ -11,6 +11,7 @@ import org.timetravellersmap.core.event.Event;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
@@ -115,7 +116,7 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
         });
 
         AddPoint that = this;
-        colorPanel.addMouseListener(new MouseListener() {
+        colorPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 LOGGER.info("Colour picker clicked");
@@ -123,26 +124,6 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
                 colorPicker.addColorChangeListener(colorPanel);
                 colorPicker.addColorChangeListener(that);
                 colorPicker.setVisible(true);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-
             }
         });
 

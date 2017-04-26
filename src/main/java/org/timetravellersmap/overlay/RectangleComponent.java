@@ -1,5 +1,6 @@
 package org.timetravellersmap.overlay;
 
+import com.google.gson.annotations.Expose;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
 
@@ -13,18 +14,40 @@ public class RectangleComponent extends LayerComponent {
     // Bounding box coordinates
     // x1,y1: topleft
     // x2,y2: bottomright
-    private double x1, y1;
-    private double x2, y2;
+    @Expose
+    private double x1;
+    @Expose
+    private double y1;
+    @Expose
+    private double x2;
+    @Expose
+    private double y2;
+    @Expose
+    private Color color;
+    @Expose
+    private float strokeWidth;
+    private static final Color DEFAULT_COLOR = new Color(0, 0, 0);
+    private static final float DEFAULT_STROKE_WIDTH = 1;
 
     public RectangleComponent() {
         this(0, 0, 0, 0);
     }
 
     public RectangleComponent(double x1, double y1, double x2, double y2) {
+        this(x1, y1, x2, y2, DEFAULT_COLOR);
+    }
+
+    public RectangleComponent(double x1, double y1, double x2, double y2, Color color) {
+        this(x1, y1, x2, y2, color, DEFAULT_STROKE_WIDTH);
+    }
+
+    public RectangleComponent(double x1, double y1, double x2, double y2, Color color, float strokeWidth) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        this.color = color;
+        this.strokeWidth = strokeWidth;
     }
 
     public boolean equals(RectangleComponent other) {
@@ -54,7 +77,8 @@ public class RectangleComponent extends LayerComponent {
         screenX2 = point2.getX();
         screenY2 = point2.getY();
 
-//        graphics2D.setStroke(new BasicStroke(40));
+        graphics2D.setStroke(new BasicStroke(strokeWidth));
+        graphics2D.setColor(color);
         graphics2D.draw(new Rectangle.Double(screenX1, screenY1, (screenX2-screenX1), (screenY2-screenY1)));
     }
 

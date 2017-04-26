@@ -7,15 +7,20 @@ import org.timetravellersmap.overlay.RectangleComponent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by joshua on 25/04/17.
  */
-public class AddRectangle extends AddComponent {
+public class AddRectangle extends AddComponent implements ColorChangeListener {
     private JTextField topX = new JTextField(5);
     private JTextField topY = new JTextField(5);
     private JTextField bottomX = new JTextField(5);
     private JTextField bottomY = new JTextField(5);
+    private JSpinner strokeWidthEntry = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
+    private ColorPanel colorPanel = new ColorPanel(16, 16, new Color(0, 0, 0));
+    private Color colorState = new Color(0, 0, 0);
 
     public AddRectangle(MapFrame ancestorMapFrame, AnnotatePane annotatePane, Event event) {
         this(ancestorMapFrame, annotatePane, event, null);
@@ -23,6 +28,17 @@ public class AddRectangle extends AddComponent {
 
     public AddRectangle(MapFrame ancestorMapFrame, AnnotatePane annotatePane, Event event, LayerComponent existingLayerComponent) {
         super(ancestorMapFrame, annotatePane, event, existingLayerComponent);
+
+        AddRectangle that = this;
+        colorPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                ColorPicker colorPicker = new ColorPicker(colorState);
+                colorPicker.addColorChangeListener(colorPanel);
+                colorPicker.addColorChangeListener(that);
+                colorPicker.setVisible(true);
+            }
+        });
 
         this.annotatePane = annotatePane;
         this.event = event;
@@ -70,7 +86,32 @@ public class AddRectangle extends AddComponent {
         gc.gridwidth = 1;
         panel.add(bottomY, gc);
 
+        gc.gridx = 0;
+        gc.gridy = 2;
+        gc.gridwidth = 1;
+        panel.add(new JLabel("Stroke width:"), gc);
+
+        gc.gridx = 1;
+        gc.gridy = 2;
+        gc.gridwidth = 1;
+        panel.add(strokeWidthEntry, gc);
+
+        gc.gridx = 0;
+        gc.gridy = 3;
+        gc.gridwidth = 1;
+        panel.add(new JLabel("Colour:"), gc);
+
+        gc.gridx = 1;
+        gc.gridy = 3;
+        gc.gridwidth = 1;
+        panel.add(colorPanel, gc);
+
         pack();
+    }
+
+    public void colorChanged(Color color) {
+        this.colorState = color;
+        colorPanel.repaint();
     }
 
     public LayerComponent createLayerComponent() {
@@ -78,6 +119,8 @@ public class AddRectangle extends AddComponent {
                 Double.valueOf(topX.getText()),
                 Double.valueOf(topY.getText()),
                 Double.valueOf(bottomX.getText()),
-                Double.valueOf(bottomY.getText()));
+                Double.valueOf(bottomY.getText()),
+                colorState,
+                Float.valueOf(String.valueOf((int)strokeWidthEntry.getValue())));
     }
 }
