@@ -24,7 +24,7 @@ public abstract class AddComponent extends JFrame {
     private JTextField nameField = new JTextField(20);
     private JTextArea descriptionField = new JTextArea(3, 20);
 
-    private JButton addButton = new JButton("Add point");
+    private JButton addButton = new JButton("Add");
     private JButton cancelButton = new JButton("Cancel");
 
     protected LayerComponent existingLayerComponent = null;
@@ -59,7 +59,7 @@ public abstract class AddComponent extends JFrame {
         // If editing an existing LayerComponent, set button text to "Update point" instead of "Add point"
         // And set title to "Edit point"
         if (existingLayerComponent != null) {
-            addButton.setText("Update point");
+            addButton.setText("Update");
             Descriptor existingLayerComponentDescriptor = existingLayerComponent.getDescriptor();
             nameField.setText(existingLayerComponentDescriptor.getName());
             descriptionField.setText(existingLayerComponentDescriptor.getDescription());

@@ -139,14 +139,16 @@ public class AddRectangle extends AddComponent implements ColorChangeListener {
             RectangleComponent existingRectangleComponent = (RectangleComponent) existingLayerComponent;
             colorState = existingRectangleComponent.getColor();
             colorPanel.colorChanged(existingRectangleComponent.getColor());
-            strokeWidthEntry.setValue(Integer.valueOf(String.valueOf(existingRectangleComponent.getStrokeWidth())));
+
+            int strokeWidthValue = Math.round(existingRectangleComponent.getStrokeWidth());
+            strokeWidthEntry.setValue(strokeWidthValue);
 
             double coordinates[] = existingRectangleComponent.getCoordinates();
             if (coordinates.length == 4) {
                 topX.setText(String.valueOf(coordinates[0]));
                 topY.setText(String.valueOf(coordinates[1]));
-                bottomX.setText(String.valueOf(coordinates[3]));
-                bottomY.setText(String.valueOf(coordinates[4]));
+                bottomX.setText(String.valueOf(coordinates[2]));
+                bottomY.setText(String.valueOf(coordinates[3]));
             }
         }
     }
