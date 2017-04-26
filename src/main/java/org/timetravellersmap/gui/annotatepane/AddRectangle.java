@@ -107,6 +107,14 @@ public class AddRectangle extends AddComponent implements ColorChangeListener {
         panel.add(colorPanel, gc);
 
         pack();
+
+        if (existingLayerComponent != null) {
+            setTitle("Edit rectangle");
+            loadExistingRectangleComponent();
+        }
+        else {
+            setTitle("Add new rectangle");
+        }
     }
 
     public void colorChanged(Color color) {
@@ -123,5 +131,23 @@ public class AddRectangle extends AddComponent implements ColorChangeListener {
                 colorState,
                 Float.valueOf(String.valueOf((int)strokeWidthEntry.getValue())),
                 createDescriptor());
+    }
+
+    private void loadExistingRectangleComponent() {
+        // Check the existingLayerComponent is not null or of another type
+        if (existingLayerComponent instanceof RectangleComponent) {
+            RectangleComponent existingRectangleComponent = (RectangleComponent) existingLayerComponent;
+            colorState = existingRectangleComponent.getColor();
+            colorPanel.colorChanged(existingRectangleComponent.getColor());
+            strokeWidthEntry.setValue(Integer.valueOf(String.valueOf(existingRectangleComponent.getStrokeWidth())));
+
+            double coordinates[] = existingRectangleComponent.getCoordinates();
+            if (coordinates.length == 4) {
+                topX.setText(String.valueOf(coordinates[0]));
+                topY.setText(String.valueOf(coordinates[1]));
+                bottomX.setText(String.valueOf(coordinates[3]));
+                bottomY.setText(String.valueOf(coordinates[4]));
+            }
+        }
     }
 }

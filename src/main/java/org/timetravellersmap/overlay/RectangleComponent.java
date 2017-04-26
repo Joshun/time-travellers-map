@@ -7,6 +7,7 @@ import org.timetravellersmap.core.Descriptor;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.lang.reflect.Array;
 
 /**
  * RectangleComponent: represents a bounding box rectangle to draw
@@ -89,6 +90,17 @@ public class RectangleComponent extends LayerComponent {
         graphics2D.draw(new Rectangle.Double(screenX1, screenY1, (screenX2-screenX1), (screenY2-screenY1)));
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public double[] getCoordinates() {
+        return new double[] { x1, y1, x2, y2};
+    }
+
+    public float getStrokeWidth() {
+        return strokeWidth;
+    }
 
     public void displayAnnotation() {
 

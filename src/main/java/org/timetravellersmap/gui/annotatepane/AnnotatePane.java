@@ -67,6 +67,12 @@ public class AnnotatePane extends JPanel implements EventSelectChangeListener, L
                 if (selectedAnnotation instanceof PointComponent) {
                     new AddPoint(mapFrame, this, getSelectedEvent(), (PointComponent)selectedAnnotation).setVisible(true);
                 }
+                else if (selectedAnnotation instanceof RectangleComponent) {
+                    new AddRectangle(mapFrame, this, getSelectedEvent(), (RectangleComponent)selectedAnnotation).setVisible(true);
+                }
+                else {
+                    LOGGER.warning("Unrecognised LayerComponent " + selectedAnnotation);
+                }
             }
         });
 
