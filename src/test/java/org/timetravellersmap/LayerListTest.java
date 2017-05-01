@@ -73,6 +73,7 @@ public class LayerListTest {
         assertEquals(layerList.getLayers().length, 1);
     }
 
+    @Test
     public void testMoveLayerUp() {
         org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer("Layer 1");
         org.timetravellersmap.overlay.Layer layer2 = new org.timetravellersmap.overlay.Layer("Layer 2");
@@ -97,12 +98,32 @@ public class LayerListTest {
         assertEquals(movedLayers[0], LayerList.DEFAULT_LAYER);
         assertEquals(movedLayers[1], layer2);
         assertEquals(movedLayers[2], layer1);
+    }
 
-        // Move default layer down
-        layerList.moveLayerDown(LayerList.DEFAULT_LAYER);
-        Layer[] movedLayers2 = layerList.getLayers();
-        assertEquals(movedLayers2[0], layer2);
-        assertEquals(movedLayers2[1], LayerList.DEFAULT_LAYER);
+    @Test
+    public void moveLayerDown() {
+        org.timetravellersmap.overlay.Layer layer1 = new org.timetravellersmap.overlay.Layer("Layer 1");
+        org.timetravellersmap.overlay.Layer layer2 = new org.timetravellersmap.overlay.Layer("Layer 2");
+        try {
+            layerList.addLayer(layer1);
+            layerList.addLayer(layer2);
+        }
+        catch (LayerAlreadyExistsException e) {
+            fail();
+        }
+
+        // Initial ordering
+        Layer[] layers = layerList.getLayers();
+        assertEquals(layers.length, 3);
+        assertEquals(layers[0], LayerList.DEFAULT_LAYER);
+        assertEquals(layers[1], layer1);
+        assertEquals(layers[2], layer2);
+
+        // Move layer1 layer down
+        layerList.moveLayerDown(layer1);
+        Layer[] movedLayers = layerList.getLayers();
+        assertEquals(movedLayers[0], LayerList.DEFAULT_LAYER);
+        assertEquals(movedLayers[1], layer2);
         assertEquals(movedLayers[2], layer1);
     }
 }
