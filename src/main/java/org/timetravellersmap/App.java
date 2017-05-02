@@ -1,6 +1,5 @@
 package org.timetravellersmap;
 
-import org.timetravellersmap.gui.Toplevel;
 import org.timetravellersmap.gui.WelcomeDialog;
 
 import javax.swing.*;
