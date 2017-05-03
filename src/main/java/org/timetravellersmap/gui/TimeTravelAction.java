@@ -12,7 +12,7 @@ public class TimeTravelAction extends MapAction {
     private MapFrame mapFrame;
 
     public TimeTravelAction(MapFrame mapFrame) {
-        super.init(mapFrame.getMapPane(), "Time Travel", "Jump to a year", "/timetravel.png");
+        super.init(mapFrame.getMapPane(), "Time travel", "Jump to a year", "/timetravel.png");
         this.mapFrame = mapFrame;
     }
 

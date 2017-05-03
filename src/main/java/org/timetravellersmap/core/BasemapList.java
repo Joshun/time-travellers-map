@@ -92,7 +92,6 @@ public class BasemapList {
 //    }
 
     public Basemap getFromPointer(int pointerYear) {
-        System.out.println(basemapDateMap);
         NavigableMap<Integer, TreeMap<Integer, ArrayList<Basemap>>> startNavigableMap = basemapDateMap.headMap(pointerYear, true);
         for (TreeMap<Integer, ArrayList<Basemap>> endYearMap: startNavigableMap.values()) {
             NavigableMap<Integer, ArrayList<Basemap>> endNavigableMap = endYearMap.tailMap(pointerYear, true);
