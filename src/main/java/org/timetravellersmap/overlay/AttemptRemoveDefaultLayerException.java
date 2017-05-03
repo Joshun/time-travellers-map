@@ -3,7 +3,9 @@ package org.timetravellersmap.overlay;
 import org.timetravellersmap.TimeTravellersMapException;
 
 /**
- * Created by joshua on 25/03/17.
+ * AttemptRemoveDefaultLayerException: exception thrown when an attempt is made to remove the
+ *  "Default" layer, this must not be removed as it is the fallback layer for events that are
+ *  orphaned from a layer
  */
 public class AttemptRemoveDefaultLayerException extends TimeTravellersMapException {
     public AttemptRemoveDefaultLayerException() {

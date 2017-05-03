@@ -12,7 +12,7 @@ import org.geotools.styling.Style;
 import java.io.File;
 
 /**
- * Created by joshua on 22/04/17.
+ * JP2Loader: class for loading JPEG2000 files, requires external gdal native library
  */
 public class JP2Loader extends ImageLoader {
     @Override

@@ -9,7 +9,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 
 /**
- * Created by joshua on 25/03/17.
+ * WelcomeDialog: dialog to greet the user upon starting the program:
+ *  New - create a new project
+ *  Load - load existing project
+ *  Settings - configure the application
  */
 public class WelcomeDialog extends JFrame {
     private static final String WELCOME_TEXT = "Welcome to Time Traveller's Map";

@@ -11,7 +11,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Created by joshua on 03/04/17.
+ * SettingsDialog: a dialog for configuring global program settings
+ * Currently includes theme choice, and toggle for experimental file format support
  */
 public class SettingsDialog extends JFrame {
     private JPanel panel = new JPanel();

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by joshua on 20/03/17.
+ * ColorPanel: JPanel configured to display a colour, to show current colour of a LayerComponent
  */
 public class ColorPanel extends JPanel implements ColorChangeListener {
     private int width;

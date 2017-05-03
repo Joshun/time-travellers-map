@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Created by joshua on 07/04/17.
+ * TimeTravelAction: button action for jumping to a specific year
  */
 public class TimeTravelAction extends MapAction {
     private MapFrame mapFrame;

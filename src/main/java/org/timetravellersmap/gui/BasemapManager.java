@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by joshua on 27/03/17.
+ * BasemapManager: a GUI for adding and removing basemaps, and displaying those loaded,
+ *  along with their name and period of validity
  */
 public class BasemapManager extends JFrame {
     private JTable basemapTable;

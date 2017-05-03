@@ -6,7 +6,7 @@ import org.timetravellersmap.core.BasemapList;
 import java.awt.event.ActionEvent;
 
 /**
- * Created by joshua on 27/03/17.
+ * BasemapManagerAction: button action for displaying the BasemapManager
  */
 public class BasemapManagerAction extends MapAction {
     private MapFrame mapFrame;

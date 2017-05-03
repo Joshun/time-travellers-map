@@ -11,7 +11,7 @@ import org.geotools.styling.Style;
 import java.io.File;
 
 /**
- * Created by joshua on 08/04/17.
+ * ShapefileLoader: class for loading Shapefiles
  */
 public class ShapefileLoader implements BasemapLoader {
     public Layer loadBasemap(File file) throws BasemapIOException {

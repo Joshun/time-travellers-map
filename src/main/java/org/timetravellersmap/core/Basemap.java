@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by joshua on 27/03/17.
+ * Basemap: representation of a historic map, along with its period of validity
  */
 public class Basemap {
     @Expose

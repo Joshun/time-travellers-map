@@ -296,8 +296,6 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         btn = new JButton(new SaveAction(mapPane, this));
         toolBar.add(btn);
 
-//        btn = new JButton(new LoadAction(mapPane, this));
-//        toolBar.add(btn);
 
         btn = new JButton(new BasemapManagerAction(this, basemapList));
         toolBar.add(btn);

@@ -10,7 +10,7 @@ import javax.swing.table.TableModel;
 import java.util.ArrayList;
 
 /**
- * Created by joshua on 07/02/17.
+ * AnnotationTableModel: model for displaying annotations in a JTable
  */
 public class AnnotationTableModel implements TableModel {
     private String[] layerComponentTableColumns = {"#", "Name", "Type"};

@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by joshua on 27/03/17.
+ * AddBasemap: dialog for adding basemap files along with their associated valid years
  */
 public class AddBasemap extends JFrame {
     private MapFrame mapFrame;

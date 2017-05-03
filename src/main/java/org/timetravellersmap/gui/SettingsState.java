@@ -1,7 +1,7 @@
 package org.timetravellersmap.gui;
 
 /**
- * Created by joshua on 03/04/17.
+ * SettingsState: class to represent current global settings state of program
  */
 public class SettingsState {
     private String style;

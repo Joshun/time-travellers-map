@@ -9,7 +9,7 @@ import java.awt.*;
 import java.lang.reflect.Type;
 
 /**
- * Created by joshua on 21/03/17.
+ * ColorSerializer: class to add support for serializing AWT Color objects in gson
  */
 public class ColorSerializer implements JsonSerializer<Color> {
     public JsonElement serialize(Color color, Type typeOfColor, JsonSerializationContext context) {

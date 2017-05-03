@@ -7,7 +7,9 @@ import org.timetravellersmap.gui.eventpane.AddModifyEventDialog;
 import java.util.*;
 
 /**
- * Created by joshua on 27/03/17.
+ * BasemapList: structure for storing historic maps (basemaps)
+ * Contains utilities for selecting the correct map given year,
+ *  and checking if a map has expired
  */
 public class BasemapList {
     @Expose

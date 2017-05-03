@@ -7,7 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by joshua on 28/03/17.
+ * StatusBar: widget for displaying extra useful information
+ * Currently this is the current basemap with its period of validity, and the total number of events
+ * The current basemap name is displayed in red if it is not valid for the selected region but no
+ *  suitable replacement has been found
  */
 public class StatusBar extends JPanel implements EventChangeListener, BasemapChangeListener {
     private static final String BASEMAP_STATUS_PREFIX = "Basemap: ";

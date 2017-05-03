@@ -3,9 +3,10 @@ package org.timetravellersmap.gui;
 import org.timetravellersmap.core.Basemap;
 
 /**
- * Created by joshua on 29/03/17.
+ * BasemapChangeListener: used to listen for changes in the current basemap
+ * A different map could be loaded by the user to represent border changes, for example
  */
 public interface BasemapChangeListener {
-    public void basemapChanged(Basemap basemap, boolean isValid);
-    public void basemapExpired();
+    void basemapChanged(Basemap basemap, boolean isValid);
+    void basemapExpired();
 }

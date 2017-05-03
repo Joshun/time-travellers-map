@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
- * Created by joshua on 09/03/17.
+ * JSONIOObject: representation of a program state to be saved and read from a file
+ * Used by JsonIO
  */
 
 public class JsonIOObject {

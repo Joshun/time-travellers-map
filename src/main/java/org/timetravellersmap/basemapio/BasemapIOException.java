@@ -3,7 +3,7 @@ package org.timetravellersmap.basemapio;
 import org.timetravellersmap.TimeTravellersMapException;
 
 /**
- * Created by joshua on 08/04/17.
+ * BasemapIOException: exception used for loading basemaps
  */
 public class BasemapIOException extends TimeTravellersMapException {
     public BasemapIOException() {

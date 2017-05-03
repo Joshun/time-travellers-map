@@ -5,7 +5,7 @@ import org.geotools.map.Layer;
 import java.io.File;
 
 /**
- * Created by joshua on 08/04/17.
+ * BasemapLoader: interface for loading different basemap file formats
  */
 public interface BasemapLoader {
     Layer loadBasemap(File file) throws BasemapIOException;

@@ -3,7 +3,7 @@ package org.timetravellersmap.overlay;
 import org.timetravellersmap.TimeTravellersMapException;
 
 /**
- * Created by joshua on 25/03/17.
+ * LayerAlreadyExistsException: exception thrown when a duplicate layer is created
  */
 public class LayerAlreadyExistsException extends TimeTravellersMapException {
     public LayerAlreadyExistsException() {

@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Created by joshua on 10/03/17.
+ * SaveAction: button action for re-saving currently open project to file
  */
 public class SaveAction extends MapAction {
     private MapFrame mapFrame;

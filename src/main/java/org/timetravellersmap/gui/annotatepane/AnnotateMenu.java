@@ -5,7 +5,7 @@ import org.timetravellersmap.gui.MapFrame;
 import javax.swing.*;
 
 /**
- * Created by joshua on 31/01/17.
+ * AnnotateMenu: dropdown menu for adding different types of LayerComponent
  */
 public class AnnotateMenu extends JPopupMenu {
     private JMenuItem newPointerAction = new JMenuItem("Point");

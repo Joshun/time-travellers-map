@@ -15,7 +15,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by joshua on 05/04/17.
+ * WelcomeWizard: wizard for stepping the user through the process of creating a new project:
+ *  a) Configure basemaps
+ *  b) Configure layers
+ *  c) Save
  */
 public class WelcomeWizard extends JFrame {
     private ArrayList<WizardItem> wizardItems = new ArrayList<>();

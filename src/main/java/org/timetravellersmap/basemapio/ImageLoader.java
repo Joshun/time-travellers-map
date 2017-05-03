@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by joshua on 08/04/17.
+ * ImageLoader: class to load miscellaneous image formats, such as tiff images
  */
 public class ImageLoader implements BasemapLoader {
     private StyleFactory sf = CommonFactoryFinder.getStyleFactory();

@@ -1,7 +1,7 @@
 package org.timetravellersmap.basemapio;
 
 /**
- * Created by joshua on 08/04/17.
+ * BasemapLoaderFactory: factory for providing the right constructor given file format
  */
 public class BasemapLoaderFactory {
     private static final String[] SUPPORTED_FORMATS = { "shp", "tiff", "tif" };

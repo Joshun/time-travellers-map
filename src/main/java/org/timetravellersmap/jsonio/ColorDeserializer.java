@@ -9,7 +9,7 @@ import java.awt.*;
 import java.lang.reflect.Type;
 
 /**
- * Created by joshua on 21/03/17.
+ * ColorDeserializer: class to add support for deserializing AWT Color objects in gson
  */
 public class ColorDeserializer implements JsonDeserializer<Color> {
     public Color deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

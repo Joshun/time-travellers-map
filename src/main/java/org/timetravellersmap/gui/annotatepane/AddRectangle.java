@@ -11,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by joshua on 25/04/17.
+ * AddRectangle: a GUI for the user to add a RectangleComponent to an Event
  */
 public class AddRectangle extends AddComponent implements ColorChangeListener {
     private JTextField topX = new JTextField(5);
