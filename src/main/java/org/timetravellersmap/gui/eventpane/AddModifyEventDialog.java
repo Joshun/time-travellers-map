@@ -54,7 +54,6 @@ public class AddModifyEventDialog extends JFrame {
         else {
             setTitle("Edit event");
         }
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         int startYearInitialValue = pointerYear;
 
