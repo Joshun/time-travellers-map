@@ -10,7 +10,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Created by joshua on 05/05/17.
+ * GregorianCalendarSerializer: class to properly serialize GregorianCalendar
+ * This properly serializes BC, unlike the built-in deserializer
  */
 public class GregorianCalendarSerializer implements JsonSerializer<GregorianCalendar> {
 
