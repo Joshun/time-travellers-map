@@ -19,9 +19,9 @@ public class Event {
     private Descriptor eventDescriptor;
 
     @Expose
-    private Calendar startDate;
+    private GregorianCalendar startDate;
     @Expose
-    private Calendar endDate;
+    private GregorianCalendar endDate;
 //    @Expose
 //    private Layer layer = LayerList.DEFAULT_LAYER;
     @Expose
@@ -33,7 +33,7 @@ public class Event {
         this(null, null, null);
     }
 
-    public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor) {
+    public Event(GregorianCalendar startDate, GregorianCalendar endDate, Descriptor eventDescriptor) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventDescriptor = eventDescriptor;
@@ -41,12 +41,12 @@ public class Event {
         layerComponents = new ArrayList<>();
     }
 
-    public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, ArrayList<LayerComponent> layerComponents) {
+    public Event(GregorianCalendar startDate, GregorianCalendar endDate, Descriptor eventDescriptor, ArrayList<LayerComponent> layerComponents) {
         this(startDate, endDate, eventDescriptor);
         this.layerComponents = layerComponents;
     }
 
-    public Event(Calendar startDate, Calendar endDate, Descriptor eventDescriptor, String layerName) {
+    public Event(GregorianCalendar startDate, GregorianCalendar endDate, Descriptor eventDescriptor, String layerName) {
         this(startDate, endDate, eventDescriptor);
         this.layerName = layerName;
     }
@@ -92,11 +92,11 @@ public class Event {
         return endDate;
     }
 
-    public void setStartDate(Calendar startDate) {
+    public void setStartDate(GregorianCalendar startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(Calendar endDate) {
+    public void setEndDate(GregorianCalendar endDate) {
         this.endDate = endDate;
     }
 

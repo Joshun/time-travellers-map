@@ -42,6 +42,8 @@ public class JsonIO {
         gson = new GsonBuilder()
                 .serializeNulls()
                 .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(GregorianCalendar.class, new GregorianCalendarSerializer())
+                .registerTypeAdapter(GregorianCalendar.class, new GregorianCalendarDeserializer())
                 .registerTypeAdapter(Color.class, new ColorSerializer())
                 .registerTypeAdapter(Color.class, new ColorDeserializer())
                 .registerTypeAdapterFactory(runtimeTypeAdapterFactory)

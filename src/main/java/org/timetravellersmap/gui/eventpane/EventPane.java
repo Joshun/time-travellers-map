@@ -131,11 +131,11 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
                         event.setEventDescriptor(newDescriptor);
                     }
                     else if (i1 == 1) {
-                        Calendar calendar = new GregorianCalendar((int)o, 0, 1);
+                        GregorianCalendar calendar = new GregorianCalendar((int)o, 0, 1);
                         event.setStartDate(calendar);
                     }
                     else if (i1 == 2) {
-                        Calendar calendar = new GregorianCalendar((int)o, 0, 1);
+                        GregorianCalendar calendar = new GregorianCalendar((int)o, 0, 1);
                         event.setEndDate(calendar);
                     }
                 }
