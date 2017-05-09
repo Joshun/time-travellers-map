@@ -81,7 +81,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     private StatusBar statusBar = new StatusBar(this, 600, 200);
 
     private JsonIO jsonIO = new JsonIO();
-    private JsonIOObject jsonIOObject;
+//    private JsonIOObject jsonIOObject;
 
     private Layer baseLayer = null;
 
@@ -91,6 +91,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     private ArrayList<BasemapChangeListener> basemapChangeListeners = new ArrayList<>();
 
     private final SettingsState settingsState;
+
+    private int initialPointerYear = 1950;
 
     public void addBasemapChangeListener(BasemapChangeListener basemapChangeListener) {
         basemapChangeListeners.add(basemapChangeListener);
@@ -345,10 +347,10 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         this.getContentPane().add(panel);
         uiSet = true;
 
-        // Set up JsonIOObject for saving if not already created
-        if (jsonIOObject == null) {
-            jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
-        }
+//        // Set up JsonIOObject for saving if not already created
+//        if (jsonIOObject == null) {
+//            jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, initialPointerYear);
+//        }
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -461,9 +463,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
 //            }
 //        });
 
-        timelineWidget.setPointer(1950);
-        timelineChanged(1950, true);
-
+        timelineWidget.setPointerJump(initialPointerYear);
+        timelineChanged(initialPointerYear, true);
     }
 
     public EventIndex getEventIndex() {
@@ -568,7 +569,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
     }
 
     public void saveStateToJson() {
-        if (jsonIOObject != null && jsonIOObject.isReady()) {
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, timelineWidget.getPointerYear());
+        if (jsonIOObject.isReady()) {
             jsonIO.saveJson(jsonFileName, jsonIOObject);
         }
     }
@@ -578,6 +580,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         layerList = jsonIOObject.getLayerList();
         eventIndex = jsonIOObject.getEventIndex();
         basemapList = jsonIOObject.getBasemapList();
+        initialPointerYear = jsonIOObject.getSelectedYear();
         if (basemapList == null) {
             basemapList = new BasemapList();
         }

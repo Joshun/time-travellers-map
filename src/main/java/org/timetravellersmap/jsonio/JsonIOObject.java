@@ -27,13 +27,16 @@ public class JsonIOObject {
     private String writeTime;
     @Expose
     private String defaultLayerName;
+    @Expose
+    private int selectedYear;
 
-    public JsonIOObject(LayerList layerList, EventIndex eventIndex, BasemapList basemapList) {
+    public JsonIOObject(LayerList layerList, EventIndex eventIndex, BasemapList basemapList, int selectedYear) {
         this.layerList = layerList;
         this.defaultLayerName = LayerList.DEFAULT_LAYER.getName();
         this.eventIndex = eventIndex;
         this.basemapList = basemapList;
         this.writeTime = LocalDateTime.now().toString();
+        this.selectedYear = selectedYear;
     }
 
     public boolean isReady() {
@@ -51,4 +54,9 @@ public class JsonIOObject {
     public BasemapList getBasemapList() {
         return basemapList;
     }
+
+    public int getSelectedYear() {
+        return selectedYear;
+    }
+
 }

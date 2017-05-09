@@ -63,7 +63,7 @@ public class JsonIOTest {
                 new Descriptor("Test Event", "An event for testing")
             );
         eventIndex.addEvent(sampleEvent);
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, 1950);
         jsonIO.saveJson(jsonFile, jsonIOObject);
     }
 
@@ -75,7 +75,7 @@ public class JsonIOTest {
                 new Descriptor("Test Event", "An event for testing")
         );
         eventIndex.addEvent(sampleEvent);
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, 1950);
         jsonIO.saveJson(jsonFile, jsonIOObject);
 
         JsonIO readingJsonIO = new JsonIO();

@@ -102,7 +102,7 @@ public class JsonIO {
 
         JsonIO jsonIO = new JsonIO();
         System.out.println("Generating JSONIOObject...");
-        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList);
+        JsonIOObject jsonIOObject = new JsonIOObject(layerList, eventIndex, basemapList, 1950);
         System.out.println(jsonIOObject);
         System.out.println("Saving...");
         jsonIO.saveJson("test.json", jsonIOObject);
