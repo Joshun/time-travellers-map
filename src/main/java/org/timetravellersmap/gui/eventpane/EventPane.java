@@ -385,6 +385,13 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
         return currentEvents;
     }
 
+    public void setSelectedEvent(Event event) {
+        if (event == null ) {
+             return;
+        }
+        eventTable.getSelectionModel().setSelectionInterval(currentEvents.indexOf(event), currentEvents.indexOf(event));
+    }
+
     public static void main(String[] args) {
         // Test harness for EventPane
 //        JFrame toplevel = new JFrame("eventpane test");

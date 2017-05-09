@@ -419,6 +419,30 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
                 }
             }
         });
+
+        mapPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                LOGGER.info("Mouse click on MapPane: (" + e.getX() + "," + e.getY() + ")");
+                LayerComponent layerComponent = LayerComponentSelector.selectLayerComponent(
+                        mapContent,
+                        mapContent.getViewport(),
+                        e.getX(),
+                        e.getY(),
+                        eventPane.getCurrentEvents()
+                );
+                if (layerComponent != null) {
+                    mapPane.setToolTipText(layerComponent.getDescriptor().getTooltipText());
+                }
+                else {
+                    mapPane.setToolTipText(null);
+                }
+//                super.mouseClicked(e);
+                ArrayList<Event> currentEvents = eventPane.getCurrentEvents();
+                Event belongingEvent = LayerComponentSelector.whichEventBelongs(layerComponent, currentEvents);
+                eventPane.setSelectedEvent(belongingEvent);
+            }
+        });
 //        mapPane.addMouseListener(new MouseAdapter() {
 //            @Override
 //            public void mouseClicked(MouseEvent e) {

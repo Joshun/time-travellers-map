@@ -21,4 +21,15 @@ public class LayerComponentSelector {
         }
         return null;
     }
+
+    public static Event whichEventBelongs(LayerComponent layerComponent, ArrayList<Event> currentEvents) {
+        for (Event event: currentEvents) {
+            for (LayerComponent layerComponent1: event.getLayerComponents()) {
+                if (layerComponent1.equals(layerComponent)) {
+                    return event;
+                }
+            }
+        }
+        return null;
+    }
 }
