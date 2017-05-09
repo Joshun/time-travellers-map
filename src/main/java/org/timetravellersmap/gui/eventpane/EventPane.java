@@ -381,6 +381,9 @@ public class EventPane extends JPanel implements TimelineChangeListener, LayerCo
         ((JMapPane)mapFrame.getMapPane()).repaint();
     }
 
+    public ArrayList<Event> getCurrentEvents() {
+        return currentEvents;
+    }
 
     public static void main(String[] args) {
         // Test harness for EventPane

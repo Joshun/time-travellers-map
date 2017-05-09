@@ -26,6 +26,8 @@ import org.timetravellersmap.gui.annotatepane.AnnotatePane;
 import org.timetravellersmap.gui.eventpane.EventPane;
 import org.timetravellersmap.jsonio.JsonIO;
 import org.timetravellersmap.jsonio.JsonIOObject;
+import org.timetravellersmap.overlay.LayerComponent;
+import org.timetravellersmap.overlay.LayerComponentSelector;
 import org.timetravellersmap.overlay.LayerList;
 import org.timetravellersmap.core.event.EventIndex;
 import org.timetravellersmap.core.event.Event;
@@ -364,6 +366,76 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         eventPane.addChangeListener(statusBar);
         statusBar.setEventCountStatus(eventIndex.getTotalEvents());
         addBasemapChangeListener(statusBar);
+
+        mapPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+//                super.mouseExited(e);
+                mapPane.setToolTipText(null);
+            }
+        });
+
+
+//         Add listener for MapPane hover
+//        mapPane.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseMoved(MouseEvent e) {
+////                super.mouseMoved(e);
+////                super.mouseClicked(e);
+//                LOGGER.info("Mouse move on MapPane: (" + e.getX() + "," + e.getY() + ")");
+//                LayerComponent layerComponent = LayerComponentSelector.selectLayerComponent(
+//                        mapContent,
+//                        mapContent.getViewport(),
+//                        e.getX(),
+//                        e.getY(),
+//                        eventPane.getCurrentEvents()
+//                );
+//                if (layerComponent != null) {
+//                    mapPane.setToolTipText(layerComponent.getDescriptor().getName());
+//                }
+//                else {
+//                    mapPane.setToolTipText(null);
+//                }
+//            }
+//        });
+
+        mapPane.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+//                super.mouseMoved(e);
+                LOGGER.info("Mouse move on MapPane: (" + e.getX() + "," + e.getY() + ")");
+                LayerComponent layerComponent = LayerComponentSelector.selectLayerComponent(
+                        mapContent,
+                        mapContent.getViewport(),
+                        e.getX(),
+                        e.getY(),
+                        eventPane.getCurrentEvents()
+                );
+                if (layerComponent != null) {
+                    mapPane.setToolTipText(layerComponent.getDescriptor().getTooltipText());
+                }
+                else {
+                    mapPane.setToolTipText(null);
+                }
+            }
+        });
+//        mapPane.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+////                super.mouseClicked(e);
+//                LOGGER.info("Mouse click on MapPane: (" + e.getX() + "," + e.getY() + ")");
+//                LayerComponent layerComponent = LayerComponentSelector.selectLayerComponent(
+//                        mapContent,
+//                        mapContent.getViewport(),
+//                        e.getX(),
+//                        e.getY(),
+//                        eventPane.getCurrentEvents()
+//                    );
+//                if (layerComponent != null) {
+//                    mapPane.setToolTipText(layerComponent.getDescriptor().getName());
+//                }
+//            }
+//        });
 
         timelineWidget.setPointer(1950);
         timelineChanged(1950, true);
