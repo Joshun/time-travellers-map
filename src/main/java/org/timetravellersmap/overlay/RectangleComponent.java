@@ -97,4 +97,8 @@ public class RectangleComponent extends LayerComponent {
     public void displayAnnotation() {
 
     }
+
+    public void highlight() {
+
+    }
 }

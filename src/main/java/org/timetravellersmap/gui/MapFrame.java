@@ -540,4 +540,8 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
             e.printStackTrace();
         }
     }
+
+    public void resetSelectedTool() {
+        getMapPane().setCursorTool(null);
+    }
 }

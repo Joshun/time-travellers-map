@@ -60,6 +60,8 @@ public class AddPoint extends AddComponent implements ColorChangeListener {
 
         // Begin setting up action listeners
         getLongLatFromMapButton.addActionListener(actionEvent -> {
+            // Reset the selected tool to the pointer, to prevent annoyance from the zoom etc.
+            mapFrame.resetSelectedTool();
             inGetLongLatFromMapState = true;
             getLongLatFromMapButton.setText(GET_LONG_LAT_FROM_MAP_BUTTON_CLICKED_TEXT);
 
