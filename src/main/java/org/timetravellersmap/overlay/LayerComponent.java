@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 /**
  * LayerComponent: represents components to be drawn on top of the map
@@ -21,6 +22,7 @@ public abstract class LayerComponent {
 
     public abstract void draw(Graphics2D graphics2D, MapContent mapContent, MapViewport mapViewport);
     public abstract void displayAnnotation();
+    public abstract Rectangle2D.Double getBounds(MapContent mapContent, MapViewport mapViewport);
 
     protected Point2D.Double worldToScreen(Point2D.Double point, MapContent mapContent, MapViewport mapViewport) {
         AffineTransform worldToScreenTransform = mapViewport.getWorldToScreen();

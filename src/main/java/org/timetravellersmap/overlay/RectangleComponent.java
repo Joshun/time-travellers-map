@@ -7,6 +7,7 @@ import org.timetravellersmap.core.Descriptor;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Array;
 
 /**
@@ -80,6 +81,20 @@ public class RectangleComponent extends LayerComponent {
         graphics2D.setStroke(new BasicStroke(strokeWidth));
         graphics2D.setColor(color);
         graphics2D.draw(new Rectangle.Double(screenX1, screenY1, (screenX2-screenX1), (screenY2-screenY1)));
+    }
+
+    public Rectangle2D.Double getBounds(MapContent mapContent, MapViewport mapViewport) {
+        double screenX1, screenY1;
+        double screenX2, screenY2;
+
+        Point2D.Double point1 = worldToScreen(new Point2D.Double(x1, y1), mapContent, mapViewport);
+        Point2D.Double point2 = worldToScreen(new Point2D.Double(x2, y2), mapContent, mapViewport);
+        screenX1 = point1.getX();
+        screenY1 = point1.getY();
+        screenX2 = point2.getX();
+        screenY2 = point2.getY();
+
+        return new Rectangle2D.Double(screenX1, screenY1, Math.abs(screenX2 - screenX1), Math.abs(screenY2 - screenY1));
     }
 
     public Color getColor() {

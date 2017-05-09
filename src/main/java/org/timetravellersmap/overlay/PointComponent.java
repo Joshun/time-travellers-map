@@ -9,6 +9,7 @@ import sun.rmi.runtime.Log;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.logging.Logger;
 
 /**
@@ -96,6 +97,29 @@ public class PointComponent extends LayerComponent{
         }
 
         graphics2D.fill(new Ellipse2D.Double(topX, topY, width, height));
+    }
+
+    public Rectangle2D.Double getBounds(MapContent mapContent, MapViewport mapViewport) {
+        double screenX, screenY;
+        Point2D.Double point = worldToScreen(new Point2D.Double(x, y), mapContent, mapViewport);
+        screenX = point.getX();
+        screenY = point.getY();
+
+        double scaledRadius;
+        if (USE_SCALING) {
+            scaledRadius = radius / computeMapScale(mapViewport);
+        }
+        else {
+            scaledRadius = radius;
+        }
+
+        double topX = screenX - 2.0*scaledRadius;
+        double topY = screenY - 2.0*scaledRadius;
+        // Width and height of box is twice the diameter / four times radius
+        double width = 4.0*scaledRadius;
+        double height = 4.0*scaledRadius;
+
+        return new Rectangle2D.Double(topX, topY, width, height);
     }
 
     public void displayAnnotation() {
