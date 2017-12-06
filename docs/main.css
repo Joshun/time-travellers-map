@@ -20,21 +20,12 @@ a {
 }
 
 a:hover {
-  color: #bed4f7;
+  color: #699bea;
 }
 
 img {
-  /*display: inline-block;*/
   display: block;
-  /*text-align: center;*/
-  /*margin: inherit; */
-  /*margin: auto;*/
-  /* height: 80%;
-  width: 80%; */
-}
 
-.screenshot {
-  text-align: center;
 }
 
 #wrapper {
