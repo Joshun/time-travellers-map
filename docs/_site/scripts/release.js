@@ -1,18 +1,29 @@
 function releaseLoaded(data) {
     var releaseNum = data["tag_name"];
-    var releaseLink = data["zipball_url"];
+    var releaseSrcLink = data["zipball_url"];
+    var releaseBinLink = data["assets"][0]["browser_download_url"];
     var releaseName = data["name"];
 
-    var linkElement = $("<a>", {
+    var linkList = $("<ul>");
+
+    var srcLinkElement = $("<a>", {
         title: "Download latest release",
         text: "source code",
-        href: releaseLink
+        href: releaseSrcLink
     });
 
+    var binLinkElement = $("<a>", {
+        title: "Download latest release",
+        text: "JAR",
+        href: releaseBinLink
+    });
+
+    linkList.append($("<li>").append(binLinkElement));    
+    linkList.append($("<li>").append(srcLinkElement));
 
 
-    $("#latest-release-bar").append(linkElement);
-    $("#latest-release-header").text(releaseNum + " " + releaseName);
+    $("#latest-release-bar").append(linkList);
+    $("#latest-release-header").text(releaseNum + " " + "\"" + releaseName + "\"");
     console.log("release info loaded.");
     console.log(releaseLink);
 }

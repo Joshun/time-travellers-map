@@ -83,22 +83,30 @@ h1 {
 
 h2 {
   font-size: 1.5em;
-  margin: 40px 0 0 0;
-  font-style: italic;
+  margin: 20px 0 0 0;
   /*text-align: center;*/
+}
+
+.description {
+  font-style: italic;  
 }
 
 h3 {
   font-size: 1.25em;
+  margin: 10px 0 10px 0;
 }
 
 #latest-release-header {
   font-weight: bold;
 }
 
-#latest-release-bar {
-  
+#latest-release-bar li {
+  padding: 0 0 0 25px;
+  margin: 5px 0 5px 0;
+  background: url("images/save-file-300px.png") no-repeat left center;
+  background-size: 20px;
 }
+
 
 .footer-space {
   padding: 0 0 50vh 0;
