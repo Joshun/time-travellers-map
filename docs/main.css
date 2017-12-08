@@ -84,8 +84,11 @@ h1 {
 h2 {
   font-size: 1.5em;
   margin: 40px 0 0 0;
-  font-style: italic;
   /*text-align: center;*/
+}
+
+.description {
+  font-style: italic;  
 }
 
 h3 {
