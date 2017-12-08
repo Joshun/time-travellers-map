@@ -5,3 +5,4 @@ out/
 *.json
 *.db
 docs/site/
+site/
