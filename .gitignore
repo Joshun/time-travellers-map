@@ -4,5 +4,5 @@ target/
 out/
 *.json
 *.db
-docs/site/
-site/
+docs/_site/
+_site/
