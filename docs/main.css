@@ -4,7 +4,8 @@
 body {
   font-size: 10pt;
   font-family: 'Raleway', sans-serif;
-  background-color: #bed4f7;
+  margin: 5vh 0 0 0;
+  /* background-color: #bed4f7; */
   /*background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%);*/
   /*background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);*/
 
@@ -33,14 +34,17 @@ img {
   margin: 0 auto;
   height: 100%;
   padding: 5vh 0 2vh 0;
-  background-color: white;
+  /* background-color: white; */
 }
 
 /* Everything in content indended 50px */
 .content {
   /*margin: 0 50px 0 0;*/
   margin: 0 0 0 50px;
+  clear: both;
 }
+
+
 
 nav {
   background-color: #A9A9A9;
@@ -117,5 +121,6 @@ h3 {
   /*text-align: center;*/
   clear: both;
   position: relative;
-  padding: 5rem 0 0 0;
+  /* padding: 5rem 0 0 0; */
+  padding: 2.5vh 0 5vh 0;
 }
