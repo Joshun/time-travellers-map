@@ -4,7 +4,9 @@
 body {
   font-size: 10pt;
   font-family: 'Raleway', sans-serif;
-  margin: 5vh 0 0 0;
+  /* margin: 5vh 0 0 0; */
+  background-color: #e4e4e4;
+  
   /* background-color: #bed4f7; */
   /*background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%);*/
   /*background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);*/
@@ -30,11 +32,16 @@ img {
 }
 
 #wrapper {
-  width: 75%;
+  /* width: 75%; */
   margin: 0 auto;
   height: 100%;
-  padding: 5vh 0 2vh 0;
+  /* padding: 5vh 0 2vh 0; */
   /* background-color: white; */
+}
+
+.top {
+  padding: 5vh 0 0vh 0;  
+  background-color: #0f1126;
 }
 
 /* Everything in content indended 50px */
@@ -75,12 +82,14 @@ nav li a {
 }
 
 nav li a:hover {
-  background-color: white;
+  background-color: #0f1126;
   text-decoration: none;
+  color: white;
 }
 
 h1 {
   font-size: 5em;
+  color: white;
   /*margin: 0 0 0 50px;*/
   /*padding: 40px 80px 40px 80px;*/
 }
@@ -116,11 +125,25 @@ h3 {
   padding: 0 0 50vh 0;
 }
 
+.footer a {
+  color: white;
+}
+
+.footer a:hover {
+  color: grey;
+}
+
 .footer {
   font-size: 1em;
   /*text-align: center;*/
   clear: both;
   position: relative;
   /* padding: 5rem 0 0 0; */
-  padding: 2.5vh 0 5vh 0;
+  padding: 5vh 0 5vh 50px;
+  /* background-color: #1d1d1d; */
+  margin: 2.5vh 0 0 0;
+  background-color: #1d1d1d;
+  color: white;
+
 }
+
