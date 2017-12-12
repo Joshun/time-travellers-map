@@ -65,10 +65,12 @@ nav {
   background-color: #A9A9A9;
   margin: 10px 0 0 0;
   padding: 10px 0 10px 50px;
+  margin: 0 0 10px 0;
 }
 
 nav ul {
   list-style: none;
+  /* margin: 0 0 10px 0; */
   /*margin: 0 0 0 50px;*/
   /*margin: 0 500px 0 500px;*/
 }
@@ -86,13 +88,19 @@ nav li {
 nav li a {
   text-decoration: none;
   color: black;
-  padding: 10px 0 10px 0;
+  padding: 5px 0 5px 0;
 }
 
 nav li a:hover {
   background-color: #0f1126;
   text-decoration: none;
   color: white;
+  font-weight: bold;
+}
+
+.current-page-nav {
+  color: white;
+  font-weight: bold;
 }
 
 h1 {
@@ -159,6 +167,16 @@ h3 {
   color: inherit;
 }
 
+.stats {
+  display: inline-flex;
+  flex-direction: column;
+  /* width: 800px; */
+}
+
+.stat-boxes {
+  /* display: flex; */
+  /* flex-direction: row; */
+}
 
 .singlestat-stat{
   font-size: 2.5em;
@@ -180,4 +198,22 @@ h3 {
   padding: 10px 15px 10px 15px;
   margin: 5px;
   align-items: center;
+}
+
+.github-link {
+  background-image: url("images/GitHub-Mark-64px.png");
+  background-repeat: no-repeat;
+  padding: 32px 0 32px 80px;
+  background-position-y: 10px;
+  background-position-x: 5px;
+  margin: 5px 0 0 5px;
+  /* background-color: grey; */
+  display: inline-flex;
+  flex-direction: column;
+  
+}
+
+.github-link p {
+  padding: 0;
+  margin: 0;
 }
