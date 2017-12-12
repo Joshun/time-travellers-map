@@ -5,7 +5,9 @@ body {
   font-size: 10pt;
   font-family: 'Raleway', sans-serif;
   /* margin: 5vh 0 0 0; */
-  background-color: #e4e4e4;
+  /* background-color: #e4e4e4; */
+  background-color: #1d1d1d;
+  
   
   /* background-color: #bed4f7; */
   /*background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%);*/
@@ -35,6 +37,8 @@ img {
   /* width: 75%; */
   margin: 0 auto;
   height: 100%;
+  background-color: #e4e4e4;
+  
   /* padding: 5vh 0 2vh 0; */
   /* background-color: white; */
 }
@@ -141,7 +145,7 @@ h3 {
   /* padding: 5rem 0 0 0; */
   padding: 5vh 0 5vh 50px;
   /* background-color: #1d1d1d; */
-  margin: 2.5vh 0 0 0;
+  margin: 10vh 0 0 0;
   background-color: #1d1d1d;
   color: white;
 
