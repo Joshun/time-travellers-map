@@ -4,6 +4,11 @@ function issuesOnPage(labelCounts) {
     $("#pullreq-count").text(labelCounts.pull_request);
 }
 
+function contributorsLoaded(data) {
+    console.log(data);
+    $("#contrib-count").text(data.length);
+}
+
 function issuesLoaded(data) {
     labels = {"pull_request": 0};
 
@@ -35,5 +40,12 @@ $.get(
     "https://api.github.com/repos/Joshun/time-travellers-map/issues",
     function(data) {
         issuesLoaded(data)
+    }
+);
+
+$.get(
+    "https://api.github.com/repos/Joshun/time-travellers-map/contributors",
+    function(data) {
+        contributorsLoaded(data);
     }
 );
