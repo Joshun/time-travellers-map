@@ -1,13 +1,18 @@
 function issuesOnPage(labelCounts) {
     $("#bug-count").text(labelCounts.bug);
     $("#feature-count").text(labelCounts.enhancement);
+    $("#pullreq-count").text(labelCounts.pull_request);
 }
 
 function issuesLoaded(data) {
-    labels = {};
+    labels = {"pull_request": 0};
 
     for (issue in data) {
         // console.log(data[issue]);
+        if ("pull_request" in data[issue]) {
+            labels["pull_request"] += 1;
+        }
+
         for (label in data[issue].labels) {
             // console.log(data[issue].labels[label].name)
             var labelStr = data[issue].labels[label].name;
