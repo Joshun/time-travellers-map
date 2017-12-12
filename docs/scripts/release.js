@@ -25,7 +25,6 @@ function releaseLoaded(data) {
     $("#latest-release-bar").append(linkList);
     $("#latest-release-header").text(releaseNum + " " + "\"" + releaseName + "\"");
     console.log("release info loaded.");
-    console.log(releaseLink);
 }
 
 
@@ -34,4 +33,4 @@ $.get(
     function(data) {
         releaseLoaded(data);
     }
-)
+);

@@ -55,6 +55,10 @@ img {
   clear: both;
 }
 
+p {
+  font-size: 1.5em;
+  padding: 10px 0 10px 0;
+}
 
 
 nav {
@@ -151,3 +155,29 @@ h3 {
 
 }
 
+.title a {
+  color: inherit;
+}
+
+
+.singlestat-stat{
+  font-size: 2.5em;
+  /* display: flex; */
+  /* flex: row nowrap; */
+}
+
+.singlestat-desc{
+  /* display: flex; */
+  /* flex: row nowrap; */
+}
+
+.singlestat {
+  background-color: #0f1126;
+  display: inline-flex;
+  flex-direction: column;
+  color: white;
+  font-size: 2em;
+  padding: 10px 15px 10px 15px;
+  margin: 5px;
+  align-items: center;
+}
