@@ -356,11 +356,22 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
             }
         }
 
+        Color[] colorCycleList = {
+                new Color(255,0,0),
+                new Color(255,0,255),
+                new Color(0,0,255),
+                new Color(0,255,0),
+                new Color(0,255,255),
+                new Color(255,255,0)
+        };
+
         System.out.println("Created Gantt chart");
         for (int i=0; i<eventGanttBuffer.size(); i++) {
             System.out.println();
             System.out.print(" ");
-            double barHeight = height / eventGanttBuffer.size();
+            // I don't know how much space the text takes up on the top
+            // for now hardcoded 50
+            double barHeight = (height-50) / eventGanttBuffer.size();
             for (int j=0; j<eventGanttBuffer.get(i).size(); j++) {
                 System.out.print(eventGanttBuffer.get(i).get(j) + ",");
 
@@ -368,10 +379,11 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
                 double x1Coord = (e.getStartDateAsYear()-timeline.getStart()) * increment;
                 double x2Coord = (e.getEndDateAsYear()-timeline.getStart()) * increment;
                 double barWidth = x2Coord - x1Coord;
-                double y1Coord = lineYOffset + (i*25);
+                double y1Coord = 50 + i * barHeight;
                 double y2Coord = lineYOffset + (i*25)+5;
 //                double barHeight = y2Coord - y1Coord;
-                graphics2D.setPaint(new Color(255, 0,0));
+//                graphics2D.setPaint(new Color(255, 0,0));
+                graphics2D.setPaint(colorCycleList[Math.floorMod(i, colorCycleList.length)]);
 //                graphics2D.drawRect((int)x1Coord, (int)y1Coord, 25,25);
                 graphics2D.fillRect((int)x1Coord, (int)y1Coord, (int)barWidth, (int)barHeight);
                 System.out.println(x1Coord);
