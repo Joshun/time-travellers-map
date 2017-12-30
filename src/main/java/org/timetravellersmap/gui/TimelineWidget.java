@@ -10,6 +10,7 @@
 
 package org.timetravellersmap.gui;
 
+import org.timetravellersmap.core.event.Event;
 import org.timetravellersmap.core.event.EventChangeListener;
 import org.timetravellersmap.core.event.EventIndex;
 import org.timetravellersmap.core.timeline.Timeline;
@@ -287,6 +288,37 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         redraw();
     }
 
+    private static boolean eventFitsGanttBuffer(ArrayList<Event> ganttBuffer, Event event) {
+        for (Event e: ganttBuffer) {
+        /*
+         * case 1:
+         * ============
+         *  ---------
+         * case 2:
+         *   ==========
+         *  ----------
+         *
+         * case 3:
+         * ========
+         *   --------
+         *
+         * case 4:
+         *   =======
+         * ------------
+         */
+
+            if ((e.getStartDateAsYear() <= event.getStartDateAsYear() && e.getStartDateAsYear() < event.getEndDateAsYear() && e.getEndDateAsYear() >= event.getStartDateAsYear() && e.getEndDateAsYear() >= event.getEndDateAsYear())
+                || (e.getStartDateAsYear() <= event.getStartDateAsYear() && e.getStartDateAsYear() <= event.getEndDateAsYear() && e.getEndDateAsYear() >=  event.getStartDateAsYear() && e.getEndDateAsYear() <= event.getEndDateAsYear())
+                || (e.getStartDateAsYear() >= event.getStartDateAsYear() && event.getStartDateAsYear() <= e.getEndDateAsYear() && event.getEndDateAsYear() >= e.getStartDateAsYear() && event.getEndDateAsYear() <= e.getEndDateAsYear())
+                || (e.getStartDateAsYear() <= event.getStartDateAsYear() && e.getStartDateAsYear() <= event.getEndDateAsYear() && e.getEndDateAsYear() >= event.getStartDateAsYear() && e.getEndDateAsYear() >= event.getEndDateAsYear()) ) {
+
+                return false;
+            }
+        }
+        return true;
+    }
+
+
     private static void paintTimeline(Graphics2D graphics2D, Timeline timeline, MapFrame mapFrame, int width, int height, double pointerPosition) {
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -301,7 +333,20 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         int textYOffset = 10;
         int lineYOffset = 20;
 
+        boolean paintGantt = false;
+
         EventIndex eventIndex = mapFrame.getEventIndex();
+//        ArrayList<HashMap<Event>> eventGanttBuffer = new ArrayList<>();
+        ArrayList<ArrayList<Event>> eventGanttBuffer = new ArrayList<>();
+        eventGanttBuffer.add(new ArrayList<>());
+
+        for (TimelineCursor timelineCursor: timeline) {
+            double timePosition = timelineCursor.getPosition();
+            eventIndex.getStartEventsForYear((int)timePosition);
+
+
+        }
+
 
         for (TimelineCursor timelineCursor: timeline) {
             double timePosition = timelineCursor.getPosition();
@@ -342,6 +387,11 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
             int eventEndCount = eventIndex.countEndEventsForYear((int)timePosition);
             drawEventCountText(graphics2D, screenXCursor, lineYOffset+20, eventStartCount);
             drawEventCountText(graphics2D, screenXCursor, lineYOffset+28, eventEndCount);
+
+            if (paintGantt) {
+                ArrayList<Event> events = eventIndex.getStartEventsForYear((int)timePosition);
+
+            }
             
             // Increment the x cursor position by increment value
             screenXCursor += increment;
