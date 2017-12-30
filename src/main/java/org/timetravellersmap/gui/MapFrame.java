@@ -320,7 +320,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
         eventPane = new EventPane(this);
 
         // Here the core widget will be configured
-        timelineWidget = new TimelineWidget(1900, 2000, 600, 50, this);
+        timelineWidget = new TimelineWidget(1900, 2000, 600, 100, this);
 
         panel.add(toolBar, "grow");
 

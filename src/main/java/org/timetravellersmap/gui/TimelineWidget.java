@@ -360,11 +360,24 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
         for (int i=0; i<eventGanttBuffer.size(); i++) {
             System.out.println();
             System.out.print(" ");
+            double barHeight = height / eventGanttBuffer.size();
             for (int j=0; j<eventGanttBuffer.get(i).size(); j++) {
                 System.out.print(eventGanttBuffer.get(i).get(j) + ",");
+
+                Event e = eventGanttBuffer.get(i).get(j);
+                double x1Coord = (e.getStartDateAsYear()-timeline.getStart()) * increment;
+                double x2Coord = (e.getEndDateAsYear()-timeline.getStart()) * increment;
+                double barWidth = x2Coord - x1Coord;
+                double y1Coord = lineYOffset + (i*25);
+                double y2Coord = lineYOffset + (i*25)+5;
+//                double barHeight = y2Coord - y1Coord;
+                graphics2D.setPaint(new Color(255, 0,0));
+//                graphics2D.drawRect((int)x1Coord, (int)y1Coord, 25,25);
+                graphics2D.fillRect((int)x1Coord, (int)y1Coord, (int)barWidth, (int)barHeight);
+                System.out.println(x1Coord);
+                System.out.println(y1Coord);
             }
         }
-
 
         for (TimelineCursor timelineCursor: timeline) {
             double timePosition = timelineCursor.getPosition();
