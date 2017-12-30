@@ -415,7 +415,7 @@ public class MapFrame extends JFrame implements TimelineChangeListener{
             @Override
             public void mouseMoved(MouseEvent e) {
 //                super.mouseMoved(e);
-                LOGGER.info("Mouse move on MapPane: (" + e.getX() + "," + e.getY() + ")");
+//                LOGGER.info("Mouse move on MapPane: (" + e.getX() + "," + e.getY() + ")");
                 LayerComponent layerComponent = LayerComponentSelector.selectLayerComponent(
                         mapContent,
                         mapContent.getViewport(),

@@ -342,9 +342,27 @@ public class TimelineWidget extends JPanel implements EventChangeListener {
 
         for (TimelineCursor timelineCursor: timeline) {
             double timePosition = timelineCursor.getPosition();
-            eventIndex.getStartEventsForYear((int)timePosition);
+            ArrayList<Event> events = eventIndex.getStartEventsForYear((int)timePosition);
+            for (Event event: events) {
+                int bufferIndex = 0;
+                while (!eventFitsGanttBuffer(eventGanttBuffer.get(bufferIndex), event)) {
+                    bufferIndex++;
+                    if (eventGanttBuffer.size() < bufferIndex+1) {
+                        eventGanttBuffer.add(new ArrayList<>());
+                        break;
+                    }
+                }
+                eventGanttBuffer.get(bufferIndex).add(event);
+            }
+        }
 
-
+        System.out.println("Created Gantt chart");
+        for (int i=0; i<eventGanttBuffer.size(); i++) {
+            System.out.println();
+            System.out.print(" ");
+            for (int j=0; j<eventGanttBuffer.get(i).size(); j++) {
+                System.out.print(eventGanttBuffer.get(i).get(j) + ",");
+            }
         }
 
 
