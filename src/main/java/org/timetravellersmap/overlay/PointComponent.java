@@ -14,7 +14,6 @@ import com.google.gson.annotations.Expose;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
 import org.timetravellersmap.core.Descriptor;
-import sun.rmi.runtime.Log;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;

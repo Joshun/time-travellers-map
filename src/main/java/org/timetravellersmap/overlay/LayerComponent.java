@@ -15,7 +15,6 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
 import org.timetravellersmap.core.Descriptor;
-import sun.security.krb5.internal.crypto.Des;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
